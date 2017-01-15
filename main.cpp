@@ -26,7 +26,7 @@ void fillModArray(int n) {
     modArray[i] = (int)rand() % 100;
   }
 
-  delete modArray;
+  delete[] modArray;
 }
 
 
@@ -88,11 +88,11 @@ int main(int argc, char **argv) {
   
   cout << "One hundred million integer comparisons took " << ((float)(t4 - t3) / 1000000.0F ) * 1000 << " ms." << endl;
 
-  pushToArray(pushUps);
+  // pushToArray(pushUps);
 
-  t5 = clock();
+  // t5 = clock();
 
-  cout << "One hundred million integer array pushups took " << ((float)(t5 - t4) / 1000000.0F ) * 1000 << " ms." << endl;
+  // cout << "One hundred million integer array pushups took " << ((float)(t5 - t4) / 1000000.0F ) * 1000 << " ms." << endl;
 
   return 0;
 }
