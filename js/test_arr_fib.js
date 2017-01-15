@@ -69,11 +69,11 @@ function pushToArray(n) {
   
   console.log(`One hundred million integer comparisons took ${t4-t3} ms.`);
 
-  pushToArray(pushUps);
+  // pushToArray(pushUps);
 
-  let t5 = +new Date;
+  // let t5 = +new Date;
   
-  console.log(`One hundred million integer array pushes took ${t5-t4} ms.`);
+  // console.log(`One hundred million integer array pushes took ${t5-t4} ms.`);
 
   return 0;
 })();

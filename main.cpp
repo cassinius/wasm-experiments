@@ -1,8 +1,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>     /* srand, rand */
-#include <time.h>
 #include <vector>
+#include <chrono>
+
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::milliseconds milliseconds;
 
 using namespace std;
 
@@ -67,30 +70,32 @@ int main(int argc, char **argv) {
   int comparisons = 1E8;
   int pushUps = 1E8;
   
-  clock_t t1, t2, t3, t4, t5;
-  t1 = clock();
+  Clock::time_point t0 = Clock::now();
   
   fillModArray(arr_n);
   
-  t2 = clock();
+  Clock::time_point t1 = Clock::now();
+  milliseconds ms = std::chrono::duration_cast<milliseconds>(t1 - t0);
   
-  cout << "Filling array of length " << arr_n << " took " << ((float)(t2 - t1) / 1000000.0F ) * 1000 << " ms." << endl;
+  cout << "Filling array of length " << arr_n << " took " << ms.count() << " ms." << endl;
   
   int fib_res = fib(40);
   
-  t3 = clock();
+  Clock::time_point t2 = Clock::now();
+  ms = std::chrono::duration_cast<milliseconds>(t2 - t1);
   
-  cout << "Fibonacci of " << fib_n << " is: " << fib_res << " and took " << ((float)(t3 - t2) / 1000000.0F ) * 1000 << " ms." << endl;
+  cout << "Fibonacci of " << fib_n << " is: " << fib_res << " and took " << ms.count() << " ms." << endl;
     
   compareTypes(comparisons);
 
-  t4 = clock();
+  Clock::time_point t3 = Clock::now();
+  ms = std::chrono::duration_cast<milliseconds>(t3 - t2);
   
-  cout << "One hundred million integer comparisons took " << ((float)(t4 - t3) / 1000000.0F ) * 1000 << " ms." << endl;
+  cout << "One hundred million integer comparisons took " << ms.count() << " ms." << endl;
 
   // pushToArray(pushUps);
 
-  // t5 = clock();
+  // gettimeofday(&t5, 0);
 
   // cout << "One hundred million integer array pushups took " << ((float)(t5 - t4) / 1000000.0F ) * 1000 << " ms." << endl;
 
