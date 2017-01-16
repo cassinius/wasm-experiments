@@ -17,17 +17,15 @@ int fib(int n) {
 
 
 void fillModArray(int n) {
-  int *modArray = (int *)malloc(sizeof(int) * n);
+  int *modArray = new int[n]; // (int *)malloc(sizeof(int) * n);
   
   // cout << "Size of array: " << sizeof(modArray) / 4 << endl;
   
   for ( int i = 0; i < n; ++i ) {
     modArray[i] = (int)rand() % 100;
   }
-  
-  cout << "Filled array of length " << sizeof(modArray) << endl;
 
-  free(modArray);
+  delete modArray;
 }
 
 
@@ -38,8 +36,6 @@ int main(int argc, char **argv) {
   
   clock_t t1, t2, t3;
   t1 = clock();
-  
-  cout << "Hello from Barnes Hut!" << endl;
   
   fillModArray(arr_n);
   
@@ -52,8 +48,6 @@ int main(int argc, char **argv) {
   t3 = clock();
   
   cout << "Fibonacci of " << fib_n << " is: " << fib_res << " and took: " << ((float)(t3 - t2) / 1000000.0F ) * 1000 << " ms." << endl;
-  
-  cout << "Good bye from Barnes Hut!" << std::endl;
     
   return 0;
 }

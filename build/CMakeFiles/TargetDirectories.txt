@@ -1,7 +1,0 @@
-/home/bernd/projects/BarnesHut/build/CMakeFiles/install.dir
-/home/bernd/projects/BarnesHut/build/CMakeFiles/list_install_components.dir
-/home/bernd/projects/BarnesHut/build/CMakeFiles/rebuild_cache.dir
-/home/bernd/projects/BarnesHut/build/CMakeFiles/barneshut.dir
-/home/bernd/projects/BarnesHut/build/CMakeFiles/edit_cache.dir
-/home/bernd/projects/BarnesHut/build/CMakeFiles/install/strip.dir
-/home/bernd/projects/BarnesHut/build/CMakeFiles/install/local.dir

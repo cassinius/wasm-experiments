@@ -16,8 +16,6 @@ function fillModArray(n) {
   for ( let i = 0; i < n; ++i ) {
     modArray[i] = Math.random()*Number.MAX_SAFE_INTEGER % 100;
   }
-  
-  console.log(`Filled array of length ${modArray.length}`);
 }
 
 
