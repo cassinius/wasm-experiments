@@ -19,10 +19,35 @@ function fillModArray(n) {
 }
 
 
+function compareTypes(n) {
+  let a, b, i;
+
+  for ( i = 0; i < n; ++i ) {
+    a = Math.random()*Number.MAX_SAFE_INTEGER;
+    b = Math.random()*Number.MAX_SAFE_INTEGER;
+
+    a = a > b ? a : b;
+  }
+}
+
+
+function pushToArray(n) {
+  let arr = [];
+
+  for ( let i = 0; i < n; ++i ) {
+    if ( Math.random() > 0.5 ) {
+      arr.push(i);
+    }
+  }
+}
+
+
 (function main() {
   
   let fib_n = 40;
   let arr_n = 1E6;
+  let comparisons = 1E8;
+  let pushUps = 1E8;
   
   let t1 = +new Date;
   
@@ -36,7 +61,19 @@ function fillModArray(n) {
   
   let t3 = +new Date;
   
-  console.log(`Fibonacci of ${fib_n} is: ${fib_res} took ${t3-t2} ms.`);
-    
+  console.log(`Fibonacci of ${fib_n} is: ${fib_res} and took ${t3-t2} ms.`);
+
+  compareTypes(comparisons);
+
+  let t4 = +new Date;
+  
+  console.log(`One hundred million integer comparisons took ${t4-t3} ms.`);
+
+  pushToArray(pushUps);
+
+  let t5 = +new Date;
+  
+  console.log(`One hundred million integer array pushes took ${t5-t4} ms.`);
+
   return 0;
 })();

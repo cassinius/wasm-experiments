@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
+#include <vector>
 
 using namespace std;
 
@@ -29,12 +30,44 @@ void fillModArray(int n) {
 }
 
 
+void compareTypes(int n) {
+  int a, b, i;
+
+  for ( i = 0; i < n; ++i ) {
+    a = rand();
+    b = rand();
+
+    a = a > b ? a : b;
+  }
+}
+
+
+void pushToArray(int n) {
+  vector< int > arr;
+
+  for ( int i = 0; i < n; ++i ) {
+    if ( ( rand() % 100 ) > 50 ) {
+      arr.push_back(i);
+    }
+  }
+}
+
+
 int main(int argc, char **argv) {
+
+  // Seed the random number generator
+  srand(time(NULL));
+
+  // string gt50 = ( rand() % 100 ) > 50 ? "true" : "false";
+  // cout << rand() % 100 << endl;
+  // cout << gt50 << endl;
   
   int fib_n = 40;
   int arr_n = 1E6;
+  int comparisons = 1E8;
+  int pushUps = 1E8;
   
-  clock_t t1, t2, t3;
+  clock_t t1, t2, t3, t4, t5;
   t1 = clock();
   
   fillModArray(arr_n);
@@ -47,7 +80,19 @@ int main(int argc, char **argv) {
   
   t3 = clock();
   
-  cout << "Fibonacci of " << fib_n << " is: " << fib_res << " and took: " << ((float)(t3 - t2) / 1000000.0F ) * 1000 << " ms." << endl;
+  cout << "Fibonacci of " << fib_n << " is: " << fib_res << " and took " << ((float)(t3 - t2) / 1000000.0F ) * 1000 << " ms." << endl;
     
+  compareTypes(comparisons);
+
+  t4 = clock();
+  
+  cout << "One hundred million integer comparisons took " << ((float)(t4 - t3) / 1000000.0F ) * 1000 << " ms." << endl;
+
+  pushToArray(pushUps);
+
+  t5 = clock();
+
+  cout << "One hundred million integer array pushups took " << ((float)(t5 - t4) / 1000000.0F ) * 1000 << " ms." << endl;
+
   return 0;
 }
