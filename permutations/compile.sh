@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Build natively
-g++ -O3 main.cpp -std=c++11 -o perm
+g++ -O3 perm.cpp -std=c++11 -o perm
 
 # Build 'normal' asm.js test file
-em++ main.cpp -O2 --closure 1 -o perm_asm.html
+emcc perm.cpp -O3 -o perm_asm.html
 
 # Build WASM test file
-em++ main.cpp -O2 --closure 1 -s WASM=1 -o perm_wasm.html
+emcc perm.cpp -O3 -s WASM=1 -o perm_wasm.html

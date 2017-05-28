@@ -26,7 +26,7 @@ int main()
   Clock::time_point t0 = Clock::now();
 
   //Permutations for strings
-  std::string example("Hello you!");
+  std::string example("Hello world!");
   std::sort(example.begin(), example.end());
   do {
       // std::cout << example << '\n';

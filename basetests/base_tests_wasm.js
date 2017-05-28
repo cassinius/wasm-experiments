@@ -1500,9 +1500,9 @@ function integrateWasmJS(Module) {
   var method = Module['wasmJSMethod'] || 'native-wasm';
   Module['wasmJSMethod'] = method;
 
-  var wasmTextFile = Module['wasmTextFile'] || 'perm_wasm.wast';
-  var wasmBinaryFile = Module['wasmBinaryFile'] || 'perm_wasm.wasm';
-  var asmjsCodeFile = Module['asmjsCodeFile'] || 'perm_wasm.asm.js';
+  var wasmTextFile = Module['wasmTextFile'] || 'base_tests_wasm.wast';
+  var wasmBinaryFile = Module['wasmBinaryFile'] || 'base_tests_wasm.wasm';
+  var asmjsCodeFile = Module['asmjsCodeFile'] || 'base_tests_wasm.asm.js';
 
   // utilities
 
@@ -1841,16 +1841,16 @@ var ASM_CONSTS = [];
 
 STATIC_BASE = 1024;
 
-STATICTOP = STATIC_BASE + 23248;
+STATICTOP = STATIC_BASE + 23312;
   /* global initializers */  __ATINIT__.push({ func: function() { __GLOBAL__I_000101() } }, { func: function() { __GLOBAL__sub_I_iostream_cpp() } });
   
 
-memoryInitializer = Module["wasmJSMethod"].indexOf("asmjs") >= 0 || Module["wasmJSMethod"].indexOf("interpret-asm2wasm") >= 0 ? "perm_wasm.html.mem" : null;
+memoryInitializer = Module["wasmJSMethod"].indexOf("asmjs") >= 0 || Module["wasmJSMethod"].indexOf("interpret-asm2wasm") >= 0 ? "base_tests_wasm.html.mem" : null;
 
 
 
 
-var STATIC_BUMP = 23248;
+var STATIC_BUMP = 23312;
 Module["STATIC_BASE"] = STATIC_BASE;
 Module["STATIC_BUMP"] = STATIC_BUMP;
 
@@ -5418,38 +5418,10 @@ function copyTempDouble(ptr) {
       _pthread_cleanup_push.level = __ATEXIT__.length;
     }
 
-   
-  Module["_pthread_mutex_unlock"] = _pthread_mutex_unlock;
-
   
-  function _emscripten_memcpy_big(dest, src, num) {
-      HEAPU8.set(HEAPU8.subarray(src, src+num), dest);
-      return dest;
-    } 
-  Module["_memcpy"] = _memcpy;
-
-  function ___syscall6(which, varargs) {SYSCALLS.varargs = varargs;
-  try {
-   // close
-      var stream = SYSCALLS.getStreamFromFD();
-      FS.close(stream);
-      return 0;
-    } catch (e) {
-    if (typeof FS === 'undefined' || !(e instanceof FS.ErrnoError)) abort(e);
-    return -e.errno;
-  }
-  }
-
   function __ZSt18uncaught_exceptionv() { // std::uncaught_exception()
       return !!__ZSt18uncaught_exceptionv.uncaught_exception;
     }
-
-   
-  Module["_sbrk"] = _sbrk;
-
-   
-  Module["_memmove"] = _memmove;
-
   
   var EXCEPTIONS={last:0,caught:[],infos:{},deAdjust:function (adjusted) {
         if (!adjusted || EXCEPTIONS.infos[adjusted]) return adjusted;
@@ -5496,6 +5468,32 @@ function copyTempDouble(ptr) {
     }
 
   
+  function _emscripten_memcpy_big(dest, src, num) {
+      HEAPU8.set(HEAPU8.subarray(src, src+num), dest);
+      return dest;
+    } 
+  Module["_memcpy"] = _memcpy;
+
+  function ___syscall6(which, varargs) {SYSCALLS.varargs = varargs;
+  try {
+   // close
+      var stream = SYSCALLS.getStreamFromFD();
+      FS.close(stream);
+      return 0;
+    } catch (e) {
+    if (typeof FS === 'undefined' || !(e instanceof FS.ErrnoError)) abort(e);
+    return -e.errno;
+  }
+  }
+
+
+   
+  Module["_sbrk"] = _sbrk;
+
+   
+  Module["_memmove"] = _memmove;
+
+  
   
   function ___resumeException(ptr) {
       if (!EXCEPTIONS.last) { EXCEPTIONS.last = ptr; }
@@ -5539,6 +5537,17 @@ function copyTempDouble(ptr) {
     }
 
   function _pthread_cond_wait() { return 0; }
+
+   
+  Module["_pthread_mutex_unlock"] = _pthread_mutex_unlock;
+
+  function _time(ptr) {
+      var ret = (Date.now()/1000)|0;
+      if (ptr) {
+        HEAP32[((ptr)>>2)]=ret;
+      }
+      return ret;
+    }
 
    
   Module["_pthread_self"] = _pthread_self;
@@ -5790,7 +5799,7 @@ function invoke_viiii(index,a1,a2,a3,a4) {
 
 Module.asmGlobalArg = { "Math": Math, "Int8Array": Int8Array, "Int16Array": Int16Array, "Int32Array": Int32Array, "Uint8Array": Uint8Array, "Uint16Array": Uint16Array, "Uint32Array": Uint32Array, "Float32Array": Float32Array, "Float64Array": Float64Array, "NaN": NaN, "Infinity": Infinity };
 
-Module.asmLibraryArg = { "abort": abort, "assert": assert, "enlargeMemory": enlargeMemory, "getTotalMemory": getTotalMemory, "abortOnCannotGrowMemory": abortOnCannotGrowMemory, "invoke_iiiiiiii": invoke_iiiiiiii, "invoke_iiii": invoke_iiii, "invoke_viiiii": invoke_viiiii, "invoke_iiiiiid": invoke_iiiiiid, "invoke_vi": invoke_vi, "invoke_vii": invoke_vii, "invoke_iiiiiii": invoke_iiiiiii, "invoke_iiiiid": invoke_iiiiid, "invoke_ii": invoke_ii, "invoke_viijii": invoke_viijii, "invoke_iiiiij": invoke_iiiiij, "invoke_viii": invoke_viii, "invoke_v": invoke_v, "invoke_iiiiiiiii": invoke_iiiiiiiii, "invoke_iiiii": invoke_iiiii, "invoke_viiiiii": invoke_viiiiii, "invoke_iii": invoke_iii, "invoke_iiiiii": invoke_iiiiii, "invoke_viiii": invoke_viiii, "_pthread_cleanup_pop": _pthread_cleanup_pop, "_strftime": _strftime, "_pthread_cond_wait": _pthread_cond_wait, "_emscripten_get_now_is_monotonic": _emscripten_get_now_is_monotonic, "___syscall54": ___syscall54, "_abort": _abort, "__addDays": __addDays, "___gxx_personality_v0": ___gxx_personality_v0, "___assert_fail": ___assert_fail, "___cxa_find_matching_catch": ___cxa_find_matching_catch, "_clock_gettime": _clock_gettime, "_strftime_l": _strftime_l, "___setErrNo": ___setErrNo, "___cxa_begin_catch": ___cxa_begin_catch, "_emscripten_memcpy_big": _emscripten_memcpy_big, "___resumeException": ___resumeException, "__ZSt18uncaught_exceptionv": __ZSt18uncaught_exceptionv, "_pthread_getspecific": _pthread_getspecific, "__arraySum": __arraySum, "_pthread_once": _pthread_once, "_pthread_key_create": _pthread_key_create, "___unlock": ___unlock, "__isLeapYear": __isLeapYear, "_emscripten_get_now": _emscripten_get_now, "_pthread_setspecific": _pthread_setspecific, "___cxa_atexit": ___cxa_atexit, "___lock": ___lock, "___syscall6": ___syscall6, "_pthread_cleanup_push": _pthread_cleanup_push, "_atexit": _atexit, "___syscall140": ___syscall140, "___syscall145": ___syscall145, "___syscall146": ___syscall146, "DYNAMICTOP_PTR": DYNAMICTOP_PTR, "tempDoublePtr": tempDoublePtr, "ABORT": ABORT, "STACKTOP": STACKTOP, "STACK_MAX": STACK_MAX, "___dso_handle": ___dso_handle };
+Module.asmLibraryArg = { "abort": abort, "assert": assert, "enlargeMemory": enlargeMemory, "getTotalMemory": getTotalMemory, "abortOnCannotGrowMemory": abortOnCannotGrowMemory, "invoke_iiiiiiii": invoke_iiiiiiii, "invoke_iiii": invoke_iiii, "invoke_viiiii": invoke_viiiii, "invoke_iiiiiid": invoke_iiiiiid, "invoke_vi": invoke_vi, "invoke_vii": invoke_vii, "invoke_iiiiiii": invoke_iiiiiii, "invoke_iiiiid": invoke_iiiiid, "invoke_ii": invoke_ii, "invoke_viijii": invoke_viijii, "invoke_iiiiij": invoke_iiiiij, "invoke_viii": invoke_viii, "invoke_v": invoke_v, "invoke_iiiiiiiii": invoke_iiiiiiiii, "invoke_iiiii": invoke_iiiii, "invoke_viiiiii": invoke_viiiiii, "invoke_iii": invoke_iii, "invoke_iiiiii": invoke_iiiiii, "invoke_viiii": invoke_viiii, "_pthread_cleanup_pop": _pthread_cleanup_pop, "_strftime": _strftime, "_pthread_cond_wait": _pthread_cond_wait, "_emscripten_get_now_is_monotonic": _emscripten_get_now_is_monotonic, "___syscall54": ___syscall54, "_abort": _abort, "__addDays": __addDays, "___gxx_personality_v0": ___gxx_personality_v0, "___assert_fail": ___assert_fail, "___cxa_find_matching_catch": ___cxa_find_matching_catch, "_clock_gettime": _clock_gettime, "_strftime_l": _strftime_l, "___setErrNo": ___setErrNo, "___cxa_begin_catch": ___cxa_begin_catch, "_emscripten_memcpy_big": _emscripten_memcpy_big, "___resumeException": ___resumeException, "__ZSt18uncaught_exceptionv": __ZSt18uncaught_exceptionv, "_pthread_getspecific": _pthread_getspecific, "__arraySum": __arraySum, "_pthread_once": _pthread_once, "_pthread_key_create": _pthread_key_create, "___unlock": ___unlock, "__isLeapYear": __isLeapYear, "_emscripten_get_now": _emscripten_get_now, "_pthread_setspecific": _pthread_setspecific, "___cxa_atexit": ___cxa_atexit, "___lock": ___lock, "___syscall6": ___syscall6, "_pthread_cleanup_push": _pthread_cleanup_push, "_time": _time, "_atexit": _atexit, "___syscall140": ___syscall140, "___syscall145": ___syscall145, "___syscall146": ___syscall146, "DYNAMICTOP_PTR": DYNAMICTOP_PTR, "tempDoublePtr": tempDoublePtr, "ABORT": ABORT, "STACKTOP": STACKTOP, "STACK_MAX": STACK_MAX, "___dso_handle": ___dso_handle };
 // EMSCRIPTEN_START_ASM
 var asm =Module["asm"]// EMSCRIPTEN_END_ASM
 (Module.asmGlobalArg, Module.asmLibraryArg, buffer);
