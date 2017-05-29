@@ -1295,21 +1295,6 @@
         };
       };
     </script>
-    <script>
-
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', 'perm_wasm.wasm', true);
-          xhr.responseType = 'arraybuffer';
-          xhr.onload = function() {
-            Module.wasmBinary = xhr.response;
-
-          var script = document.createElement('script');
-          script.src = "perm_wasm.js";
-          document.body.appendChild(script);
-
-          };
-          xhr.send(null);
-
-</script>
+    <script async type="text/javascript" src="perm_wasm.js"></script>
   </body>
 </html>
