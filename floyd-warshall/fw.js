@@ -6,8 +6,9 @@ let time_start = +new Date;
 let graph = [];
 for (i = 0; i < V; ++i) {
   graph.push([]);
-  for (j = 0; j < V; ++j)
+  for (j = 0; j < V; ++j) {
     graph[i].push(i == j ? 0 : parseFloat(Math.random() * 9 + 1) );
+  }
 }
 
 let time_graph = +new Date;
@@ -21,6 +22,7 @@ FWSparse(graph);
 let time_floyd_sparse = +new Date;
 console.log(`SPARSE Floyd-Warshall took ${time_floyd_sparse - time_floyd_dense} ms.`);
 
+// Rechenwerk ;-)
 function FWDense(graph) {
   for (k = 0; k < V; ++k) {
     for (i = 0; i < V; ++i) {
@@ -33,6 +35,7 @@ function FWDense(graph) {
   }
 }
 
+// Rechenwerk ;-)
 function FWSparse(graph) {
   for (k = 0; k < V; ++k) {
     for (i = 0; i < V; ++i) {
