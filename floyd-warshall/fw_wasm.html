@@ -1295,21 +1295,6 @@
         };
       };
     </script>
-    <script>
-
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', 'fw_wasm.wasm', true);
-          xhr.responseType = 'arraybuffer';
-          xhr.onload = function() {
-            Module.wasmBinary = xhr.response;
-
-          var script = document.createElement('script');
-          script.src = "fw_wasm.js";
-          document.body.appendChild(script);
-
-          };
-          xhr.send(null);
-
-</script>
+    <script async type="text/javascript" src="fw_wasm.js"></script>
   </body>
 </html>

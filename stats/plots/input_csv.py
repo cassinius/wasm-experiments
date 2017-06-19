@@ -41,8 +41,15 @@ if __name__ == "__main__":
     # print(algos)
     # print(values)
 
-    print(algos)
-    print(values)
+    # data_na = data.dropna(how='any')
+    # print(data_na)
+
+    for col in data.columns.difference([ALGO_COL]):
+        col_num = pd.to_numeric(data[col], errors='coerce')
+        # print(data_num)
+        print(np.mean(col_num))
+        print(np.std(col_num))
+
 
     mean_of_cols = data.mean(axis=0)
     print(mean_of_cols)
