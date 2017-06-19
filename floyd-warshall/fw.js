@@ -11,16 +11,26 @@ for (i = 0; i < V; ++i) {
   }
 }
 
-let time_graph = +new Date;
-console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
+// let time_graph = +new Date;
+// console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
 
-FWDense(graph);
-let time_floyd_dense = +new Date;
-console.log(`DENSE Floyd-Warshall took ${time_floyd_dense - time_graph} ms.`);
+// FWDense(graph);
+// let time_floyd_dense = +new Date;
+// console.log(`DENSE Floyd-Warshall took ${time_floyd_dense - time_graph} ms.`);
 
-FWSparse(graph);
-let time_floyd_sparse = +new Date;
-console.log(`SPARSE Floyd-Warshall took ${time_floyd_sparse - time_floyd_dense} ms.`);
+// FWSparse(graph);
+// let time_floyd_sparse = +new Date;
+// console.log(`SPARSE Floyd-Warshall took ${time_floyd_sparse - time_floyd_dense} ms.`);
+
+
+let time_10_fold_start = +new Date;
+for (let i = 0; i < 10; ++i) {
+  FWDense(graph);
+  console.log(`Completed FWDense iteration ${i}`);
+}
+let time_10_fold_mean = (+new Date - time_10_fold_start) / 10;
+console.log(`Time 10-fold mean: ${time_10_fold_mean}`);
+
 
 // Rechenwerk ;-)
 function FWDense(graph) {
