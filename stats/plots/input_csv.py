@@ -7,6 +7,7 @@ INPUT_COLS = [
     "FillArrayRand 1e6",
     "RecFib40",
     "IntCompare 1e8",
+    "Floyd-Warshall 1k",
     "Permutations",
     "FFT",
     "Hufmann 100k",
