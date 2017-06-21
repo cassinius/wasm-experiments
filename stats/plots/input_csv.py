@@ -28,6 +28,10 @@ def readFromCSV(input_file, input_cols):
         sep=r'\s*,\s*',
         engine='python',
         na_values="?")
+    
+    for col in original_data.columns.difference([ALGO_COL]):
+        original_data[col] = pd.to_numeric(original_data[col], errors='coerce')
+    
     return original_data
 
 
@@ -45,11 +49,11 @@ if __name__ == "__main__":
     # data_na = data.dropna(how='any')
     # print(data_na)
 
-    for col in data.columns.difference([ALGO_COL]):
-        col_num = pd.to_numeric(data[col], errors='coerce')
-        # print(data_num)
-        print(np.mean(col_num))
-        print(np.std(col_num))
+    for idx, col in enumerate(values):
+        print(algos[idx] + ":")
+        print("Mean: %s" % (np.mean(col)))
+        print("Std: %s" % (np.std(col)))
+        print("\n")
 
 
     mean_of_cols = data.mean(axis=0)
