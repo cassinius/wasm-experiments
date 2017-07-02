@@ -15,12 +15,12 @@ INPUT_COLS = [
     "MinCut graph-100",
     "MinCut graph-150"
 ]
-ALGO_COL = "ALL-10-FOLD-AVG"
+K_FOLD_VAL = "ALL-10-FOLD-AVG"
 
 
 
-def readFromCSV(input_file, input_cols):
-    original_data = pd.read_csv(
+def readFromCSV(input_file, input_cols, k_fold_val):
+    data = pd.read_csv(
         input_file,
         names=input_cols,
         header=0,
@@ -29,32 +29,14 @@ def readFromCSV(input_file, input_cols):
         engine='python',
         na_values="?")
     
-    for col in original_data.columns.difference([ALGO_COL]):
-        original_data[col] = pd.to_numeric(original_data[col], errors='coerce')
+    for col in data.columns.difference([k_fold_val]):
+        data[col] = pd.to_numeric(data[col], errors='coerce')
     
-    return original_data
+    return data
 
 
 
 if __name__ == "__main__":
-    data = readFromCSV(INPUT_CSV, INPUT_COLS)
-    # print(data)
-
-    algos = np.array(data[ALGO_COL])
-    values = np.array(data[data.columns.difference([ALGO_COL])])
-
-    # print(algos)
-    # print(values)
-
-    # data_na = data.dropna(how='any')
-    # print(data_na)
-
-    for idx, col in enumerate(values):
-        print(algos[idx] + ":")
-        print("Mean: %s" % (np.mean(col)))
-        print("Std: %s" % (np.std(col)))
-        print("\n")
-
-
-    mean_of_cols = data.mean(axis=0)
-    print(mean_of_cols)
+    data = readFromCSV(INPUT_CSV, INPUT_COLS, K_FOLD_VAL)
+    print(data.mean(axis=0))
+    print(data.std(axis=0))
