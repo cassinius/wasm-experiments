@@ -32,7 +32,6 @@ algo_means = np.array(data.mean(axis=0))
 algo_std = np.array(data.std(axis=0))
 
 
-
 print(INPUT_COLS)
 print(algo_means)
 print(algo_std)

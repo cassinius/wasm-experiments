@@ -38,5 +38,11 @@ def readFromCSV(input_file, input_cols, k_fold_val):
 
 if __name__ == "__main__":
     data = readFromCSV(INPUT_CSV, INPUT_COLS, K_FOLD_VAL)
-    print(data.mean(axis=0))
-    print(data.std(axis=0))
+    # print(data.mean(axis=0))
+    # print(data.std(axis=0))
+
+    INPUT_COLS.pop(0)
+    for col in INPUT_COLS:
+        print(col)
+        print(data.loc[data[K_FOLD_VAL].isin(["Native C++ GCC", "Native C++ VS"])][col])
+
