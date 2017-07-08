@@ -7,7 +7,7 @@ import math
 OUTPUT_DIR = 'output'
 FILE_NAME = 'all_subplots_'
 FILE_FORMAT = '.png'
-COLOR_PALETTE = 3
+COLOR_PALETTE = 1
 N = 4
 
 # Color palettes
@@ -26,7 +26,7 @@ INPUT_COLS.pop(0)
 overall_means = np.array(data.mean(axis=0))
 overall_stds = np.array(data.std(axis=0))
 
-natives = ["Native C++ GCC", "Native C++ VS"]
+natives = ["Native C++ GCC"] #, "Native C++ VS"]
 jss = ["native JS Node"]
 asms = ["ASM.js Node", "ASM.js Chrome", "ASM.js Firefox", "ASM.js Edge"]
 wasms = ["WASM Chrome", "WASM Firefox", "WASM Edge"]
@@ -93,8 +93,8 @@ for idx, col in enumerate(INPUT_COLS):
     ax.set_yticks([])
 
 
-labels = ('C++', 'JS', 'ASM.js', 'WASM')
-leg = plt.figlegend(lines, labels, loc=(0.32, 0.9), ncol=4, labelspacing=2. )
+labels = ('C++ (GCC 6.x)', 'Node.js native', 'ASM.js (Node, Chrome, Firefox, Edge)', 'WASM (Node, Chrome, Firefox, Edge)')
+leg = plt.figlegend(lines, labels, loc=(0.055, 0.9), ncol=4, labelspacing=2. )
 for idx, handle in enumerate(leg.legendHandles):
     handle.set_color(colors[COLOR_PALETTE][N-idx-1])
 
