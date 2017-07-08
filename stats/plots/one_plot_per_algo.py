@@ -1,27 +1,17 @@
 from stats.plots.input_csv import readFromCSV, INPUT_CSV, INPUT_COLS, K_FOLD_VAL
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.misc import imread
-import colorsys
+import math
 
-
-"""
-========
-Barchart
-========
-
-A bar plot with errorbars and height labels on individual bars
-"""
-
-colors = ['#800000', '#bf5300', '#edb908', '#4c4c4c', '#009000']
-# colors = ['#4f2c1d', '#cba052', '#ffe680', '#fef1b2', '#7cff00']
-# colors = ['#6f94d2', '#5b1085', '#abfdfb', '#a72294', '#f07fe0']
-# colors = ['#ffa472', '#ff8847', '#e17e7c', '#ce7798', '#a669db']
+# Color palettes
+colors = ['#800000', '#bf5300', '#edb908', '#4c4c4c']
+# colors = ['#4f2c1d', '#cba052', '#ffe680', '#fef1b2']
+# colors = ['#6f94d2', '#5b1085', '#abfdfb', '#a72294']
+# colors = ['#ffa472', '#ff8847', '#e17e7c', '#ce7798']
 
 data = readFromCSV(INPUT_CSV, INPUT_COLS, K_FOLD_VAL)
 
 INPUT_COLS.pop(0)
-N = len(INPUT_COLS)
 
 # Overall data
 overall_means = np.array(data.mean(axis=0))
@@ -41,7 +31,6 @@ asmjs_stds = []
 wasm_means = []
 wasm_stds = []
 
-# Native CPP implementations
 for col in INPUT_COLS:
     native_means.append(np.mean(np.array(data.loc[data[K_FOLD_VAL].isin(natives)][col])))
     native_stds.append(np.std(np.array(data.loc[data[K_FOLD_VAL].isin(natives)][col])))
@@ -77,29 +66,32 @@ for idx, col in enumerate(INPUT_COLS):
 print(bars_means)
 print(bars_stds)
 
-x_range = np.arange(N)  # the x locations for the groups
-width = .3             # the width of the bars
+N = 4                       # runtime environments per algorithm
+x_range = np.arange(N)      # the x locations for the groups
+bars_width = .8             # the width of the bars
 
-fig, ax = plt.subplots()
+fig, axes = plt.subplots(5, 2, figsize=(11, 12)) # subplot_kw=dict(polar=True)
+fig.set_facecolor((230/256.0, 243/256.0, 247/256.0))
+fig.suptitle(r'($\mu, \sigma$) per algorithm & execution environment (runtime in ms.)', fontsize=20)
+plt.title('Runtime in ms.', fontsize=14)
 
-overall = plt.barh(x_range, overall_means, width, color=colors[0], xerr=overall_stds, log=True, label="overall")
-native = plt.barh(x_range+width, native_means, width, color=colors[1], xerr=native_stds, log=True, label="native")
-jss = plt.barh(x_range+2*width, js_means, width, color=colors[2], xerr=js_stds, log=True, label = "JavaScript")
-asms = plt.barh(x_range+3*width, asmjs_means, width, color=colors[3], xerr=asmjs_stds, log=True, label = "ASM.js")
-wasms = plt.barh(x_range+4*width, wasm_means, width, color=colors[4], xerr=wasm_stds, log=True, label = "WASM")
+lines = []
 
-ax.set_facecolor((230/256.0, 243/256.0, 247/256.0))
+print(INPUT_COLS)
+print(list(enumerate(INPUT_COLS)))
 
-ax.invert_yaxis()  # labels read top-to-bottom
-handles, labels = ax.get_legend_handles_labels()
-ax.legend(handles, labels)
-
-plt.xlabel('Runtime in ms.')
-
-plt.title('Mean / Std. per runtime environment & algorithm')
-plt.yticks(x_range+0.34, INPUT_COLS, rotation=45, ha='right')
-plt.axis([0, max(overall_means + overall_stds) * 2, -0.25, N])
-# plt.subplots_adjust(bottom=0.3)
+for idx, col in enumerate(INPUT_COLS):
+    ax = axes[math.floor(idx/2)%5, idx%2]
+    ax.set_title(col)
+    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors, xerr=np.flipud(bars_stds[col])) )
+    ax.axis([0, max(bars_means[col] + max(bars_stds[col])) * 1.05, -0.5, N-0.5])
+    ax.set_yticks([])
 
 
+labels = ('C++', 'JS', 'ASM.js', 'WASM')
+leg = plt.figlegend(lines, labels, loc=(0.32, 0.9), ncol=4, labelspacing=2. )
+for idx, handle in enumerate(leg.legendHandles):
+    handle.set_color(colors[N-idx-1])
+
+plt.subplots_adjust(top=0.85, bottom=0.05, left=0.05, right=0.95, hspace=0.65)
 plt.show()
