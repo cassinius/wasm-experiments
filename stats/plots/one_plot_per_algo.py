@@ -3,11 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+
+OUTPUT_DIR = 'output'
+FILE_NAME = 'all_subplots_'
+FILE_FORMAT = '.png'
+COLOR_PALETTE = 3
+N = 4
+
 # Color palettes
-colors = ['#800000', '#bf5300', '#edb908', '#4c4c4c']
-# colors = ['#4f2c1d', '#cba052', '#ffe680', '#fef1b2']
-# colors = ['#6f94d2', '#5b1085', '#abfdfb', '#a72294']
-# colors = ['#ffa472', '#ff8847', '#e17e7c', '#ce7798']
+colors = [
+    ['#800000', '#bf5300', '#edb908', '#4c4c4c'],
+    ['#4f2c1d', '#cba052', '#ffe680', '#fef1b2'],
+    ['#6f94d2', '#5b1085', '#abfdfb', '#a72294'],
+    ['#ffa472', '#ff8847', '#e17e7c', '#ce7798']
+]
 
 data = readFromCSV(INPUT_CSV, INPUT_COLS, K_FOLD_VAL)
 
@@ -65,8 +74,7 @@ for idx, col in enumerate(INPUT_COLS):
 
 print(bars_means)
 print(bars_stds)
-
-N = 4                       # runtime environments per algorithm
+                  # runtime environments per algorithm
 x_range = np.arange(N)      # the x locations for the groups
 bars_width = .8             # the width of the bars
 
@@ -77,13 +85,10 @@ plt.title('Runtime in ms.', fontsize=14)
 
 lines = []
 
-print(INPUT_COLS)
-print(list(enumerate(INPUT_COLS)))
-
 for idx, col in enumerate(INPUT_COLS):
     ax = axes[math.floor(idx/2)%5, idx%2]
     ax.set_title(col)
-    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors, xerr=np.flipud(bars_stds[col])) )
+    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], xerr=np.flipud(bars_stds[col])) )
     ax.axis([0, max(bars_means[col] + max(bars_stds[col])) * 1.05, -0.5, N-0.5])
     ax.set_yticks([])
 
@@ -91,7 +96,8 @@ for idx, col in enumerate(INPUT_COLS):
 labels = ('C++', 'JS', 'ASM.js', 'WASM')
 leg = plt.figlegend(lines, labels, loc=(0.32, 0.9), ncol=4, labelspacing=2. )
 for idx, handle in enumerate(leg.legendHandles):
-    handle.set_color(colors[N-idx-1])
+    handle.set_color(colors[COLOR_PALETTE][N-idx-1])
 
 plt.subplots_adjust(top=0.85, bottom=0.05, left=0.05, right=0.95, hspace=0.65)
-plt.show()
+# plt.show()
+fig.savefig(OUTPUT_DIR + '/' + FILE_NAME + '_' + str(COLOR_PALETTE) + FILE_FORMAT, facecolor=fig.get_facecolor())
