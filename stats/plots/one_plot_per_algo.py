@@ -7,7 +7,7 @@ import math
 OUTPUT_DIR = 'output'
 FILE_NAME = 'all_subplots_'
 FILE_FORMAT = '.png'
-COLOR_PALETTE = 1
+COLOR_PALETTE = 0
 N = 4
 
 # Color palettes
@@ -99,5 +99,5 @@ for idx, handle in enumerate(leg.legendHandles):
     handle.set_color(colors[COLOR_PALETTE][N-idx-1])
 
 plt.subplots_adjust(top=0.85, bottom=0.05, left=0.05, right=0.95, hspace=0.65)
-# plt.show()
+plt.show()
 fig.savefig(OUTPUT_DIR + '/' + FILE_NAME + '_' + str(COLOR_PALETTE) + FILE_FORMAT, facecolor=fig.get_facecolor())

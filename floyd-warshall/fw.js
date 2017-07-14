@@ -11,8 +11,8 @@ for (i = 0; i < V; ++i) {
   }
 }
 
-// let time_graph = +new Date;
-// console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
+let time_graph = +new Date;
+console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
 
 // FWDense(graph);
 // let time_floyd_dense = +new Date;
@@ -25,7 +25,7 @@ for (i = 0; i < V; ++i) {
 
 let time_10_fold_start = +new Date;
 for (let i = 0; i < 10; ++i) {
-  FWDense(graph);
+  FWSparse(graph);
   console.log(`Completed FWDense iteration ${i}`);
 }
 let time_10_fold_mean = (+new Date - time_10_fold_start) / 10;

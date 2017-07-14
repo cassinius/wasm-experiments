@@ -1,0 +1,49 @@
+const V = 1034;
+
+// Graph instantiation
+let time_start = +new Date;
+
+let graph = {}
+for (i = 0; i < V; ++i) {
+  graph[i] = {};
+  for (j = 0; j < V; ++j) {
+    graph[i][j] = i == j ? 0 : parseFloat(Math.random() * 9 + 1);
+  }
+}
+
+let time_graph = +new Date;
+console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
+
+
+// FWDenseDict(graph);
+FWDenseKeys(graph);
+let time_floyd_dense = +new Date;
+console.log(`DENSE Floyd-Warshall took ${time_floyd_dense - time_graph} ms.`);
+
+
+
+function FWDenseDict(graph) {
+  for (k in graph) {
+    for (i in graph) {
+      for (j in graph) {
+        if (graph[i][j] > graph[i][k] + graph[k][j]) {
+          graph[i][j] = graph[i][k] + graph[k][j];
+        }
+      }
+    }
+  }
+}
+
+
+function FWDenseKeys(graph) {
+  var keys = Object.keys(graph);
+  for (k = 0; k < keys.length; ++k) {
+    for (i = 0; i < keys.length; ++i) {
+      for (j = 0; j < keys.length; ++j) {
+        if (graph[keys[i]][keys[j]] > graph[keys[i]][keys[k]] + graph[keys[k]][keys[j]]) {
+          graph[keys[i]][keys[j]] = graph[keys[i]][keys[k]] + graph[keys[k]][keys[j]];
+        }
+      }
+    }
+  }
+}
