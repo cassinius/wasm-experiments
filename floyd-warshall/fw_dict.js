@@ -1,4 +1,5 @@
-const V = 1034;
+// const V = 1034;
+const V = 700;
 
 // Graph instantiation
 let time_start = +new Date;
@@ -16,10 +17,33 @@ console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
 
 
 // FWDenseDict(graph);
-FWDenseKeys(graph);
-let time_floyd_dense = +new Date;
-console.log(`DENSE Floyd-Warshall took ${time_floyd_dense - time_graph} ms.`);
+// FWDenseKeys(graph);
+// FWDictIdx(graph);
+// let time_floyd_dense = +new Date;
+// console.log(`DENSE Floyd-Warshall took ${time_floyd_dense - time_graph} ms.`);
 
+
+let time_10_fold_start = +new Date;
+for (let i = 0; i < 10; ++i) {
+  FWDictIdx(graph);
+  console.log(`Completed FWDictIdx iteration ${i}`);
+}
+let time_10_fold_mean = (+new Date - time_10_fold_start) / 10;
+console.log(`Time 10-fold mean: ${time_10_fold_mean}`);
+
+
+function FWDictIdx(graph) {
+  for (k = 0; k < V; ++k) {
+    for (i = 0; i < V; ++i) {
+      for (j = 0; j < V; ++j) {
+        let sum_legs = graph[i][k] + graph[k][j];
+        if (graph[i][j] > sum_legs) {
+          graph[i][j] = sum_legs;
+        }
+      }
+    }
+  }
+}
 
 
 function FWDenseDict(graph) {

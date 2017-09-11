@@ -1,4 +1,5 @@
-const V = 1034;
+// const V = 1034;
+const V = 700;
 
 // Graph instantiation
 let time_start = +new Date;
@@ -25,7 +26,7 @@ console.log(`Graph instantiation took ${time_graph - time_start} ms.`);
 
 let time_10_fold_start = +new Date;
 for (let i = 0; i < 10; ++i) {
-  FWSparse(graph);
+  FWDense(graph);
   console.log(`Completed FWDense iteration ${i}`);
 }
 let time_10_fold_mean = (+new Date - time_10_fold_start) / 10;
