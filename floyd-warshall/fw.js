@@ -8,7 +8,7 @@ let graph = [];
 for (i = 0; i < V; ++i) {
   graph.push([]);
   for (j = 0; j < V; ++j) {
-    graph[i].push(i == j ? 0 : parseFloat(Math.random() * 9 + 1) );
+    graph[i].push(i == j ? 0 : parseFloat( ( Math.random() * 9 + 1 )|0 ) );
   }
 }
 
@@ -58,3 +58,18 @@ function FWSparse(graph) {
     }
   }
 }
+
+// Rechenwerk ;-)
+// This one makes no sense and was just to check 'for of' performance on arrays
+// function FWDenseOf(graph) {
+//   for (k of graph[0]) {
+//     for (i of graph[0]) {
+//       for (j of graph[0]) {
+//         // console.log(`${i}, ${j}`);
+//         if (graph[i][j] > graph[i][k] + graph[k][j]) {
+//           graph[i][j] = graph[i][k] + graph[k][j];
+//         }
+//       }
+//     }
+//   }
+// }
