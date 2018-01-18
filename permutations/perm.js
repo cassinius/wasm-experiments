@@ -1,25 +1,39 @@
 function permut(string) {
-    if (string.length < 2) return string; // This is our break condition
+    
+    if (string.length < 2) {
+        return string;
+    }
 
-    var permutations = []; // This array will hold our permutations
+    // This array will hold our permutations
+    var permutations = [];
 
-    for (var i=0; i<string.length; i++) {
+    for (var i = 0; i < string.length; i++) {
         var char = string[i];
 
         // Cause we don't want any duplicates:
-        if (string.indexOf(char) != i) // if char was used already
-            continue;           // skip it this time
+        // if char was used already
+        if (string.indexOf(char) != i) {
+            continue;
+        }
 
-        var remainingString = string.slice(0,i) + string.slice(i+1,string.length); //Note: you can concat Strings via '+' in JS
+        var remainingString = string.slice(0, i) + string.slice(i + 1, string.length);
 
-        for (var subPermutation of permut(remainingString))
+        for (var subPermutation of permut(remainingString)) {
             permutations.push(char + subPermutation)
+        }
 
     }
     return permutations;
 }
 
-let tic = +new Date;
-permut("Hello worl")
-let toc = +new Date;
-console.log(`String permutation in native JS took ${toc-tic} ms.`);
+let sum_time = 0;
+const iterations = 10;
+
+for ( let i = 0; i < iterations; ++i ) {
+    let tic = +new Date;
+    permut("Hello world!")
+    let toc = +new Date;
+    sum_time += toc - tic;
+}
+
+console.log(`String permutation over ${iterations} iterations in native JS took ${sum_time / iterations} ms.`);
