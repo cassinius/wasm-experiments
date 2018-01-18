@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+def mean(numbers):
+    return float(sum(numbers)) / max(len(numbers), 1)
 
 OUTPUT_DIR = 'output'
 FILE_NAME = 'all_subplots_'
@@ -74,7 +76,7 @@ for idx, col in enumerate(INPUT_COLS):
 
 print(bars_means)
 print(bars_stds)
-                  # runtime environments per algorithm
+                            # runtime environments per algorithm
 x_range = np.arange(N)      # the x locations for the groups
 bars_width = .8             # the width of the bars
 
@@ -88,8 +90,18 @@ lines = []
 for idx, col in enumerate(INPUT_COLS):
     ax = axes[math.floor(idx/2)%5, idx%2]
     ax.set_title(col)
-    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], xerr=np.flipud(bars_stds[col])) )
-    ax.axis([0, max(bars_means[col] + max(bars_stds[col])) * 1.05, -0.5, N-0.5])
+    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], log=False) ) #, xerr=np.flipud(bars_stds[col])
+    avg_y = mean(bars_means[col]) + mean(bars_stds[col])
+    max_y = max(bars_means[col]) + max(bars_stds[col])
+    # print("Average mean + std : " + str(avg_y))
+    # print("Maximum mean + std : " + str(max_y))
+    for i, v in reversed(list(enumerate(bars_means[col]))):
+        # v can be NaN if no value exists (min-cut JS)
+        if math.isnan(v):
+            v = 0
+        # print("i, v: " + str(i) + " " + str(v))
+        ax.text(v*1.01+3, -i+2.78, str(int(v)), color='blue', fontweight='normal', backgroundcolor='none') # bbox={'fc': 'white', 'ec': 'none', 'pad':0})
+    ax.axis([0, max_y * 1.13, -0.5, N-0.5]) # min(max_y * 1.05, avg_y * 2),
     ax.set_yticks([])
 
 

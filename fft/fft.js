@@ -115,3 +115,18 @@ function cfft(amplitudes)
 // test code
 console.log( cfft([1,1,1,1,0,0,0,0]) );
 console.log( icfft(cfft([1,1,1,1,0,0,0,0])) );
+
+let sum_time = 0;
+const iterations = 1e1;
+const fft_iterations = 1e5;
+
+for ( let it = 0; it < iterations; it++ ) {
+    let tic = +new Date;
+    for ( let i = 0; i < fft_iterations; i++ ) {        
+		cfft([1,1,1,1,0,0,0,0]);
+		icfft(cfft([1,1,1,1,0,0,0,0]));
+    }
+    let toc = +new Date;
+    sum_time += toc - tic;
+}
+console.log(`Huffman coding over ${iterations} iterations in native JS took ${sum_time / iterations} ms.`);

@@ -1,7 +1,7 @@
 ALL-10-FOLD-AVG,FillArrayRand 1e6,RecFib40,IntCompare 1e8,Floyd-Warshall 1k,Permutations,FFT,Huffman 100k,MinCut graph-50,MinCut graph-100,MinCut graph-150
 Native C++ GCC,13.2,371,1622,687,153,348,1370,619,11068,65227
 Native C++ VS,20,804,3891,2495,286,311,2488,637,4129,10087
-native JS Node,22.6,1375,1392,2620,58831,not tried,8682,not tried,not tried,not tried
+native JS Node,22.6,1375,1392,2620,58831,792,8682,not tried,not tried,not tried
 ASM.js Node,67.6,1173,10037,1872,306,615,3275,1143,3249,119323
 ASM.js Chrome,12.2,806,2278,1949,346,346,2082,809,2624,120450
 WASM Chrome,2,794,520,1934,366,288,2033,682,2400,112353
