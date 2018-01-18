@@ -185,7 +185,7 @@ const huff_iterations = 1e5;
 
 for ( let it = 0; it < iterations; it++ ) {
     let tic = +new Date;
-    for ( let i = 0; i < fft_iterations; i++ ) {        
+    for ( let i = 0; i < huff_iterations; i++ ) {        
         var huff = new HuffmanEncoding(s);
     }
     let toc = +new Date;
