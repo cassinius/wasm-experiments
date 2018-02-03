@@ -1,8 +1,8 @@
 ALL-10-FOLD-AVG,FillArrayRand 1e6,RecFib40,IntCompare 1e8,Floyd-Warshall 1k,Permutations,FFT 100k,Huffman 100k,MinCut graph-50,MinCut graph-100,MinCut graph-150
 Native C++ GCC,10.3,272,149,1045,92,307,547,619,11068,65227
-native JS Node,18.2,1102.7,156,3204.7,3475.8,827.2,3698,n/a,n/a,n/a
+native JS Node,18.2,1102.7,156,3204.7,3475.8,827.2,3698,notavail,notavail,notavail
 ASM.js Node,14,740,173,1374,321,258,1297,1143,3249,119323
-WASM Node,3.67,723,44,1364,252,218,1133,,,
+WASM Node,3.67,723,44,1364,252,218,1133,notavail,notavail,notavail
 ASM.js Chrome,17,750,221,2356,407,347,1834,809,2624,120450
 WASM Chrome,4,730,44,1989,352,272,1447,682,2400,112353
 ASM.js Firefox,13,770,220,1567,354,467,1027,708,2406,117550

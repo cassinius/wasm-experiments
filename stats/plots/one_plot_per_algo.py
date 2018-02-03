@@ -31,7 +31,7 @@ overall_stds = np.array(data.std(axis=0))
 natives = ["Native C++ GCC"] #, "Native C++ VS"]
 jss = ["native JS Node"]
 asms = ["ASM.js Node", "ASM.js Chrome", "ASM.js Firefox", "ASM.js Edge"]
-wasms = ["WASM Chrome", "WASM Firefox", "WASM Edge"]
+wasms = ["WASM Node", "WASM Chrome", "WASM Firefox", "WASM Edge"]
 
 native_means = []
 native_stds = []
@@ -43,14 +43,14 @@ wasm_means = []
 wasm_stds = []
 
 for col in INPUT_COLS:
-    native_means.append(np.mean(np.array(data.loc[data[K_FOLD_VAL].isin(natives)][col])))
-    native_stds.append(np.std(np.array(data.loc[data[K_FOLD_VAL].isin(natives)][col])))
-    js_means.append(np.mean(np.array(data.loc[data[K_FOLD_VAL].isin(jss)][col])))
-    js_stds.append(np.std(np.array(data.loc[data[K_FOLD_VAL].isin(jss)][col])))
-    asmjs_means.append(np.mean(np.array(data.loc[data[K_FOLD_VAL].isin(asms)][col])))
-    asmjs_stds.append(np.std(np.array(data.loc[data[K_FOLD_VAL].isin(asms)][col])))
-    wasm_means.append(np.mean(np.array(data.loc[data[K_FOLD_VAL].isin(wasms)][col])))
-    wasm_stds.append(np.std(np.array(data.loc[data[K_FOLD_VAL].isin(wasms)][col])))
+    native_means.append(np.nanmean(np.array(data.loc[data[K_FOLD_VAL].isin(natives)][col])))
+    native_stds.append(np.nanstd(np.array(data.loc[data[K_FOLD_VAL].isin(natives)][col])))
+    js_means.append(np.nanmean(np.array(data.loc[data[K_FOLD_VAL].isin(jss)][col])))
+    js_stds.append(np.nanstd(np.array(data.loc[data[K_FOLD_VAL].isin(jss)][col])))
+    asmjs_means.append(np.nanmean(np.array(data.loc[data[K_FOLD_VAL].isin(asms)][col])))
+    asmjs_stds.append(np.nanstd(np.array(data.loc[data[K_FOLD_VAL].isin(asms)][col])))
+    wasm_means.append(np.nanmean(np.array(data.loc[data[K_FOLD_VAL].isin(wasms)][col])))
+    wasm_stds.append(np.nanstd(np.array(data.loc[data[K_FOLD_VAL].isin(wasms)][col])))
 
 print(overall_means)
 print(native_means)
@@ -90,26 +90,29 @@ lines = []
 for idx, col in enumerate(INPUT_COLS):
     ax = axes[math.floor(idx/2)%5, idx%2]
     ax.set_title(col)
-    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], log=False) ) #, xerr=np.flipud(bars_stds[col])
+    lines.append( ax.barh(y=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], log=False) ) #, xerr=np.flipud(bars_stds[col])
     avg_y = mean(bars_means[col]) + mean(bars_stds[col])
     max_y = max(bars_means[col]) + max(bars_stds[col])
     # print("Average mean + std : " + str(avg_y))
     # print("Maximum mean + std : " + str(max_y))
     for i, v in reversed(list(enumerate(bars_means[col]))):
+        v_label = str(round(v, 2))
         # v can be NaN if no value exists (min-cut JS)
         if math.isnan(v):
             v = 0
+            v_label = "n/a"
         # print("i, v: " + str(i) + " " + str(v))
-        ax.text(v*1.01+3, -i+2.78, str(int(v)), color='blue', fontweight='normal', backgroundcolor='none') # bbox={'fc': 'white', 'ec': 'none', 'pad':0})
+        ax.text(v*1.01+3, -i+2.78, v_label, color='blue', fontweight='normal', backgroundcolor='none') # bbox={'fc': 'white', 'ec': 'none', 'pad':0})
     ax.axis([0, max_y * 1.13, -0.5, N-0.5]) # min(max_y * 1.05, avg_y * 2),
     ax.set_yticks([])
 
 
 labels = ('C++ (GCC 6.x)', 'Node.js native', 'ASM.js (Node, Chrome, Firefox, Edge)', 'WASM (Node, Chrome, Firefox, Edge)')
-leg = plt.figlegend(lines, labels, loc=(0.055, 0.9), ncol=4, labelspacing=2. )
+leg = plt.figlegend(lines, labels, loc=(0.055, 0.9), ncol=4, labelspacing=2.)
 for idx, handle in enumerate(leg.legendHandles):
     handle.set_color(colors[COLOR_PALETTE][N-idx-1])
 
 plt.subplots_adjust(top=0.85, bottom=0.05, left=0.05, right=0.95, hspace=0.65)
-plt.show()
+# plt.show()
 fig.savefig(OUTPUT_DIR + '/' + FILE_NAME + '_' + str(COLOR_PALETTE) + FILE_FORMAT, facecolor=fig.get_facecolor())
+plt.close(fig)

@@ -1,15 +1,15 @@
 import pandas as pd
 import numpy as np
 
-INPUT_CSV = "../Performance_paper_sheet.csv"
+INPUT_CSV = "../Performance_paper_sheet_20180203.csv"
 INPUT_COLS = [
     "ALL-10-FOLD-AVG",
     "FillArrayRand 1e6",
     "RecFib40",
-    "IntCompare 1e8",
+    "IntCompare 1e7",
     "Floyd-Warshall 1k",
     "Permutations",
-    "FFT",
+    "FFT 100k",
     "Hufmann 100k",
     "MinCut graph-50",
     "MinCut graph-100",
@@ -31,7 +31,8 @@ def readFromCSV(input_file, input_cols, k_fold_val):
     
     for col in data.columns.difference([k_fold_val]):
         data[col] = pd.to_numeric(data[col], errors='coerce')
-    
+
+    # print(data)
     return data
 
 
