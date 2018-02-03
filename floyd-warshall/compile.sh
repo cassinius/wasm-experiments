@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build natively
-g++ -O3 fw.cpp -std=c++11 -o ./fw
+g++ -O3 -std=c++11 fw.cpp -o ./fw
 
 # Build 'normal' asm.js test file
 emcc fw.cpp -O3 --std=c++11 -o fw_asm.html

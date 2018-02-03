@@ -1,3 +1,5 @@
+// invoke with 'node --max-old-space-size=8192'
+
 function permut(string) {
     
     if (string.length < 2) {
@@ -31,7 +33,7 @@ const iterations = 10;
 
 for ( let i = 0; i < iterations; ++i ) {
     let tic = +new Date;
-    permut("Hello world!")
+    permut("Hello World");
     let toc = +new Date;
     sum_time += toc - tic;
 }

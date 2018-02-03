@@ -120,7 +120,7 @@ function HuffmanEncoding(str) {
     for (var i = 0; i < str.length; i++) 
         if (str[i] in count_chars) 
             count_chars[str[i]] ++;
-        else 
+        else
             count_chars[str[i]] = 1;
  
     var pq = new BinaryHeap(function(x){return x[0];});
@@ -177,11 +177,13 @@ HuffmanEncoding.prototype.decode = function(encoded) {
     return decoded;
 }
 
-const s = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere";
+const s = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.";
 
 let sum_time = 0;
-const iterations = 1e1;
+const iterations = 1e0;
 const huff_iterations = 1e5;
+
+// console.log( new HuffmanEncoding(s) );
 
 for ( let it = 0; it < iterations; it++ ) {
     let tic = +new Date;
@@ -191,5 +193,5 @@ for ( let it = 0; it < iterations; it++ ) {
     let toc = +new Date;
     sum_time += toc - tic;
 }
-console.log(`Huffman coding over ${iterations} iterations in native JS took ${sum_time / iterations} ms.`);
+console.log(`Huffman coding over ${huff_iterations} iterations in native JS took ${sum_time / iterations} ms.`);
 
