@@ -20,6 +20,25 @@ int fib(int n) {
 }
 
 
+/**
+ * Possibly auto-vectorizable version
+ * via gcc  
+ */
+void fillModVector(int n)  {
+  std::vector<int> modVec(n);
+  // modVec.reserve(n); // no faster...
+
+  for ( int i = 0; i < n; ++i ) {
+    modVec[i] = (int)(rand() % 100);
+  }
+
+  int rand_idx = (int)(rand() % n);  
+  printf("Accessing vector at random index %d: %d\n", rand_idx, modVec[rand_idx]);
+
+  std::vector<int>().swap(modVec);
+}
+
+
 void fillModArray(int n) {
   int *modArray = new int[n]; // (int *)malloc(sizeof(int) * n);
   
@@ -73,16 +92,30 @@ int main(int argc, char **argv) {
   int arr_n = 1E6;
   int comparisons = 1E7;
   int pushUps = 1E8;
+
+
+  /**
+   * VECTOR FILLING TEST (with random ints)
+   */
+  Clock::time_point tStart = Clock::now();  
+  for ( int i = 0; i < iterations; i++ ) {
+    fillModVector(arr_n);
+  }  
+  Clock::time_point t0 = Clock::now();
+  milliseconds ms = std::chrono::duration_cast<milliseconds>(t0 - tStart);
+  
+  cout << "Filling VECTOR of length " << arr_n << " took " << ms.count() / iterations << " ms.\n" << endl;
+  
+
   
   /**
    * ARRAY FILLING TEST (with random ints)
    */
-  Clock::time_point t0 = Clock::now();  
   for ( int i = 0; i < iterations; i++ ) {
     fillModArray(arr_n);
   }  
   Clock::time_point t1 = Clock::now();
-  milliseconds ms = std::chrono::duration_cast<milliseconds>(t1 - t0);
+  ms = std::chrono::duration_cast<milliseconds>(t1 - t0);
   
   cout << "Filling array of length " << arr_n << " took " << ms.count() / iterations << " ms." << endl;
   
