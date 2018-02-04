@@ -82,7 +82,7 @@ bars_width = .8             # the width of the bars
 
 fig, axes = plt.subplots(5, 2, figsize=(11, 12)) # subplot_kw=dict(polar=True)
 fig.set_facecolor((230/256.0, 243/256.0, 247/256.0))
-fig.suptitle(r'($\mu, \sigma$) per algorithm & execution environment (runtime in ms.)', fontsize=20)
+fig.suptitle(r'avg. runtime per algorithm & execution environment (in ms.)', fontsize=20)
 plt.title('Runtime in ms.', fontsize=14)
 
 lines = []
