@@ -10,7 +10,7 @@ INPUT_COLS = [
     "Floyd-Warshall 1k",
     "Permutations",
     "FFT 100k",
-    "Hufmann 100k",
+    "Huffman 100k",
     "MinCut graph-50",
     "MinCut graph-100",
     "MinCut graph-150"

@@ -90,7 +90,7 @@ lines = []
 for idx, col in enumerate(INPUT_COLS):
     ax = axes[math.floor(idx/2)%5, idx%2]
     ax.set_title(col)
-    lines.append( ax.barh(y=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], log=False) ) #, xerr=np.flipud(bars_stds[col])
+    lines.append( ax.barh(bottom=x_range, width=np.flipud(bars_means[col]), height=bars_width, color=colors[COLOR_PALETTE], log=False) ) #, xerr=np.flipud(bars_stds[col])
     avg_y = mean(bars_means[col]) + mean(bars_stds[col])
     max_y = max(bars_means[col]) + max(bars_stds[col])
     # print("Average mean + std : " + str(avg_y))
