@@ -17,7 +17,6 @@ cfg_if! {
 		}
 }
 
-
 #[wasm_bindgen]
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -26,14 +25,12 @@ pub enum Cell {
 	Alive = 1,
 }
 
-
 #[wasm_bindgen]
 pub struct Universe {
 	width: u32,
 	height: u32,
 	cells: Vec<Cell>,
 }
-
 
 #[wasm_bindgen]
 impl Universe {
@@ -112,11 +109,22 @@ impl Universe {
 		}
 	}
 
+	pub fn width(&self) -> u32 {
+		self.width
+	}
+
+	pub fn height(&self) -> u32 {
+		self.height
+	}
+
+	pub fn cells(&self) -> *const Cell {
+		self.cells.as_ptr()
+	}
+
 	pub fn render(&self) -> String {
 		self.to_string()
 	}
 }
-
 
 /**
  * Simple text renderer
