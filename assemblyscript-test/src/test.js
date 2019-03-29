@@ -1,7 +1,6 @@
 var myModule = require("../module.js")
-console.log( `Test addition: ${myModule.add(1, 2)}` )
 
-const V = 300
+const V = 510
 
 /**
  * Graph instantiation performance test

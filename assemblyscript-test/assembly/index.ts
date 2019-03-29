@@ -5,58 +5,54 @@
  **/
 import "allocator/tlsf";
 
-@external("env", "logGraph") 
-declare function logGraph(val: Array<Array<i32>>) : void;
-
 @external("env", "logi") 
 declare function logi(val: i32) : void;
 
 Math.seedRandom(8190327419327409137);
 
-let graph : Array<Array<i32>>;
+// let graph : Array<Array<i32>>;
+let V : i32;
+let graph : Array<i32>;
 
 
-function instantiateGraph(V: i32) : void {
-  graph = new Array( V );
+function instantiateGraph(v: i32) : void {
+  V = v;
+  graph = new Array( V*V );
   // logi( graph.length );
-  // logGraph( graph );
 
-  for (var i = 0; i < V; ++i) {
-    graph[i] = new Array( V );
-    // logi( graph[i].length );
-
-    for (var j = 0; j < V; ++j) {
-      graph[i][j] = <i32>(Math.random() * 9 + 1);
-    }
+  for (var i = 0; i < V*V; ++i) {
+    graph[i] = <i32>(Math.random() * 9 + 1);
   }
-} 
+}
 
 // Rechenwerk ;-)
 function FWDense() : void {
-  let V = graph.length;
-  for (let k = 0; k < V; ++k) {
-    for (let i = 0; i < V; ++i) {
-      for (let j = 0; j < V; ++j) {
-        if (graph[i][j] > graph[i][k] + graph[k][j]) {
-          graph[i][j] = graph[i][k] + graph[k][j];
+  let k: i32, i: i32, j: i32;
+
+  for (k = 0; k < V; ++k) {
+    for (i = 0; i < V; ++i) {
+      for (j = 0; j < V; ++j) {
+        let new_val = getGraphIJ(i, k) + getGraphIJ(k, j)
+        if ( getGraphIJ(i, j) > new_val ) {
+          setGraphIJ( i, j, new_val )
         }
       }
     }
   }
 }
 
+@inline
+function getGraphIJ( i: i32, j: i32 ) : i32 {
+  return graph[i * V + j]
+}
 
-/**
- * Exporting a function from the index.ts file will cause AssemblyScript to
- * generate a corresponding function that will be exported to JavaScript.
- **/
-function add(a: i32, b: i32): i32 {
-  return a + b;
+@inline
+function setGraphIJ( i: i32, j: i32, val: i32 ) : void {
+  graph[i * V + j] = val
 }
 
 
 export {
   instantiateGraph,
-  FWDense,
-  add
+  FWDense
 }

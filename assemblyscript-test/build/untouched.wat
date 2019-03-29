@@ -40,13 +40,13 @@
  (global $~lib/math/random_state1_64 (mut i64) (i64.const 0))
  (global $~lib/math/random_state0_32 (mut i32) (i32.const 0))
  (global $~lib/math/random_state1_32 (mut i32) (i32.const 0))
+ (global $assembly/index/V (mut i32) (i32.const 0))
  (global $assembly/index/graph (mut i32) (i32.const 0))
  (global $~lib/memory/HEAP_BASE i32 (i32.const 180))
  (export "memory" (memory $0))
  (export "table" (table $0))
  (export "instantiateGraph" (func $assembly/index/instantiateGraph))
  (export "FWDense" (func $assembly/index/FWDense))
- (export "add" (func $assembly/index/add))
  (start $start)
  (func $start:~lib/allocator/tlsf (; 1 ;) (type $FUNCSIG$v)
   i32.const 1
@@ -1822,7 +1822,7 @@
    end
   end
  )
- (func $~lib/array/Array<~lib/array/Array<i32>>#constructor (; 28 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/array/Array<i32>#constructor (; 28 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
@@ -1883,66 +1883,62 @@
   end
   local.get $0
  )
- (func $~lib/array/Array<i32>#constructor (; 29 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  local.get $1
-  i32.const 268435454
-  i32.gt_u
+ (func $~lib/math/NativeMath.random (; 29 ;) (type $FUNCSIG$d) (result f64)
+  (local $0 i64)
+  (local $1 i64)
+  (local $2 i64)
+  global.get $~lib/math/random_seeded
+  i32.eqz
   if
    i32.const 0
-   i32.const 88
-   i32.const 45
-   i32.const 39
+   i32.const 56
+   i32.const 987
+   i32.const 24
    call $~lib/env/abort
    unreachable
   end
+  global.get $~lib/math/random_state0_64
+  local.set $0
+  global.get $~lib/math/random_state1_64
+  local.set $1
   local.get $1
-  i32.const 2
-  i32.shl
+  global.set $~lib/math/random_state0_64
+  local.get $0
+  local.get $0
+  i64.const 23
+  i64.shl
+  i64.xor
+  local.set $0
+  local.get $0
+  local.get $0
+  i64.const 17
+  i64.shr_u
+  i64.xor
+  local.set $0
+  local.get $0
+  local.get $1
+  i64.xor
+  local.set $0
+  local.get $0
+  local.get $1
+  i64.const 26
+  i64.shr_u
+  i64.xor
+  local.set $0
+  local.get $0
+  global.set $~lib/math/random_state1_64
+  local.get $1
+  local.get $0
+  i64.add
+  i64.const 4503599627370495
+  i64.and
+  i64.const 4607182418800017408
+  i64.or
   local.set $2
   local.get $2
-  call $~lib/internal/arraybuffer/allocateUnsafe
-  local.set $3
-  block (result i32)
-   local.get $0
-   i32.eqz
-   if
-    i32.const 8
-    call $~lib/memory/memory.allocate
-    local.set $0
-   end
-   local.get $0
-   i32.const 0
-   i32.store
-   local.get $0
-   i32.const 0
-   i32.store offset=4
-   local.get $0
-  end
-  local.get $3
-  i32.store
-  local.get $0
-  local.get $1
-  i32.store offset=4
-  block $~lib/memory/memory.fill|inlined.1
-   local.get $3
-   i32.const 8
-   i32.add
-   local.set $4
-   i32.const 0
-   local.set $5
-   local.get $2
-   local.set $6
-   local.get $4
-   local.get $5
-   local.get $6
-   call $~lib/internal/memory/memset
-  end
-  local.get $0
+  f64.reinterpret_i64
+  f64.const 1
+  f64.sub
  )
  (func $~lib/internal/memory/memcpy (; 30 ;) (type $FUNCSIG$viii) (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
@@ -3480,7 +3476,7 @@
     local.get $3
     local.set $0
    end
-   block $~lib/memory/memory.fill|inlined.2
+   block $~lib/memory/memory.fill|inlined.1
     local.get $0
     i32.const 8
     i32.add
@@ -3522,164 +3518,7 @@
   end
   local.get $0
  )
- (func $~lib/array/Array<~lib/array/Array<i32>>#__set (; 34 ;) (type $FUNCSIG$viii) (param $0 i32) (param $1 i32) (param $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  (local $7 i32)
-  (local $8 i32)
-  local.get $0
-  i32.load
-  local.set $3
-  local.get $3
-  i32.load
-  i32.const 2
-  i32.shr_u
-  local.set $4
-  local.get $1
-  local.get $4
-  i32.ge_u
-  if
-   local.get $1
-   i32.const 268435454
-   i32.ge_u
-   if
-    i32.const 0
-    i32.const 88
-    i32.const 107
-    i32.const 41
-    call $~lib/env/abort
-    unreachable
-   end
-   local.get $3
-   local.get $1
-   i32.const 1
-   i32.add
-   i32.const 2
-   i32.shl
-   call $~lib/internal/arraybuffer/reallocateUnsafe
-   local.set $3
-   local.get $0
-   local.get $3
-   i32.store
-   local.get $0
-   local.get $1
-   i32.const 1
-   i32.add
-   i32.store offset=4
-  end
-  block $~lib/internal/arraybuffer/STORE<~lib/array/Array<i32>,~lib/array/Array<i32>>|inlined.0
-   local.get $3
-   local.set $5
-   local.get $1
-   local.set $6
-   local.get $2
-   local.set $7
-   i32.const 0
-   local.set $8
-   local.get $5
-   local.get $6
-   i32.const 2
-   i32.shl
-   i32.add
-   local.get $8
-   i32.add
-   local.get $7
-   i32.store offset=8
-  end
- )
- (func $~lib/math/NativeMath.random (; 35 ;) (type $FUNCSIG$d) (result f64)
-  (local $0 i64)
-  (local $1 i64)
-  (local $2 i64)
-  global.get $~lib/math/random_seeded
-  i32.eqz
-  if
-   i32.const 0
-   i32.const 56
-   i32.const 987
-   i32.const 24
-   call $~lib/env/abort
-   unreachable
-  end
-  global.get $~lib/math/random_state0_64
-  local.set $0
-  global.get $~lib/math/random_state1_64
-  local.set $1
-  local.get $1
-  global.set $~lib/math/random_state0_64
-  local.get $0
-  local.get $0
-  i64.const 23
-  i64.shl
-  i64.xor
-  local.set $0
-  local.get $0
-  local.get $0
-  i64.const 17
-  i64.shr_u
-  i64.xor
-  local.set $0
-  local.get $0
-  local.get $1
-  i64.xor
-  local.set $0
-  local.get $0
-  local.get $1
-  i64.const 26
-  i64.shr_u
-  i64.xor
-  local.set $0
-  local.get $0
-  global.set $~lib/math/random_state1_64
-  local.get $1
-  local.get $0
-  i64.add
-  i64.const 4503599627370495
-  i64.and
-  i64.const 4607182418800017408
-  i64.or
-  local.set $2
-  local.get $2
-  f64.reinterpret_i64
-  f64.const 1
-  f64.sub
- )
- (func $~lib/array/Array<~lib/array/Array<i32>>#__get (; 36 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
-  (local $2 i32)
-  (local $3 i32)
-  (local $4 i32)
-  (local $5 i32)
-  local.get $0
-  i32.load
-  local.set $2
-  local.get $1
-  local.get $2
-  i32.load
-  i32.const 2
-  i32.shr_u
-  i32.lt_u
-  if (result i32)
-   local.get $2
-   local.set $3
-   local.get $1
-   local.set $4
-   i32.const 0
-   local.set $5
-   local.get $3
-   local.get $4
-   i32.const 2
-   i32.shl
-   i32.add
-   local.get $5
-   i32.add
-   i32.load offset=8
-  else   
-   unreachable
-  end
- )
- (func $~lib/array/Array<i32>#__set (; 37 ;) (type $FUNCSIG$viii) (param $0 i32) (param $1 i32) (param $2 i32)
+ (func $~lib/array/Array<i32>#__set (; 34 ;) (type $FUNCSIG$viii) (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -3746,59 +3585,36 @@
    i32.store offset=8
   end
  )
- (func $assembly/index/instantiateGraph (; 38 ;) (type $FUNCSIG$vi) (param $0 i32)
+ (func $assembly/index/instantiateGraph (; 35 ;) (type $FUNCSIG$vi) (param $0 i32)
   (local $1 i32)
-  (local $2 i32)
-  i32.const 0
   local.get $0
-  call $~lib/array/Array<~lib/array/Array<i32>>#constructor
+  global.set $assembly/index/V
+  i32.const 0
+  global.get $assembly/index/V
+  global.get $assembly/index/V
+  i32.mul
+  call $~lib/array/Array<i32>#constructor
   global.set $assembly/index/graph
   block $break|0
    i32.const 0
    local.set $1
    loop $repeat|0
     local.get $1
-    local.get $0
+    global.get $assembly/index/V
+    global.get $assembly/index/V
+    i32.mul
     i32.lt_s
     i32.eqz
     br_if $break|0
-    block
-     global.get $assembly/index/graph
-     local.get $1
-     i32.const 0
-     local.get $0
-     call $~lib/array/Array<i32>#constructor
-     call $~lib/array/Array<~lib/array/Array<i32>>#__set
-     block $break|1
-      i32.const 0
-      local.set $2
-      loop $repeat|1
-       local.get $2
-       local.get $0
-       i32.lt_s
-       i32.eqz
-       br_if $break|1
-       global.get $assembly/index/graph
-       local.get $1
-       call $~lib/array/Array<~lib/array/Array<i32>>#__get
-       local.get $2
-       call $~lib/math/NativeMath.random
-       f64.const 9
-       f64.mul
-       f64.const 1
-       f64.add
-       i32.trunc_f64_s
-       call $~lib/array/Array<i32>#__set
-       local.get $2
-       i32.const 1
-       i32.add
-       local.set $2
-       br $repeat|1
-       unreachable
-      end
-      unreachable
-     end
-    end
+    global.get $assembly/index/graph
+    local.get $1
+    call $~lib/math/NativeMath.random
+    f64.const 9
+    f64.mul
+    f64.const 1
+    f64.add
+    i32.trunc_f64_s
+    call $~lib/array/Array<i32>#__set
     local.get $1
     i32.const 1
     i32.add
@@ -3809,7 +3625,7 @@
    unreachable
   end
  )
- (func $~lib/array/Array<i32>#__get (; 39 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/array/Array<i32>#__get (; 36 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
@@ -3842,116 +3658,133 @@
    unreachable
   end
  )
- (func $assembly/index/FWDense (; 40 ;) (type $FUNCSIG$v)
+ (func $assembly/index/FWDense (; 37 ;) (type $FUNCSIG$v)
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
-  block $~lib/array/Array<~lib/array/Array<i32>>#get:length|inlined.0 (result i32)
-   global.get $assembly/index/graph
-   local.set $0
-   local.get $0
-   i32.load offset=4
-  end
-  local.set $0
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
   block $break|0
    i32.const 0
-   local.set $1
+   local.set $0
    loop $repeat|0
-    local.get $1
     local.get $0
+    global.get $assembly/index/V
     i32.lt_s
     i32.eqz
     br_if $break|0
     block $break|1
      i32.const 0
-     local.set $2
+     local.set $1
      loop $repeat|1
-      local.get $2
-      local.get $0
+      local.get $1
+      global.get $assembly/index/V
       i32.lt_s
       i32.eqz
       br_if $break|1
       block $break|2
        i32.const 0
-       local.set $3
+       local.set $2
        loop $repeat|2
-        local.get $3
-        local.get $0
+        local.get $2
+        global.get $assembly/index/V
         i32.lt_s
         i32.eqz
         br_if $break|2
-        global.get $assembly/index/graph
-        local.get $2
-        call $~lib/array/Array<~lib/array/Array<i32>>#__get
-        local.get $3
-        call $~lib/array/Array<i32>#__get
-        global.get $assembly/index/graph
-        local.get $2
-        call $~lib/array/Array<~lib/array/Array<i32>>#__get
-        local.get $1
-        call $~lib/array/Array<i32>#__get
-        global.get $assembly/index/graph
-        local.get $1
-        call $~lib/array/Array<~lib/array/Array<i32>>#__get
-        local.get $3
-        call $~lib/array/Array<i32>#__get
-        i32.add
-        i32.gt_s
-        if
-         global.get $assembly/index/graph
-         local.get $2
-         call $~lib/array/Array<~lib/array/Array<i32>>#__get
-         local.get $3
-         global.get $assembly/index/graph
-         local.get $2
-         call $~lib/array/Array<~lib/array/Array<i32>>#__get
-         local.get $1
-         call $~lib/array/Array<i32>#__get
-         global.get $assembly/index/graph
-         local.get $1
-         call $~lib/array/Array<~lib/array/Array<i32>>#__get
-         local.get $3
-         call $~lib/array/Array<i32>#__get
+        block
+         block $assembly/index/getGraphIJ|inlined.0 (result i32)
+          local.get $1
+          local.set $3
+          local.get $0
+          local.set $4
+          global.get $assembly/index/graph
+          local.get $3
+          global.get $assembly/index/V
+          i32.mul
+          local.get $4
+          i32.add
+          call $~lib/array/Array<i32>#__get
+         end
+         block $assembly/index/getGraphIJ|inlined.1 (result i32)
+          local.get $0
+          local.set $4
+          local.get $2
+          local.set $3
+          global.get $assembly/index/graph
+          local.get $4
+          global.get $assembly/index/V
+          i32.mul
+          local.get $3
+          i32.add
+          call $~lib/array/Array<i32>#__get
+         end
          i32.add
-         call $~lib/array/Array<i32>#__set
+         local.set $3
+         block $assembly/index/getGraphIJ|inlined.3 (result i32)
+          local.get $1
+          local.set $5
+          local.get $2
+          local.set $4
+          global.get $assembly/index/graph
+          local.get $5
+          global.get $assembly/index/V
+          i32.mul
+          local.get $4
+          i32.add
+          call $~lib/array/Array<i32>#__get
+         end
+         local.get $3
+         i32.gt_s
+         if
+          local.get $1
+          local.set $4
+          local.get $2
+          local.set $5
+          local.get $3
+          local.set $6
+          global.get $assembly/index/graph
+          local.get $4
+          global.get $assembly/index/V
+          i32.mul
+          local.get $5
+          i32.add
+          local.get $6
+          call $~lib/array/Array<i32>#__set
+         end
         end
-        local.get $3
+        local.get $2
         i32.const 1
         i32.add
-        local.set $3
+        local.set $2
         br $repeat|2
         unreachable
        end
        unreachable
       end
-      local.get $2
+      local.get $1
       i32.const 1
       i32.add
-      local.set $2
+      local.set $1
       br $repeat|1
       unreachable
      end
      unreachable
     end
-    local.get $1
+    local.get $0
     i32.const 1
     i32.add
-    local.set $1
+    local.set $0
     br $repeat|0
     unreachable
    end
    unreachable
   end
  )
- (func $assembly/index/add (; 41 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
-  local.get $0
-  local.get $1
-  i32.add
- )
- (func $start (; 42 ;) (type $FUNCSIG$v)
+ (func $start (; 38 ;) (type $FUNCSIG$v)
   call $start:assembly/index
  )
- (func $null (; 43 ;) (type $FUNCSIG$v)
+ (func $null (; 39 ;) (type $FUNCSIG$v)
  )
 )
