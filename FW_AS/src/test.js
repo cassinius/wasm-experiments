@@ -21,7 +21,7 @@ for ( let i = 0; i < 10; ++i ) {
   var innertic = +new Date
   myModule.FWDense()
   var innertoc = +new Date
-  console.log( 'Computed FW Dense, iteration ' + i + ', took time: ' + (innertoc - innertic) + ' ms.' )
+  console.log( 'Computed FW Dense, iteration #' + i + ', took: ' + (innertoc - innertic) + ' ms.' )
 }
 var toc = +new Date
 console.log( `Floyd Warshal on ${V} nodes took (10-fold mean): ${(toc-tic)/10} ms.`)
