@@ -5,23 +5,44 @@
  **/
 import "allocator/tlsf";
 
-declare namespace console {
-  function log(s: string): void;
-}
+@external("env", "logGraph") 
+declare function logGraph(val: Array<Array<i32>>) : void;
 
-function FWDense(V: i32) : void {
+@external("env", "logi") 
+declare function logi(val: i32) : void;
 
-  // Graph instantiation
-  let time_start = Date.now();
-  console.log( `${time_start}` );
+Math.seedRandom(8190327419327409137);
 
-  // let graph = [];
-  // for (var i = 0; i < V; ++i) {
-  //   graph.push([]);
-  //   for (var j = 0; j < V; ++j) {
-  //     graph[i].push(i == j ? 0 : parseFloat( ( Math.random() * 9 + 1 )|0 ) );
-  //   }
-  // }
+let graph : Array<Array<i32>>;
+
+
+function instantiateGraph(V: i32) : void {
+  graph = new Array( V );
+  // logi( graph.length );
+  // logGraph( graph );
+
+  for (var i = 0; i < V; ++i) {
+    graph[i] = new Array( V );
+    // logi( graph[i].length );
+
+    for (var j = 0; j < V; ++j) {
+      graph[i][j] = <i32>(Math.random() * 9 + 1);
+    }
+  }
+} 
+
+// Rechenwerk ;-)
+function FWDense() : void {
+  let V = graph.length;
+  for (let k = 0; k < V; ++k) {
+    for (let i = 0; i < V; ++i) {
+      for (let j = 0; j < V; ++j) {
+        if (graph[i][j] > graph[i][k] + graph[k][j]) {
+          graph[i][j] = graph[i][k] + graph[k][j];
+        }
+      }
+    }
+  }
 }
 
 
@@ -35,6 +56,7 @@ function add(a: i32, b: i32): i32 {
 
 
 export {
-  // FWDense
+  instantiateGraph,
+  FWDense,
   add
 }
