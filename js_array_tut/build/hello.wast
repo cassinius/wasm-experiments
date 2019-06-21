@@ -12,7 +12,7 @@
  (data (i32.const 1024) "\88\04\00\00<\05\00\00\b0\04\00\00\9c\05\00\00\18\04\00\00\00\00\00\00\b0\04\00\00I\05\00\00(\04\00\00\00\00\00\00\88\04\00\00j\05\00\00\b0\04\00\00w\05\00\00\08\04\00\00\00\00\00\00\b0\04\00\00\be\05\00\00\00\04\00\00\00\00\00\00\b0\04\00\00\ce\05\00\00@\04\00\00\00\00\00\00\b0\04\00\00\03\06\00\00\18\04\00\00\00\00\00\00\b0\04\00\00\df\05\00\00`\04")
  (data (i32.const 1156) "\08\04\00\00\01\00\00\00\02\00\00\00\03\00\00\00\04\00\00\00\01\00\00\00\01\00\00\00\01\00\00\00\01\00\00\00\00\00\00\000\04\00\00\01\00\00\00\05\00\00\00\03\00\00\00\04\00\00\00\01\00\00\00\02\00\00\00\02\00\00\00\02\00\00\00\00\00\00\00@\04\00\00\06\00\00\00\07\00\00\00\01\00\00\00\00\00\00\00P\04\00\00\06\00\00\00\08\00\00\00\01\00\00\00allocator<T>::allocate(size_t n) \'n\' exceeds maximum supported size\00St9exception\00N10__cxxabiv116__shim_type_infoE\00St9type_info\00N10__cxxabiv120__si_class_type_infoE\00N10__cxxabiv117__class_type_infoE\00St11logic_error\00St12length_error\00N10__cxxabiv119__pointer_type_infoE\00N10__cxxabiv117__pbase_type_infoE")
  (import "env" "table" (table $table 33 33 funcref))
- (elem (global.get $__table_base) $b0 $__ZNKSt11logic_error4whatEv $b1 $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv $b2 $b3 $__ZN10__cxxabiv116__shim_type_infoD2Ev $__ZdlPv $__ZN10__cxxabiv116__shim_type_infoD2Ev $__ZN10__cxxabiv116__shim_type_infoD2Ev $__ZdlPv $__ZNSt11logic_errorD2Ev $__ZNSt11logic_errorD0Ev $__ZNSt11logic_errorD0Ev $b3 $b3 $b3 $b3 $b3 $b3 $b3 $b4 $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi $b4 $b5 $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib $b5 $b6 $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib $b6)
+ (elem (global.get $__table_base) $b0 $__ZNKSt11logic_error4whatEv $b1 $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv $b2 $b3 $__ZN10__cxxabiv116__shim_type_infoD2Ev $__ZN10__cxxabiv117__class_type_infoD0Ev $__ZN10__cxxabiv116__shim_type_infoD2Ev $__ZN10__cxxabiv116__shim_type_infoD2Ev $__ZN10__cxxabiv117__class_type_infoD0Ev $__ZNSt11logic_errorD2Ev $__ZNSt11logic_errorD0Ev $__ZNSt11logic_errorD0Ev $b3 $b3 $b3 $b3 $b3 $b3 $b3 $b4 $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi $b4 $b5 $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib $b5 $b6 $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib $b6)
  (import "env" "__table_base" (global $__table_base i32))
  (import "env" "DYNAMICTOP_PTR" (global $DYNAMICTOP_PTR$asm2wasm$import i32))
  (import "env" "abort" (func $abort (param i32)))
@@ -27,47 +27,9 @@
  (import "env" "abortOnCannotGrowMemory" (func $abortOnCannotGrowMemory (param i32) (result i32)))
  (global $STACKTOP (mut i32) (i32.const 3328))
  (global $STACK_MAX (mut i32) (i32.const 5246208))
- (export "__ZN10__cxxabiv116__shim_type_infoD2Ev" (func $__ZN10__cxxabiv116__shim_type_infoD2Ev))
- (export "__ZN10__cxxabiv117__class_type_infoD0Ev" (func $__ZdlPv))
- (export "__ZN10__cxxabiv120__si_class_type_infoD0Ev" (func $__ZdlPv))
- (export "__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b" (func $__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b))
- (export "__ZN3Fib4nextEv" (func $__ZN3Fib4nextEv))
- (export "__ZN3FibC2Ev" (func $__ZN3FibC2Ev))
- (export "__ZNK10__cxxabiv116__shim_type_info5noop1Ev" (func $__ZN10__cxxabiv116__shim_type_infoD2Ev))
- (export "__ZNK10__cxxabiv116__shim_type_info5noop2Ev" (func $__ZN10__cxxabiv116__shim_type_infoD2Ev))
- (export "__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib" (func $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib))
- (export "__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib" (func $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib))
- (export "__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi" (func $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi))
- (export "__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi" (func $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi))
- (export "__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i" (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i))
- (export "__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi" (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi))
- (export "__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv" (func $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv))
- (export "__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib" (func $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib))
- (export "__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib" (func $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib))
- (export "__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi" (func $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi))
- (export "__ZNKSt11logic_error4whatEv" (func $__ZNKSt11logic_error4whatEv))
- (export "__ZNKSt3__218__libcpp_refstring15__uses_refcountEv" (func $__ZNKSt3__218__libcpp_refstring15__uses_refcountEv))
- (export "__ZNKSt3__218__libcpp_refstring5c_strEv" (func $__ZNKSt3__218__libcpp_refstring5c_strEv))
- (export "__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv" (func $__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv))
- (export "__ZNSt11logic_errorC2EPKc" (func $__ZNSt11logic_errorC2EPKc))
- (export "__ZNSt11logic_errorD0Ev" (func $__ZNSt11logic_errorD0Ev))
- (export "__ZNSt11logic_errorD2Ev" (func $__ZNSt11logic_errorD2Ev))
- (export "__ZNSt12length_errorD0Ev" (func $__ZNSt11logic_errorD0Ev))
- (export "__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE" (func $__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE))
- (export "__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70" (func $__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70))
- (export "__ZNSt3__218__libcpp_refstringC2EPKc" (func $__ZNSt3__218__libcpp_refstringC2EPKc))
- (export "__ZNSt3__218__libcpp_refstringD2Ev" (func $__ZNSt3__218__libcpp_refstringD2Ev))
- (export "__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_" (func $__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_))
- (export "__ZNSt9exceptionD2Ev" (func $__ZN10__cxxabiv116__shim_type_infoD2Ev))
- (export "__ZNSt9type_infoD2Ev" (func $__ZN10__cxxabiv116__shim_type_infoD2Ev))
- (export "__ZSt15get_new_handlerv" (func $__ZSt15get_new_handlerv))
  (export "__ZSt18uncaught_exceptionv" (func $__ZSt18uncaught_exceptionv))
- (export "__ZSt19uncaught_exceptionsv" (func $__ZSt19uncaught_exceptionsv))
- (export "__ZdlPv" (func $__ZdlPv))
- (export "__Znwm" (func $__Znwm))
  (export "___cxa_can_catch" (func $___cxa_can_catch))
  (export "___cxa_is_pointer_type" (func $___cxa_is_pointer_type))
- (export "___dynamic_cast" (func $___dynamic_cast))
  (export "___errno_location" (func $___errno_location))
  (export "_free" (func $_free))
  (export "_main" (func $_main))
@@ -77,7 +39,6 @@
  (export "_new_fib" (func $_new_fib))
  (export "_next_val" (func $_next_val))
  (export "_sbrk" (func $_sbrk))
- (export "_strlen" (func $_strlen))
  (export "dynCall_ii" (func $dynCall_ii))
  (export "dynCall_iiii" (func $dynCall_iiii))
  (export "dynCall_v" (func $dynCall_v))
@@ -127,52 +88,7 @@
    (local.get $1)
   )
  )
- (func $__ZN3FibC2Ev (; 14 ;) (; has Stack IR ;) (param $0 i32)
-  ;;@ ../cpp/fib.h:12:0
-  (i32.store
-   (local.get $0)
-   (i32.const 1)
-  )
-  ;;@ ../cpp/fib.h:13:0
-  (i32.store offset=4
-   (local.get $0)
-   (i32.const 1)
-  )
- )
- (func $__ZN3Fib4nextEv (; 15 ;) (; has Stack IR ;) (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  ;;@ ../cpp/fib.cpp:6:0
-  (local.set $2
-   (i32.load
-    (local.get $0)
-   )
-  )
-  (local.set $1
-   (i32.load offset=4
-    (local.get $0)
-   )
-  )
-  (local.set $1
-   (i32.add
-    (local.get $1)
-    (local.get $2)
-   )
-  )
-  ;;@ ../cpp/fib.cpp:7:0
-  (i32.store offset=4
-   (local.get $0)
-   (local.get $2)
-  )
-  ;;@ ../cpp/fib.cpp:8:0
-  (i32.store
-   (local.get $0)
-   (local.get $1)
-  )
-  ;;@ ../cpp/fib.cpp:9:0
-  (local.get $1)
- )
- (func $_new_fib (; 16 ;) (; has Stack IR ;) (result i32)
+ (func $_new_fib (; 14 ;) (; has Stack IR ;) (result i32)
   (local $0 i32)
   (local $1 i32)
   (local.set $1
@@ -231,7 +147,6 @@
    (block
     ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1619:0
     (call $__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_
-     (i32.const 1576)
      (local.get $1)
     )
     ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:633:0
@@ -242,7 +157,7 @@
     )
    )
   )
-  ;;@ ../cpp/hello.cpp:11:0
+  ;;@ ../cpp/hello.cpp:17:0
   (local.set $0
    (i32.add
     (i32.shr_s
@@ -262,7 +177,8 @@
   )
   (local.get $0)
  )
- (func $__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_ (; 17 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
+ (func $__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_ (; 15 ;) (; has Stack IR ;) (param $0 i32)
+  (local $1 i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
@@ -270,24 +186,23 @@
   (local $6 i32)
   (local $7 i32)
   (local $8 i32)
-  (local $9 i32)
   (if
    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:969:0
    (i32.gt_u
     ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1578:0
-    (local.tee $2
+    (local.tee $1
      (i32.add
       ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:633:0
       (local.tee $7
        (i32.shr_s
         (local.tee $6
          (i32.sub
-          (i32.load offset=4
-           (local.get $0)
+          (i32.load
+           (i32.const 1580)
           )
-          (local.tee $4
+          (local.tee $3
            (i32.load
-            (local.get $0)
+            (i32.const 1576)
            )
           )
          )
@@ -305,34 +220,34 @@
   )
   (if
    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/__split_buffer:311:0
-   (local.tee $2
+   (local.tee $1
     (select
      (select
-      (local.get $2)
+      (local.get $1)
       ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:974:0
-      (local.tee $8
+      (local.tee $4
        (i32.shr_s
         ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:359:0
-        (local.tee $3
+        (local.tee $2
          (i32.sub
-          (i32.load offset=8
-           (local.get $0)
+          (i32.load
+           (i32.const 1584)
           )
-          (local.get $4)
+          (local.get $3)
          )
         )
         (i32.const 2)
        )
       )
       (i32.lt_u
-       (local.get $8)
-       (local.get $2)
+       (local.get $4)
+       (local.get $1)
       )
      )
      (i32.const 536870911)
      (i32.lt_u
       (i32.shr_s
-       (local.get $3)
+       (local.get $2)
        (i32.const 3)
       )
       (i32.const 268435455)
@@ -342,38 +257,45 @@
    (if
     ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/memory:1790:0
     (i32.gt_u
-     (local.get $2)
+     (local.get $1)
      (i32.const 536870911)
     )
     (block
-     ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/stdexcept:136:0
-     (call $__ZNSt11logic_errorC2EPKc
-      ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/stdexcept:225:0
-      (local.tee $3
-       (call $___cxa_allocate_exception
-        (i32.const 8)
+     (i32.store
+      (local.tee $4
+       ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/stdexcept:225:0
+       (local.tee $2
+        (call $___cxa_allocate_exception
+         (i32.const 8)
+        )
        )
       )
-      (i32.const 1272)
+      (i32.const 1240)
+     )
+     (call $__ZNSt3__218__libcpp_refstringC2EPKc
+      (i32.add
+       (local.get $4)
+       (i32.const 4)
+      )
      )
      ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/stdexcept:136:0
      (i32.store
-      (local.get $3)
+      (local.get $2)
       (i32.const 1260)
      )
      ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/stdexcept:225:0
      (call $___cxa_throw
-      (local.get $3)
+      (local.get $2)
       (i32.const 1104)
       (i32.const 6)
      )
     )
     ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/new:228:0
     (local.set $5
-     (local.tee $9
+     (local.tee $8
       (call $__Znwm
        (i32.shl
-        (local.get $2)
+        (local.get $1)
         (i32.const 3)
        )
       )
@@ -384,7 +306,7 @@
   ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/memory:1805:0
   (i64.store align=4
    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/__split_buffer:312:0
-   (local.tee $3
+   (local.tee $2
     (i32.add
      (i32.shl
       (local.get $7)
@@ -394,7 +316,7 @@
     )
    )
    (i64.load align=4
-    (local.get $1)
+    (local.get $0)
    )
   )
   (if
@@ -406,29 +328,29 @@
    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/memory:1697:0
    (drop
     (call $_memcpy
-     (local.get $9)
-     (local.get $4)
+     (local.get $8)
+     (local.get $3)
      (local.get $6)
     )
    )
   )
   ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/type_traits:4647:0
   (i32.store
-   (local.get $0)
+   (i32.const 1576)
    (local.get $5)
   )
-  (i32.store offset=4
-   (local.get $0)
+  (i32.store
+   (i32.const 1580)
    (i32.add
-    (local.get $3)
+    (local.get $2)
     (i32.const 8)
    )
   )
-  (i32.store offset=8
-   (local.get $0)
+  (i32.store
+   (i32.const 1584)
    (i32.add
     (i32.shl
-     (local.get $2)
+     (local.get $1)
      (i32.const 3)
     )
     (local.get $5)
@@ -437,17 +359,17 @@
   (if
    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/__split_buffer:342:0
    (i32.eqz
-    (local.get $4)
+    (local.get $3)
    )
    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1583:0
    (return)
   )
   ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/new:236:0
   (call $_free
-   (local.get $4)
+   (local.get $3)
   )
  )
- (func $_next_val (; 18 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $_next_val (; 16 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   ;;@ ../cpp/fib.cpp:6:0
@@ -486,187 +408,21 @@
   ;;@ ../cpp/fib.cpp:9:0
   (local.get $1)
  )
- (func $_main (; 19 ;) (; has Stack IR ;) (result i32)
+ (func $_main (; 17 ;) (; has Stack IR ;) (result i32)
+  ;;@ ../cpp/hello.cpp:31:0
+  (i32.const 0)
+ )
+ (func $___errno_location (; 18 ;) (; has Stack IR ;) (result i32)
+  (i32.const 1588)
+ )
+ (func $_strlen (; 19 ;) (; has Stack IR ;) (result i32)
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
-  (local $3 i32)
-  (local.set $1
-   (global.get $STACKTOP)
-  )
-  (global.set $STACKTOP
-   (i32.add
-    (global.get $STACKTOP)
-    (i32.const 16)
-   )
-  )
-  ;;@ ../cpp/fib.h:12:0
-  (i32.store
-   (local.get $1)
-   (i32.const 1)
-  )
-  ;;@ ../cpp/fib.h:13:0
-  (i32.store offset=4
-   (local.get $1)
-   (i32.const 1)
-  )
-  (if
-   ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1609:0
-   (i32.lt_u
-    (local.tee $0
-     (i32.load
-      (i32.const 1580)
-     )
-    )
-    (i32.load
-     (i32.const 1584)
-    )
-   )
-   ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1617:0
-   (block
-    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/memory:1805:0
-    (i64.store align=4
-     (local.get $0)
-     (i64.load
-      (local.get $1)
-     )
-    )
-    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1616:0
-    (i32.store
-     (i32.const 1580)
-     (local.tee $0
-      (i32.add
-       (i32.load
-        (i32.const 1580)
-       )
-       (i32.const 8)
-      )
-     )
-    )
-   )
-   (block
-    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:1619:0
-    (call $__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_
-     (i32.const 1576)
-     (local.get $1)
-    )
-    ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:633:0
-    (local.set $0
-     (i32.load
-      (i32.const 1580)
-     )
-    )
-   )
-  )
-  ;;@ ../cpp/fib.cpp:6:0
-  (local.set $2
-   (i32.add
-    (local.tee $3
-     (i32.load
-      (local.tee $0
-       (i32.add
-        ;;@ /home/bernd/tmp/emsdk/emscripten/incoming/system/include/libcxx/vector:633:0
-        (local.tee $2
-         (i32.load
-          (i32.const 1576)
-         )
-        )
-        (i32.shl
-         (i32.add
-          (i32.shr_s
-           (i32.sub
-            (local.get $0)
-            (local.get $2)
-           )
-           (i32.const 3)
-          )
-          (i32.const -1)
-         )
-         (i32.const 3)
-        )
-       )
-      )
-     )
-    )
-    (i32.load offset=4
-     (local.get $0)
-    )
-   )
-  )
-  ;;@ ../cpp/fib.cpp:7:0
-  (i32.store offset=4
-   (local.get $0)
-   (local.get $3)
-  )
-  ;;@ ../cpp/fib.cpp:8:0
-  (i32.store
-   (local.get $0)
-   (local.get $2)
-  )
   (local.set $0
-   ;;@ ../cpp/fib.cpp:9:0
-   (local.get $2)
+   (i32.const 1272)
   )
-  (global.set $STACKTOP
-   (local.get $1)
-  )
-  ;;@ ../cpp/hello.cpp:26:0
-  (local.get $0)
- )
- (func $___errno_location (; 20 ;) (; has Stack IR ;) (result i32)
-  (i32.const 1588)
- )
- (func $_strlen (; 21 ;) (; has Stack IR ;) (param $0 i32) (result i32)
-  (local $1 i32)
-  (local $2 i32)
-  (local $3 i32)
   (block $__rjto$0
-   (block $__rjti$0
-    (br_if $__rjti$0
-     (i32.eqz
-      (i32.and
-       (local.tee $2
-        (local.get $0)
-       )
-       (i32.const 3)
-      )
-     )
-    )
-    (local.set $0
-     (local.tee $1
-      (local.get $2)
-     )
-    )
-    (block $label$break$L1
-     (loop $while-in
-      (br_if $label$break$L1
-       (i32.eqz
-        (i32.load8_s
-         (local.get $1)
-        )
-       )
-      )
-      (br_if $while-in
-       (i32.and
-        (local.tee $0
-         (local.tee $1
-          (i32.add
-           (local.get $1)
-           (i32.const 1)
-          )
-         )
-        )
-        (i32.const 3)
-       )
-      )
-     )
-     (local.set $0
-      (local.get $1)
-     )
-     (br $__rjti$0)
-    )
-    (br $__rjto$0)
-   )
    (loop $while-in1
     (local.set $1
      (i32.add
@@ -678,7 +434,7 @@
      (i32.eqz
       (i32.and
        (i32.add
-        (local.tee $3
+        (local.tee $2
          (i32.load
           (local.get $0)
          )
@@ -687,7 +443,7 @@
        )
        (i32.xor
         (i32.and
-         (local.get $3)
+         (local.get $2)
          (i32.const -2139062144)
         )
         (i32.const -2139062144)
@@ -704,7 +460,7 @@
    )
    (if
     (i32.and
-     (local.get $3)
+     (local.get $2)
      (i32.const 255)
     )
     (loop $while-in3
@@ -723,10 +479,10 @@
   )
   (i32.sub
    (local.get $0)
-   (local.get $2)
+   (i32.const 1272)
   )
  )
- (func $_malloc (; 22 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $_malloc (; 20 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -6254,7 +6010,7 @@
   )
   (i32.const 0)
  )
- (func $_free (; 23 ;) (; has Stack IR ;) (param $0 i32)
+ (func $_free (; 21 ;) (; has Stack IR ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -8004,19 +7760,16 @@
    (i32.const -1)
   )
  )
- (func $__ZSt18uncaught_exceptionv (; 24 ;) (; has Stack IR ;) (result i32)
+ (func $__ZSt18uncaught_exceptionv (; 22 ;) (; has Stack IR ;) (result i32)
   (i32.gt_s
-   (call $__ZSt19uncaught_exceptionsv)
+   (i32.and
+    (call $___cxa_uncaught_exception)
+    (i32.const 1)
+   )
    (i32.const 0)
   )
  )
- (func $__ZSt19uncaught_exceptionsv (; 25 ;) (; has Stack IR ;) (result i32)
-  (i32.and
-   (call $___cxa_uncaught_exception)
-   (i32.const 1)
-  )
- )
- (func $__Znwm (; 26 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $__Znwm (; 23 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local.set $1
    (select
@@ -8056,86 +7809,59 @@
    )
   )
  )
- (func $__ZdlPv (; 27 ;) (; has Stack IR ;) (param $0 i32)
-  (call $_free
-   (local.get $0)
-  )
- )
- (func $__ZNSt3__218__libcpp_refstringC2EPKc (; 28 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
+ (func $__ZNSt3__218__libcpp_refstringC2EPKc (; 24 ;) (; has Stack IR ;) (param $0 i32)
+  (local $1 i32)
   (local $2 i32)
-  (local $3 i32)
   (i32.store
-   (local.tee $2
+   (local.tee $1
     (call $__Znwm
      (i32.add
-      (local.tee $3
-       (call $_strlen
-        (local.get $1)
-       )
+      (local.tee $2
+       (call $_strlen)
       )
       (i32.const 13)
      )
     )
    )
-   (local.get $3)
+   (local.get $2)
   )
   (i32.store offset=4
+   (local.get $1)
    (local.get $2)
-   (local.get $3)
   )
   (i32.store offset=8
-   (local.get $2)
+   (local.get $1)
    (i32.const 0)
   )
   (drop
    (call $_memcpy
-    (local.tee $2
+    (local.tee $1
      (i32.add
-      (local.get $2)
+      (local.get $1)
       (i32.const 12)
      )
     )
-    (local.get $1)
+    (i32.const 1272)
     (i32.add
-     (local.get $3)
+     (local.get $2)
      (i32.const 1)
     )
    )
   )
   (i32.store
    (local.get $0)
-   (local.get $2)
-  )
- )
- (func $__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE (; 29 ;) (; has Stack IR ;) (param $0 i32) (result i32)
-  (i32.add
-   (local.get $0)
-   (i32.const 12)
-  )
- )
- (func $__ZNSt11logic_errorC2EPKc (; 30 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
-  (i32.store
-   (local.get $0)
-   (i32.const 1240)
-  )
-  (call $__ZNSt3__218__libcpp_refstringC2EPKc
-   (i32.add
-    (local.get $0)
-    (i32.const 4)
-   )
    (local.get $1)
   )
  )
- (func $__ZNKSt3__218__libcpp_refstring15__uses_refcountEv (; 31 ;) (; has Stack IR ;) (param $0 i32) (result i32)
-  (i32.const 1)
- )
- (func $__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv (; 32 ;) (; has Stack IR ;) (param $0 i32)
-  (call $_abort)
- )
- (func $__ZN10__cxxabiv116__shim_type_infoD2Ev (; 33 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZN10__cxxabiv116__shim_type_infoD2Ev (; 25 ;) (; has Stack IR ;) (param $0 i32)
   (nop)
  )
- (func $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv (; 34 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $__ZN10__cxxabiv117__class_type_infoD0Ev (; 26 ;) (; has Stack IR ;) (param $0 i32)
+  (call $_free
+   (local.get $0)
+  )
+ )
+ (func $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv (; 27 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local.set $3
    (global.get $STACKTOP)
@@ -8159,9 +7885,7 @@
       (local.tee $1
        (call $___dynamic_cast
         (local.get $1)
-        (i32.const 1048)
         (i32.const 1032)
-        (i32.const 0)
        )
       )
       (block (result i32)
@@ -8258,7 +7982,7 @@
   )
   (local.get $0)
  )
- (func $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 35 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 28 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (if
    (i32.eq
     (i32.load offset=8
@@ -8267,7 +7991,6 @@
     (local.get $0)
    )
    (call $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i
-    (i32.const 0)
     (local.get $1)
     (local.get $2)
     (local.get $3)
@@ -8275,7 +7998,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 36 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 29 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (if
    (i32.eq
     (i32.load offset=8
@@ -8385,7 +8108,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 37 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 30 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (if
    (i32.eq
     (i32.load offset=8
@@ -8394,48 +8117,42 @@
     (local.get $0)
    )
    (call $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi
-    (i32.const 0)
     (local.get $1)
     (local.get $2)
     (local.get $3)
    )
   )
  )
- (func $__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b (; 38 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
-  (i32.eq
-   (local.get $0)
-   (local.get $1)
-  )
- )
- (func $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi (; 39 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi (; 31 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32)
+  (local $3 i32)
   (if
-   (local.tee $0
+   (local.tee $3
     (i32.load offset=16
-     (local.get $1)
+     (local.get $0)
     )
    )
    (block $do-once
     (if
      (i32.ne
-      (local.get $0)
-      (local.get $2)
+      (local.get $1)
+      (local.get $3)
      )
      (block
       (i32.store offset=36
-       (local.get $1)
+       (local.get $0)
        (i32.add
         (i32.load offset=36
-         (local.get $1)
+         (local.get $0)
         )
         (i32.const 1)
        )
       )
       (i32.store offset=24
-       (local.get $1)
+       (local.get $0)
        (i32.const 2)
       )
       (i32.store8 offset=54
-       (local.get $1)
+       (local.get $0)
        (i32.const 1)
       )
       (br $do-once)
@@ -8444,90 +8161,68 @@
     (if
      (i32.eq
       (i32.load offset=24
-       (local.get $1)
+       (local.get $0)
       )
       (i32.const 2)
      )
      (i32.store offset=24
-      (local.get $1)
-      (local.get $3)
+      (local.get $0)
+      (local.get $2)
      )
     )
    )
    (block
     (i32.store offset=16
+     (local.get $0)
      (local.get $1)
-     (local.get $2)
     )
     (i32.store offset=24
-     (local.get $1)
-     (local.get $3)
+     (local.get $0)
+     (local.get $2)
     )
     (i32.store offset=36
-     (local.get $1)
+     (local.get $0)
      (i32.const 1)
     )
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi (; 40 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
-  (if
-   (i32.eq
-    (local.get $2)
-    (i32.load offset=4
-     (local.get $1)
-    )
-   )
-   (if
-    (i32.ne
-     (i32.load offset=28
-      (local.get $1)
-     )
-     (i32.const 1)
-    )
-    (i32.store offset=28
-     (local.get $1)
-     (local.get $3)
-    )
-   )
-  )
- )
- (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i (; 41 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i (; 32 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (i32.store8 offset=53
-   (local.get $1)
+   (local.get $0)
    (i32.const 1)
   )
   (if
    (i32.eq
-    (local.get $3)
+    (local.get $2)
     (i32.load offset=4
-     (local.get $1)
+     (local.get $0)
     )
    )
    (block $do-once
     (i32.store8 offset=52
-     (local.get $1)
+     (local.get $0)
      (i32.const 1)
     )
     (if
      (i32.eqz
-      (local.tee $0
+      (local.tee $2
        (i32.load offset=16
-        (local.get $1)
+        (local.get $0)
        )
       )
      )
      (block
       (i32.store offset=16
+       (local.get $0)
        (local.get $1)
-       (local.get $2)
       )
       (i32.store offset=24
-       (local.get $1)
-       (local.get $4)
+       (local.get $0)
+       (local.get $3)
       )
       (i32.store offset=36
-       (local.get $1)
+       (local.get $0)
        (i32.const 1)
       )
       (br_if $do-once
@@ -8535,19 +8230,19 @@
         (i32.and
          (i32.eq
           (i32.load offset=48
-           (local.get $1)
+           (local.get $0)
           )
           (i32.const 1)
          )
          (i32.eq
-          (local.get $4)
+          (local.get $3)
           (i32.const 1)
          )
         )
        )
       )
       (i32.store8 offset=54
-       (local.get $1)
+       (local.get $0)
        (i32.const 1)
       )
       (br $do-once)
@@ -8555,21 +8250,21 @@
     )
     (if
      (i32.ne
-      (local.get $0)
+      (local.get $1)
       (local.get $2)
      )
      (block
       (i32.store offset=36
-       (local.get $1)
+       (local.get $0)
        (i32.add
         (i32.load offset=36
-         (local.get $1)
+         (local.get $0)
         )
         (i32.const 1)
        )
       )
       (i32.store8 offset=54
-       (local.get $1)
+       (local.get $0)
        (i32.const 1)
       )
       (br $do-once)
@@ -8577,47 +8272,47 @@
     )
     (if
      (i32.eq
-      (local.tee $0
+      (local.tee $1
        (i32.load offset=24
-        (local.get $1)
+        (local.get $0)
        )
       )
       (i32.const 2)
      )
      (i32.store offset=24
-      (local.get $1)
-      (local.get $4)
-     )
-     (local.set $4
       (local.get $0)
+      (local.get $3)
+     )
+     (local.set $3
+      (local.get $1)
      )
     )
     (if
      (i32.and
       (i32.eq
        (i32.load offset=48
-        (local.get $1)
+        (local.get $0)
        )
        (i32.const 1)
       )
       (i32.eq
-       (local.get $4)
+       (local.get $3)
        (i32.const 1)
       )
      )
      (i32.store8 offset=54
-      (local.get $1)
+      (local.get $0)
       (i32.const 1)
      )
     )
    )
   )
  )
- (func $___dynamic_cast (; 42 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
+ (func $___dynamic_cast (; 33 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
+  (local $2 i32)
+  (local $3 i32)
   (local $4 i32)
-  (local $5 i32)
-  (local $6 i32)
-  (local.set $4
+  (local.set $2
    (global.get $STACKTOP)
   )
   (global.set $STACKTOP
@@ -8626,12 +8321,12 @@
     (i32.const -64)
    )
   )
-  (local.set $6
+  (local.set $4
    (i32.add
     (local.get $0)
     (i32.load
      (i32.add
-      (local.tee $5
+      (local.tee $3
        (i32.load
         (local.get $0)
        )
@@ -8641,81 +8336,81 @@
     )
    )
   )
-  (local.set $5
+  (local.set $3
    (i32.load
     (i32.add
-     (local.get $5)
+     (local.get $3)
      (i32.const -4)
     )
    )
   )
   (i32.store
-   (local.get $4)
    (local.get $2)
+   (local.get $1)
   )
   (i32.store offset=4
-   (local.get $4)
+   (local.get $2)
    (local.get $0)
   )
   (i32.store offset=8
-   (local.get $4)
-   (local.get $1)
+   (local.get $2)
+   (i32.const 1048)
   )
   (i32.store offset=12
-   (local.get $4)
-   (local.get $3)
+   (local.get $2)
+   (i32.const 0)
   )
   (i64.store offset=16 align=4
-   (local.get $4)
+   (local.get $2)
    (i64.const 0)
   )
   (i64.store offset=24 align=4
-   (local.get $4)
+   (local.get $2)
    (i64.const 0)
   )
   (i64.store offset=32 align=4
-   (local.get $4)
+   (local.get $2)
    (i64.const 0)
   )
   (i64.store offset=40 align=4
-   (local.get $4)
+   (local.get $2)
    (i64.const 0)
   )
   (i32.store offset=48
-   (local.get $4)
+   (local.get $2)
    (i32.const 0)
   )
   (i32.store16 offset=52
-   (local.get $4)
+   (local.get $2)
    (i32.const 0)
   )
   (i32.store8 offset=54
-   (local.get $4)
+   (local.get $2)
    (i32.const 0)
   )
   (local.set $0
    (if (result i32)
     (i32.eq
-     (local.get $2)
-     (local.get $5)
+     (local.get $1)
+     (local.get $3)
     )
     (block (result i32)
      (i32.store offset=48
-      (local.get $4)
+      (local.get $2)
       (i32.const 1)
      )
      (call_indirect (type $FUNCSIG$viiiiii)
-      (local.get $5)
+      (local.get $3)
+      (local.get $2)
       (local.get $4)
-      (local.get $6)
-      (local.get $6)
+      (local.get $4)
       (i32.const 1)
       (i32.const 0)
       (i32.add
        (i32.and
         (i32.load offset=20
          (i32.load
-          (local.get $5)
+          (local.get $3)
          )
         )
         (i32.const 3)
@@ -8724,11 +8419,11 @@
       )
      )
      (select
-      (local.get $6)
+      (local.get $4)
       (i32.const 0)
       (i32.eq
        (i32.load offset=24
-        (local.get $4)
+        (local.get $2)
        )
        (i32.const 1)
       )
@@ -8736,16 +8431,16 @@
     )
     (block $label$break$L1 (result i32)
      (call_indirect (type $FUNCSIG$viiiii)
-      (local.get $5)
+      (local.get $3)
+      (local.get $2)
       (local.get $4)
-      (local.get $6)
       (i32.const 1)
       (i32.const 0)
       (i32.add
        (i32.and
         (i32.load offset=24
          (i32.load
-          (local.get $5)
+          (local.get $3)
          )
         )
         (i32.const 3)
@@ -8758,34 +8453,34 @@
        (block $switch-case
         (br_table $switch-case $switch $switch-default
          (i32.load offset=36
-          (local.get $4)
+          (local.get $2)
          )
         )
        )
        (br $label$break$L1
         (select
          (i32.load offset=20
-          (local.get $4)
+          (local.get $2)
          )
          (i32.const 0)
          (i32.and
           (i32.and
            (i32.eq
             (i32.load offset=40
-             (local.get $4)
+             (local.get $2)
             )
             (i32.const 1)
            )
            (i32.eq
             (i32.load offset=28
-             (local.get $4)
+             (local.get $2)
             )
             (i32.const 1)
            )
           )
           (i32.eq
            (i32.load offset=32
-            (local.get $4)
+            (local.get $2)
            )
            (i32.const 1)
           )
@@ -8800,7 +8495,7 @@
      (if
       (i32.ne
        (i32.load offset=24
-        (local.get $4)
+        (local.get $2)
        )
        (i32.const 1)
       )
@@ -8812,19 +8507,19 @@
           (i32.and
            (i32.eqz
             (i32.load offset=40
-             (local.get $4)
+             (local.get $2)
             )
            )
            (i32.eq
             (i32.load offset=28
-             (local.get $4)
+             (local.get $2)
             )
             (i32.const 1)
            )
           )
           (i32.eq
            (i32.load offset=32
-            (local.get $4)
+            (local.get $2)
            )
            (i32.const 1)
           )
@@ -8834,17 +8529,17 @@
       )
      )
      (i32.load offset=16
-      (local.get $4)
+      (local.get $2)
      )
     )
    )
   )
   (global.set $STACKTOP
-   (local.get $4)
+   (local.get $2)
   )
   (local.get $0)
  )
- (func $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 43 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 34 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (local $6 i32)
   (if
    (i32.eq
@@ -8854,7 +8549,6 @@
     (local.get $0)
    )
    (call $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i
-    (i32.const 0)
     (local.get $1)
     (local.get $2)
     (local.get $3)
@@ -8890,7 +8584,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 44 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 35 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (local $5 i32)
   (if
    (i32.eq
@@ -9105,7 +8799,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 45 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 36 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (local $4 i32)
   (if
    (i32.eq
@@ -9115,7 +8809,6 @@
     (local.get $0)
    )
    (call $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi
-    (i32.const 0)
     (local.get $1)
     (local.get $2)
     (local.get $3)
@@ -9148,7 +8841,7 @@
    )
   )
  )
- (func $__ZNSt11logic_errorD2Ev (; 46 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt11logic_errorD2Ev (; 37 ;) (; has Stack IR ;) (param $0 i32)
   (i32.store
    (local.get $0)
    (i32.const 1240)
@@ -9160,7 +8853,7 @@
    )
   )
  )
- (func $__ZNSt11logic_errorD0Ev (; 47 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt11logic_errorD0Ev (; 38 ;) (; has Stack IR ;) (param $0 i32)
   (call $__ZNSt11logic_errorD2Ev
    (local.get $0)
   )
@@ -9168,17 +8861,12 @@
    (local.get $0)
   )
  )
- (func $__ZNKSt11logic_error4whatEv (; 48 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $__ZNKSt11logic_error4whatEv (; 39 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (i32.load offset=4
    (local.get $0)
   )
  )
- (func $__ZNKSt3__218__libcpp_refstring5c_strEv (; 49 ;) (; has Stack IR ;) (param $0 i32) (result i32)
-  (i32.load
-   (local.get $0)
-  )
- )
- (func $__ZNSt3__218__libcpp_refstringD2Ev (; 50 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt3__218__libcpp_refstringD2Ev (; 40 ;) (; has Stack IR ;) (param $0 i32)
   (local $1 i32)
   (local.set $1
    (i32.load offset=8
@@ -9212,25 +8900,7 @@
    )
   )
  )
- (func $__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70 (; 51 ;) (; has Stack IR ;) (param $0 i32) (result i32)
-  (i32.add
-   (local.get $0)
-   (i32.const -12)
-  )
- )
- (func $__ZSt15get_new_handlerv (; 52 ;) (; has Stack IR ;) (result i32)
-  (local $0 i32)
-  (i32.store
-   (i32.const 2088)
-   (local.tee $0
-    (i32.load
-     (i32.const 2088)
-    )
-   )
-  )
-  (local.get $0)
- )
- (func $___cxa_can_catch (; 53 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $___cxa_can_catch (; 41 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local.set $3
@@ -9285,22 +8955,20 @@
    (i32.const 1)
   )
  )
- (func $___cxa_is_pointer_type (; 54 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $___cxa_is_pointer_type (; 42 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (if (result i32)
    (local.get $0)
    (i32.ne
     (call $___dynamic_cast
      (local.get $0)
-     (i32.const 1048)
      (i32.const 1136)
-     (i32.const 0)
     )
     (i32.const 0)
    )
    (i32.const 0)
   )
  )
- (func $_memcpy (; 55 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $_memcpy (; 43 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -9633,7 +9301,7 @@
   )
   (local.get $4)
  )
- (func $_memset (; 56 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $_memset (; 44 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -9839,7 +9507,7 @@
    (local.get $2)
   )
  )
- (func $_sbrk (; 57 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $_sbrk (; 45 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -9913,7 +9581,7 @@
   )
   (local.get $2)
  )
- (func $dynCall_ii (; 58 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
+ (func $dynCall_ii (; 46 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
   (call_indirect (type $FUNCSIG$ii)
    (local.get $1)
    (i32.and
@@ -9922,7 +9590,7 @@
    )
   )
  )
- (func $dynCall_iiii (; 59 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
+ (func $dynCall_iiii (; 47 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
   (call_indirect (type $FUNCSIG$iiii)
    (local.get $1)
    (local.get $2)
@@ -9936,12 +9604,12 @@
    )
   )
  )
- (func $dynCall_v (; 60 ;) (; has Stack IR ;) (param $0 i32)
+ (func $dynCall_v (; 48 ;) (; has Stack IR ;) (param $0 i32)
   (call_indirect (type $FUNCSIG$v)
    (i32.const 4)
   )
  )
- (func $dynCall_vi (; 61 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
+ (func $dynCall_vi (; 49 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
   (call_indirect (type $FUNCSIG$vi)
    (local.get $1)
    (i32.add
@@ -9953,7 +9621,7 @@
    )
   )
  )
- (func $dynCall_viiii (; 62 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $dynCall_viiii (; 50 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (call_indirect (type $FUNCSIG$viiii)
    (local.get $1)
    (local.get $2)
@@ -9968,7 +9636,7 @@
    )
   )
  )
- (func $dynCall_viiiii (; 63 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $dynCall_viiiii (; 51 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (call_indirect (type $FUNCSIG$viiiii)
    (local.get $1)
    (local.get $2)
@@ -9984,7 +9652,7 @@
    )
   )
  )
- (func $dynCall_viiiiii (; 64 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32) (param $6 i32)
+ (func $dynCall_viiiiii (; 52 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32) (param $6 i32)
   (call_indirect (type $FUNCSIG$viiiiii)
    (local.get $1)
    (local.get $2)
@@ -10001,39 +9669,39 @@
    )
   )
  )
- (func $b0 (; 65 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $b0 (; 53 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (call $abort
    (i32.const 0)
   )
   (i32.const 0)
  )
- (func $b1 (; 66 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $b1 (; 54 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (call $abort
    (i32.const 1)
   )
   (i32.const 0)
  )
- (func $b2 (; 67 ;) (; has Stack IR ;)
+ (func $b2 (; 55 ;) (; has Stack IR ;)
   (call $abort
    (i32.const 2)
   )
  )
- (func $b3 (; 68 ;) (; has Stack IR ;) (param $0 i32)
+ (func $b3 (; 56 ;) (; has Stack IR ;) (param $0 i32)
   (call $abort
    (i32.const 3)
   )
  )
- (func $b4 (; 69 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $b4 (; 57 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (call $abort
    (i32.const 4)
   )
  )
- (func $b5 (; 70 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $b5 (; 58 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (call $abort
    (i32.const 5)
   )
  )
- (func $b6 (; 71 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $b6 (; 59 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (call $abort
    (i32.const 6)
   )

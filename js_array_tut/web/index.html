@@ -3,41 +3,35 @@
     <script src="gen/hello.js"></script>
 
     <script>
-      // function loadWasm(fileName) {
-      //   return fetch(fileName)
-      //     .then(response => response.arrayBuffer())
-      //     .then(bits => WebAssembly.compile(bits))
-      //     .then(module => { return new WebAssembly.Instance(module ) });
-      // }
 
-      // loadWasm('gen/hello.wasm')
-      //   .then(instance => {
-      //     let fib_wasm = instance.exports.__Z3fibi;
-      //     console.log(`fib_wasm(1) = ${fib_wasm(1)}`);
-      //     console.log(`fib_wasm(20) = ${fib_wasm(20)}`);
-      //     console.log(`fib_wasm(20) = ${fib_wasm(42)}`);
-      //   });
+      class Fib {
+        constructor() {
+          this.cppInstance = Module._new_fib();
+        }
 
+        next() {
+          return Module._next_val(this.cppInstance);
+        }
+      }
+      
 
       Module.onRuntimeInitialized = function() {
         let tic = new Date;
 
         console.log(`main() gives ${Module._main()}`);
 
-        let fib1 = Module._new_fib();
-        let fib2 = Module._new_fib();
-        console.log(fib1);
-        console.log(fib2);
-        
-        console.log(Module._next_val(fib1));
-        console.log(Module._next_val(fib1));
-        console.log(Module._next_val(fib1));
-        console.log(Module._next_val(fib1));
+        let fib1 = new Fib();
+        let fib2 = new Fib();
 
-        console.log(Module._next_val(fib2));
-        console.log(Module._next_val(fib2));
-        console.log(Module._next_val(fib2));
-        console.log(Module._next_val(fib2));
+        console.log(fib1.next());
+        console.log(fib1.next());
+        console.log(fib1.next());
+        console.log(fib1.next());
+
+        console.log(fib2.next());
+        console.log(fib2.next());
+        console.log(fib2.next());
+        console.log(fib2.next());
         
         let toc = new Date;
         console.log(`Some fibs took ${toc-tic} ms in WASM`)

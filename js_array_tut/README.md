@@ -15,6 +15,7 @@ em++ -O3 ../cpp/fib.cpp ../cpp/hello.cpp -g -s WASM=1 -s EXPORT_ALL=1 -o hello.j
  * -s WASM=1 => generate WASM instead of ASM
  * -s ONLY_MY_CODE=1 => dont compile STL functions
  * -s EXPORT_ALL=1 => do not just export main()
+ * -s EXPORTED_FUNCTIONS='[]' => array of functions to export (prefixed with underscore)
  * || exit 1  => abort in case of error
  **/
 ```

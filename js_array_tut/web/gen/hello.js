@@ -1635,14 +1635,11 @@ function copyTempDouble(ptr) {
   function ___cxa_allocate_exception(size) {
       return _malloc(size);
     }
-  Module["___cxa_allocate_exception"] = ___cxa_allocate_exception;
 
   
   var ___exception_infos={};
-  Module["___exception_infos"] = ___exception_infos;
   
-  var ___exception_last=0;
-  Module["___exception_last"] = ___exception_last;function ___cxa_throw(ptr, type, destructor) {
+  var ___exception_last=0;function ___cxa_throw(ptr, type, destructor) {
       ___exception_infos[ptr] = {
         ptr: ptr,
         adjusted: [ptr],
@@ -1660,32 +1657,26 @@ function copyTempDouble(ptr) {
       }
       throw ptr;
     }
-  Module["___cxa_throw"] = ___cxa_throw;
 
   function ___cxa_uncaught_exception() {
       return !!__ZSt18uncaught_exceptionv.uncaught_exception;
     }
-  Module["___cxa_uncaught_exception"] = ___cxa_uncaught_exception;
 
   function ___gxx_personality_v0() {
     }
-  Module["___gxx_personality_v0"] = ___gxx_personality_v0;
 
   function _abort() {
       Module['abort']();
     }
-  Module["_abort"] = _abort;
 
   function _emscripten_get_heap_size() {
       return HEAP8.length;
     }
-  Module["_emscripten_get_heap_size"] = _emscripten_get_heap_size;
 
   
   function _emscripten_memcpy_big(dest, src, num) {
       HEAPU8.set(HEAPU8.subarray(src, src+num), dest);
     }
-  Module["_emscripten_memcpy_big"] = _emscripten_memcpy_big;
   
    
 
@@ -1696,16 +1687,13 @@ function copyTempDouble(ptr) {
       if (Module['___errno_location']) HEAP32[((Module['___errno_location']())>>2)]=value;
       return value;
     }
-  Module["___setErrNo"] = ___setErrNo;
   
   
   function abortOnCannotGrowMemory(requestedSize) {
       abort('OOM');
-    }
-  Module["abortOnCannotGrowMemory"] = abortOnCannotGrowMemory;function _emscripten_resize_heap(requestedSize) {
+    }function _emscripten_resize_heap(requestedSize) {
       abortOnCannotGrowMemory(requestedSize);
-    }
-  Module["_emscripten_resize_heap"] = _emscripten_resize_heap; 
+    } 
 var ASSERTIONS = false;
 
 // Copyright 2017 The Emscripten Authors.  All rights reserved.
@@ -1765,156 +1753,8 @@ var asm =Module["asm"]// EMSCRIPTEN_END_ASM
 (asmGlobalArg, asmLibraryArg, buffer);
 
 Module["asm"] = asm;
-var __ZN10__cxxabiv116__shim_type_infoD2Ev = Module["__ZN10__cxxabiv116__shim_type_infoD2Ev"] = function() {
-  return Module["asm"]["__ZN10__cxxabiv116__shim_type_infoD2Ev"].apply(null, arguments)
-};
-
-var __ZN10__cxxabiv117__class_type_infoD0Ev = Module["__ZN10__cxxabiv117__class_type_infoD0Ev"] = function() {
-  return Module["asm"]["__ZN10__cxxabiv117__class_type_infoD0Ev"].apply(null, arguments)
-};
-
-var __ZN10__cxxabiv120__si_class_type_infoD0Ev = Module["__ZN10__cxxabiv120__si_class_type_infoD0Ev"] = function() {
-  return Module["asm"]["__ZN10__cxxabiv120__si_class_type_infoD0Ev"].apply(null, arguments)
-};
-
-var __ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b = Module["__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b"] = function() {
-  return Module["asm"]["__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b"].apply(null, arguments)
-};
-
-var __ZN3Fib4nextEv = Module["__ZN3Fib4nextEv"] = function() {
-  return Module["asm"]["__ZN3Fib4nextEv"].apply(null, arguments)
-};
-
-var __ZN3FibC2Ev = Module["__ZN3FibC2Ev"] = function() {
-  return Module["asm"]["__ZN3FibC2Ev"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv116__shim_type_info5noop1Ev = Module["__ZNK10__cxxabiv116__shim_type_info5noop1Ev"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv116__shim_type_info5noop1Ev"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv116__shim_type_info5noop2Ev = Module["__ZNK10__cxxabiv116__shim_type_info5noop2Ev"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv116__shim_type_info5noop2Ev"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib = Module["__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib = Module["__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi = Module["__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi = Module["__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i = Module["__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi = Module["__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv = Module["__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib = Module["__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib = Module["__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"].apply(null, arguments)
-};
-
-var __ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi = Module["__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"] = function() {
-  return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
-};
-
-var __ZNKSt11logic_error4whatEv = Module["__ZNKSt11logic_error4whatEv"] = function() {
-  return Module["asm"]["__ZNKSt11logic_error4whatEv"].apply(null, arguments)
-};
-
-var __ZNKSt3__218__libcpp_refstring15__uses_refcountEv = Module["__ZNKSt3__218__libcpp_refstring15__uses_refcountEv"] = function() {
-  return Module["asm"]["__ZNKSt3__218__libcpp_refstring15__uses_refcountEv"].apply(null, arguments)
-};
-
-var __ZNKSt3__218__libcpp_refstring5c_strEv = Module["__ZNKSt3__218__libcpp_refstring5c_strEv"] = function() {
-  return Module["asm"]["__ZNKSt3__218__libcpp_refstring5c_strEv"].apply(null, arguments)
-};
-
-var __ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv = Module["__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv"] = function() {
-  return Module["asm"]["__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv"].apply(null, arguments)
-};
-
-var __ZNSt11logic_errorC2EPKc = Module["__ZNSt11logic_errorC2EPKc"] = function() {
-  return Module["asm"]["__ZNSt11logic_errorC2EPKc"].apply(null, arguments)
-};
-
-var __ZNSt11logic_errorD0Ev = Module["__ZNSt11logic_errorD0Ev"] = function() {
-  return Module["asm"]["__ZNSt11logic_errorD0Ev"].apply(null, arguments)
-};
-
-var __ZNSt11logic_errorD2Ev = Module["__ZNSt11logic_errorD2Ev"] = function() {
-  return Module["asm"]["__ZNSt11logic_errorD2Ev"].apply(null, arguments)
-};
-
-var __ZNSt12length_errorD0Ev = Module["__ZNSt12length_errorD0Ev"] = function() {
-  return Module["asm"]["__ZNSt12length_errorD0Ev"].apply(null, arguments)
-};
-
-var __ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE = Module["__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE"] = function() {
-  return Module["asm"]["__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE"].apply(null, arguments)
-};
-
-var __ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70 = Module["__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70"] = function() {
-  return Module["asm"]["__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70"].apply(null, arguments)
-};
-
-var __ZNSt3__218__libcpp_refstringC2EPKc = Module["__ZNSt3__218__libcpp_refstringC2EPKc"] = function() {
-  return Module["asm"]["__ZNSt3__218__libcpp_refstringC2EPKc"].apply(null, arguments)
-};
-
-var __ZNSt3__218__libcpp_refstringD2Ev = Module["__ZNSt3__218__libcpp_refstringD2Ev"] = function() {
-  return Module["asm"]["__ZNSt3__218__libcpp_refstringD2Ev"].apply(null, arguments)
-};
-
-var __ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_ = Module["__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_"] = function() {
-  return Module["asm"]["__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_"].apply(null, arguments)
-};
-
-var __ZNSt9exceptionD2Ev = Module["__ZNSt9exceptionD2Ev"] = function() {
-  return Module["asm"]["__ZNSt9exceptionD2Ev"].apply(null, arguments)
-};
-
-var __ZNSt9type_infoD2Ev = Module["__ZNSt9type_infoD2Ev"] = function() {
-  return Module["asm"]["__ZNSt9type_infoD2Ev"].apply(null, arguments)
-};
-
-var __ZSt15get_new_handlerv = Module["__ZSt15get_new_handlerv"] = function() {
-  return Module["asm"]["__ZSt15get_new_handlerv"].apply(null, arguments)
-};
-
 var __ZSt18uncaught_exceptionv = Module["__ZSt18uncaught_exceptionv"] = function() {
   return Module["asm"]["__ZSt18uncaught_exceptionv"].apply(null, arguments)
-};
-
-var __ZSt19uncaught_exceptionsv = Module["__ZSt19uncaught_exceptionsv"] = function() {
-  return Module["asm"]["__ZSt19uncaught_exceptionsv"].apply(null, arguments)
-};
-
-var __ZdlPv = Module["__ZdlPv"] = function() {
-  return Module["asm"]["__ZdlPv"].apply(null, arguments)
-};
-
-var __Znwm = Module["__Znwm"] = function() {
-  return Module["asm"]["__Znwm"].apply(null, arguments)
 };
 
 var ___cxa_can_catch = Module["___cxa_can_catch"] = function() {
@@ -1923,10 +1763,6 @@ var ___cxa_can_catch = Module["___cxa_can_catch"] = function() {
 
 var ___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = function() {
   return Module["asm"]["___cxa_is_pointer_type"].apply(null, arguments)
-};
-
-var ___dynamic_cast = Module["___dynamic_cast"] = function() {
-  return Module["asm"]["___dynamic_cast"].apply(null, arguments)
 };
 
 var ___errno_location = Module["___errno_location"] = function() {
@@ -1963,10 +1799,6 @@ var _next_val = Module["_next_val"] = function() {
 
 var _sbrk = Module["_sbrk"] = function() {
   return Module["asm"]["_sbrk"].apply(null, arguments)
-};
-
-var _strlen = Module["_strlen"] = function() {
-  return Module["asm"]["_strlen"].apply(null, arguments)
 };
 
 var establishStackSpace = Module["establishStackSpace"] = function() {
