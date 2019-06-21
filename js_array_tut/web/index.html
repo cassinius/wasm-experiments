@@ -3,22 +3,54 @@
     <!-- <script src="gen/hello.js"></script> -->
 
     <script>
+      // function loadWasm(fileName) {
+      //   return fetch(fileName)
+      //     .then(response => response.arrayBuffer())
+      //     .then(bits => WebAssembly.compile(bits))
+      //     .then(module => { return new WebAssembly.Instance(module ) });
+      // }
 
-      function loadWasm(fileName) {
-        return fetch(fileName)
-          .then(response => response.arrayBuffer())
-          .then(bits => WebAssembly.compile(bits))
-          .then(module => { return new WebAssembly.Instance(module ) });
+      // loadWasm('gen/hello.wasm')
+      //   .then(instance => {
+      //     let fib_wasm = instance.exports.__Z3fibi;
+      //     console.log(`fib_wasm(1) = ${fib_wasm(1)}`);
+      //     console.log(`fib_wasm(20) = ${fib_wasm(20)}`);
+      //     console.log(`fib_wasm(20) = ${fib_wasm(42)}`);
+      //   });
+
+      // Module.onRuntimeInitialized = function() {
+      //   console.log(Module.__Z3fibi(30));
+      // }
+
+      function fib_js(x) {
+        if (x < 1)
+          return 0;
+        if (x == 1)
+          return 1;
+        return fib_js(x-1) + fib_js(x-2);
       }
 
-      loadWasm('gen/hello.wasm')
-        .then(instance => {
-          let fib = instance.exports.__Z3fibi;
-          console.log(`fib(1) = ${fib(1)}`);
-          console.log(`fib(20) = ${fib(20)}`);
-        });
+      async function initFib () {
+        // const fetchPromise = fetch('gen/hello.wasm');
+        const module = await WebAssembly.compileStreaming(fetch('gen/hello.wasm'));
+        const instance = await WebAssembly.instantiate(module);
+        const fib = instance.exports.__Z3fibi;
+        return fib;
+      }
 
-      // console.log( fib(10) );
+      (async () => {
+        const fib_wasm = await initFib();
+        [{rt: fib_js, name: "JS"}, {rt: fib_wasm, name: "WASM"}].forEach(fib_rt => {
+          let tic = new Date;
+          // console.log(`fib_wasm(1) = ${fib_rt.rt(1)}`);
+          // console.log(`fib_wasm(20) = ${fib_rt.rt(20)}`);
+          console.log(`fib_wasm(40) = ${fib_rt.rt(42)}`);
+          let toc = new Date;
+          console.log(`Fib(40) took ${toc-tic} ms in ${fib_rt.name}`)
+        });
+      })();
+
+
     </script>
   </body>
 </html>
