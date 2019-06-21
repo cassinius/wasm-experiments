@@ -1,0 +1,24 @@
+<html>
+  <body>
+    <!-- <script src="gen/hello.js"></script> -->
+
+    <script>
+
+      function loadWasm(fileName) {
+        return fetch(fileName)
+          .then(response => response.arrayBuffer())
+          .then(bits => WebAssembly.compile(bits))
+          .then(module => { return new WebAssembly.Instance(module ) });
+      }
+
+      loadWasm('gen/hello.wasm')
+        .then(instance => {
+          let fib = instance.exports.__Z3fibi;
+          console.log(`fib(1) = ${fib(1)}`);
+          console.log(`fib(20) = ${fib(20)}`);
+        });
+
+      // console.log( fib(10) );
+    </script>
+  </body>
+</html>

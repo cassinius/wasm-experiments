@@ -1,3 +1,6 @@
+#include "fib.h"
+
+
 int fib(int x) {
   if (x < 1)
     return 0;
