@@ -1,20 +1,28 @@
-#include <iostream>
+// #include <iostream>
+#include <vector>
 #include "fib.h"
 
-int fib() {
-  static Fib fib = Fib();
-  return fib.next();
+auto instances = std::vector<Fib>();
+
+extern "C" {
+
+  int new_fib() {
+    instances.push_back(Fib());
+    return instances.size() - 1;
+  }
+
+  int next_val(int fib_instance) {
+    // instances[fib_instance].bla();
+    return instances[fib_instance].next();
+  }
+
 }
 
+/**
+ * we need to call the functions above in main() so the compiler does not optimize them away...
+ */
 int main() {
-  // Fib fib{};
-  // std::cout << fib.next() << std::endl;
-  // std::cout << fib.next() << std::endl;
-  // std::cout << fib.next() << std::endl;
-  // std::cout << fib.next() << std::endl;
-  // std::cout << fib.next() << std::endl;
-  
-  // using fib so that the compiler does not optimize away the fib function
-  fib();
-  return 0;
+  int fib1 = new_fib();
+  return next_val(fib1);
+  // return 0;
 }

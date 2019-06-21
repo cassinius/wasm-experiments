@@ -6,6 +6,7 @@ class Fib {
   public:
     Fib();
     int next();
+    // int bla();
   
   private:
     int curr = 1;

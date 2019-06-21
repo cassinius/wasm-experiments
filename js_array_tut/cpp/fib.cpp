@@ -9,6 +9,8 @@ int Fib::next() {
   return next;
 }
 
+// int Fib::bla() { return 0; }
+
 // int fib(int x) {
 //   if (x < 1)
 //     return 0;

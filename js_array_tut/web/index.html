@@ -21,12 +21,23 @@
 
       Module.onRuntimeInitialized = function() {
         let tic = new Date;
+
+        console.log(`main() gives ${Module._main()}`);
+
+        let fib1 = Module._new_fib();
+        let fib2 = Module._new_fib();
+        console.log(fib1);
+        console.log(fib2);
         
-        Module.__ZN3FibC2Ev();
-        console.log(Module.__ZN3Fib4nextEv());
-        console.log(Module.__ZN3Fib4nextEv());
-        console.log(Module.__ZN3Fib4nextEv());
-        console.log(Module.__ZN3Fib4nextEv());
+        console.log(Module._next_val(fib1));
+        console.log(Module._next_val(fib1));
+        console.log(Module._next_val(fib1));
+        console.log(Module._next_val(fib1));
+
+        console.log(Module._next_val(fib2));
+        console.log(Module._next_val(fib2));
+        console.log(Module._next_val(fib2));
+        console.log(Module._next_val(fib2));
         
         let toc = new Date;
         console.log(`Some fibs took ${toc-tic} ms in WASM`)

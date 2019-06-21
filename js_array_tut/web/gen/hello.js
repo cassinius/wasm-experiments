@@ -1194,11 +1194,11 @@ function updateGlobalBufferViews() {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 3136,
+    STACK_BASE = 3328,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 5246016,
-    DYNAMIC_BASE = 5246016,
-    DYNAMICTOP_PTR = 3104;
+    STACK_MAX = 5246208,
+    DYNAMIC_BASE = 5246208,
+    DYNAMICTOP_PTR = 3296;
 
 
 
@@ -1576,8 +1576,8 @@ Module['asm'] = function(global, env, providedBuffer) {
   ;
   // import table
   env['table'] = wasmTable = new WebAssembly.Table({
-    'initial': 22,
-    'maximum': 22,
+    'initial': 33,
+    'maximum': 33,
     'element': 'anyfunc'
   });
   // With the wasm backend __memory_base and __table_base and only needed for
@@ -1598,7 +1598,7 @@ var ASM_CONSTS = [];
 
 
 
-// STATICTOP = STATIC_BASE + 2112;
+// STATICTOP = STATIC_BASE + 2304;
 /* global initializers */ /*__ATINIT__.push();*/
 
 
@@ -1609,7 +1609,7 @@ var ASM_CONSTS = [];
 
 
 /* no memory initializer */
-var tempDoublePtr = 3120
+var tempDoublePtr = 3312
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
   HEAP8[tempDoublePtr] = HEAP8[ptr];
@@ -1631,6 +1631,36 @@ function copyTempDouble(ptr) {
 
 // {{PRE_LIBRARY}}
 
+
+  function ___cxa_allocate_exception(size) {
+      return _malloc(size);
+    }
+  Module["___cxa_allocate_exception"] = ___cxa_allocate_exception;
+
+  
+  var ___exception_infos={};
+  Module["___exception_infos"] = ___exception_infos;
+  
+  var ___exception_last=0;
+  Module["___exception_last"] = ___exception_last;function ___cxa_throw(ptr, type, destructor) {
+      ___exception_infos[ptr] = {
+        ptr: ptr,
+        adjusted: [ptr],
+        type: type,
+        destructor: destructor,
+        refcount: 0,
+        caught: false,
+        rethrown: false
+      };
+      ___exception_last = ptr;
+      if (!("uncaught_exception" in __ZSt18uncaught_exceptionv)) {
+        __ZSt18uncaught_exceptionv.uncaught_exception = 1;
+      } else {
+        __ZSt18uncaught_exceptionv.uncaught_exception++;
+      }
+      throw ptr;
+    }
+  Module["___cxa_throw"] = ___cxa_throw;
 
   function ___cxa_uncaught_exception() {
       return !!__ZSt18uncaught_exceptionv.uncaught_exception;
@@ -1717,6 +1747,8 @@ var asmLibraryArg = {
   "abort": abort,
   "setTempRet0": setTempRet0,
   "getTempRet0": getTempRet0,
+  "___cxa_allocate_exception": ___cxa_allocate_exception,
+  "___cxa_throw": ___cxa_throw,
   "___cxa_uncaught_exception": ___cxa_uncaught_exception,
   "___gxx_personality_v0": ___gxx_personality_v0,
   "___setErrNo": ___setErrNo,
@@ -1805,8 +1837,68 @@ var __ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19_
   return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
 };
 
+var __ZNKSt11logic_error4whatEv = Module["__ZNKSt11logic_error4whatEv"] = function() {
+  return Module["asm"]["__ZNKSt11logic_error4whatEv"].apply(null, arguments)
+};
+
+var __ZNKSt3__218__libcpp_refstring15__uses_refcountEv = Module["__ZNKSt3__218__libcpp_refstring15__uses_refcountEv"] = function() {
+  return Module["asm"]["__ZNKSt3__218__libcpp_refstring15__uses_refcountEv"].apply(null, arguments)
+};
+
+var __ZNKSt3__218__libcpp_refstring5c_strEv = Module["__ZNKSt3__218__libcpp_refstring5c_strEv"] = function() {
+  return Module["asm"]["__ZNKSt3__218__libcpp_refstring5c_strEv"].apply(null, arguments)
+};
+
+var __ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv = Module["__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv"] = function() {
+  return Module["asm"]["__ZNKSt3__220__vector_base_commonILb1EE20__throw_length_errorEv"].apply(null, arguments)
+};
+
+var __ZNSt11logic_errorC2EPKc = Module["__ZNSt11logic_errorC2EPKc"] = function() {
+  return Module["asm"]["__ZNSt11logic_errorC2EPKc"].apply(null, arguments)
+};
+
+var __ZNSt11logic_errorD0Ev = Module["__ZNSt11logic_errorD0Ev"] = function() {
+  return Module["asm"]["__ZNSt11logic_errorD0Ev"].apply(null, arguments)
+};
+
+var __ZNSt11logic_errorD2Ev = Module["__ZNSt11logic_errorD2Ev"] = function() {
+  return Module["asm"]["__ZNSt11logic_errorD2Ev"].apply(null, arguments)
+};
+
+var __ZNSt12length_errorD0Ev = Module["__ZNSt12length_errorD0Ev"] = function() {
+  return Module["asm"]["__ZNSt12length_errorD0Ev"].apply(null, arguments)
+};
+
+var __ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE = Module["__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE"] = function() {
+  return Module["asm"]["__ZNSt3__215__refstring_imp12_GLOBAL__N_113data_from_repEPNS1_9_Rep_baseE"].apply(null, arguments)
+};
+
+var __ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70 = Module["__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70"] = function() {
+  return Module["asm"]["__ZNSt3__215__refstring_imp12_GLOBAL__N_113rep_from_dataEPKc_70"].apply(null, arguments)
+};
+
+var __ZNSt3__218__libcpp_refstringC2EPKc = Module["__ZNSt3__218__libcpp_refstringC2EPKc"] = function() {
+  return Module["asm"]["__ZNSt3__218__libcpp_refstringC2EPKc"].apply(null, arguments)
+};
+
+var __ZNSt3__218__libcpp_refstringD2Ev = Module["__ZNSt3__218__libcpp_refstringD2Ev"] = function() {
+  return Module["asm"]["__ZNSt3__218__libcpp_refstringD2Ev"].apply(null, arguments)
+};
+
+var __ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_ = Module["__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_"] = function() {
+  return Module["asm"]["__ZNSt3__26vectorI3FibNS_9allocatorIS1_EEE21__push_back_slow_pathIS1_EEvOT_"].apply(null, arguments)
+};
+
+var __ZNSt9exceptionD2Ev = Module["__ZNSt9exceptionD2Ev"] = function() {
+  return Module["asm"]["__ZNSt9exceptionD2Ev"].apply(null, arguments)
+};
+
 var __ZNSt9type_infoD2Ev = Module["__ZNSt9type_infoD2Ev"] = function() {
   return Module["asm"]["__ZNSt9type_infoD2Ev"].apply(null, arguments)
+};
+
+var __ZSt15get_new_handlerv = Module["__ZSt15get_new_handlerv"] = function() {
+  return Module["asm"]["__ZSt15get_new_handlerv"].apply(null, arguments)
 };
 
 var __ZSt18uncaught_exceptionv = Module["__ZSt18uncaught_exceptionv"] = function() {
@@ -1821,16 +1913,12 @@ var __ZdlPv = Module["__ZdlPv"] = function() {
   return Module["asm"]["__ZdlPv"].apply(null, arguments)
 };
 
+var __Znwm = Module["__Znwm"] = function() {
+  return Module["asm"]["__Znwm"].apply(null, arguments)
+};
+
 var ___cxa_can_catch = Module["___cxa_can_catch"] = function() {
   return Module["asm"]["___cxa_can_catch"].apply(null, arguments)
-};
-
-var ___cxa_guard_acquire = Module["___cxa_guard_acquire"] = function() {
-  return Module["asm"]["___cxa_guard_acquire"].apply(null, arguments)
-};
-
-var ___cxa_guard_release = Module["___cxa_guard_release"] = function() {
-  return Module["asm"]["___cxa_guard_release"].apply(null, arguments)
 };
 
 var ___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = function() {
@@ -1865,8 +1953,20 @@ var _memset = Module["_memset"] = function() {
   return Module["asm"]["_memset"].apply(null, arguments)
 };
 
+var _new_fib = Module["_new_fib"] = function() {
+  return Module["asm"]["_new_fib"].apply(null, arguments)
+};
+
+var _next_val = Module["_next_val"] = function() {
+  return Module["asm"]["_next_val"].apply(null, arguments)
+};
+
 var _sbrk = Module["_sbrk"] = function() {
   return Module["asm"]["_sbrk"].apply(null, arguments)
+};
+
+var _strlen = Module["_strlen"] = function() {
+  return Module["asm"]["_strlen"].apply(null, arguments)
 };
 
 var establishStackSpace = Module["establishStackSpace"] = function() {
@@ -1885,8 +1985,16 @@ var stackSave = Module["stackSave"] = function() {
   return Module["asm"]["stackSave"].apply(null, arguments)
 };
 
+var dynCall_ii = Module["dynCall_ii"] = function() {
+  return Module["asm"]["dynCall_ii"].apply(null, arguments)
+};
+
 var dynCall_iiii = Module["dynCall_iiii"] = function() {
   return Module["asm"]["dynCall_iiii"].apply(null, arguments)
+};
+
+var dynCall_v = Module["dynCall_v"] = function() {
+  return Module["asm"]["dynCall_v"].apply(null, arguments)
 };
 
 var dynCall_vi = Module["dynCall_vi"] = function() {
@@ -1914,8 +2022,8 @@ Module['asm'] = asm;
 
 
 
-
-
+Module["ccall"] = ccall;
+Module["cwrap"] = cwrap;
 
 
 
