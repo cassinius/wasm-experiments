@@ -1,6 +1,16 @@
 #ifndef FIB
 #define FIB
 
-int fib(int x);
+class Fib {
+
+  public:
+    Fib();
+    int next();
+  
+  private:
+    int curr = 1;
+    int prev = 1;
+
+};
 
 #endif

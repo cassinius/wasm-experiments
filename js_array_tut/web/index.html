@@ -1,6 +1,6 @@
 <html>
   <body>
-    <!-- <script src="gen/hello.js"></script> -->
+    <script src="gen/hello.js"></script>
 
     <script>
       // function loadWasm(fileName) {
@@ -18,37 +18,50 @@
       //     console.log(`fib_wasm(20) = ${fib_wasm(42)}`);
       //   });
 
-      // Module.onRuntimeInitialized = function() {
-      //   console.log(Module.__Z3fibi(30));
+
+      Module.onRuntimeInitialized = function() {
+        let tic = new Date;
+        
+        Module.__ZN3FibC2Ev();
+        console.log(Module.__ZN3Fib4nextEv());
+        console.log(Module.__ZN3Fib4nextEv());
+        console.log(Module.__ZN3Fib4nextEv());
+        console.log(Module.__ZN3Fib4nextEv());
+        
+        let toc = new Date;
+        console.log(`Some fibs took ${toc-tic} ms in WASM`)
+      }
+
+
+      // function fib_js(x) {
+      //   if (x < 1)
+      //     return 0;
+      //   if (x == 1)
+      //     return 1;
+      //   return fib_js(x-1) + fib_js(x-2);
       // }
 
-      function fib_js(x) {
-        if (x < 1)
-          return 0;
-        if (x == 1)
-          return 1;
-        return fib_js(x-1) + fib_js(x-2);
-      }
+      // async function initFib () {
+      //   const fetchPromise = fetch('gen/hello.wasm');
+      //   const module = await WebAssembly.compileStreaming(fetchPromise);
+      //   const instance = await WebAssembly.instantiate(module);
+      //   const fib = instance.exports.__Z3fibi;
+      //   return fib;
+      // }
 
-      async function initFib () {
-        // const fetchPromise = fetch('gen/hello.wasm');
-        const module = await WebAssembly.compileStreaming(fetch('gen/hello.wasm'));
-        const instance = await WebAssembly.instantiate(module);
-        const fib = instance.exports.__Z3fibi;
-        return fib;
-      }
+      // (async () => {
+      //   const fib_wasm = await initFib();
+      //   console.log(fib_wasm);
 
-      (async () => {
-        const fib_wasm = await initFib();
-        [{rt: fib_js, name: "JS"}, {rt: fib_wasm, name: "WASM"}].forEach(fib_rt => {
-          let tic = new Date;
-          // console.log(`fib_wasm(1) = ${fib_rt.rt(1)}`);
-          // console.log(`fib_wasm(20) = ${fib_rt.rt(20)}`);
-          console.log(`fib_wasm(40) = ${fib_rt.rt(42)}`);
-          let toc = new Date;
-          console.log(`Fib(40) took ${toc-tic} ms in ${fib_rt.name}`)
-        });
-      })();
+      //   [{rt: fib_js, name: "JS"}, {rt: fib_wasm, name: "WASM"}].forEach(fib_rt => {
+      //     let tic = new Date;
+      //     // console.log(`fib_wasm(1) = ${fib_rt.rt(1)}`);
+      //     // console.log(`fib_wasm(20) = ${fib_rt.rt(20)}`);
+      //     console.log(`fib_wasm(42) = ${fib_rt.rt(42)}`);
+      //     let toc = new Date;
+      //     console.log(`Fib(42) took ${toc-tic} ms in ${fib_rt.name}`)
+      //   });
+      // })();
 
 
     </script>

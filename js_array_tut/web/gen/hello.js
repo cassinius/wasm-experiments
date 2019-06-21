@@ -1194,11 +1194,11 @@ function updateGlobalBufferViews() {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 2080,
+    STACK_BASE = 3136,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 5244960,
-    DYNAMIC_BASE = 5244960,
-    DYNAMICTOP_PTR = 2048;
+    STACK_MAX = 5246016,
+    DYNAMIC_BASE = 5246016,
+    DYNAMICTOP_PTR = 3104;
 
 
 
@@ -1576,8 +1576,8 @@ Module['asm'] = function(global, env, providedBuffer) {
   ;
   // import table
   env['table'] = wasmTable = new WebAssembly.Table({
-    'initial': 0,
-    'maximum': 0,
+    'initial': 22,
+    'maximum': 22,
     'element': 'anyfunc'
   });
   // With the wasm backend __memory_base and __table_base and only needed for
@@ -1598,7 +1598,7 @@ var ASM_CONSTS = [];
 
 
 
-// STATICTOP = STATIC_BASE + 1056;
+// STATICTOP = STATIC_BASE + 2112;
 /* global initializers */ /*__ATINIT__.push();*/
 
 
@@ -1609,7 +1609,7 @@ var ASM_CONSTS = [];
 
 
 /* no memory initializer */
-var tempDoublePtr = 2064
+var tempDoublePtr = 3120
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
   HEAP8[tempDoublePtr] = HEAP8[ptr];
@@ -1631,6 +1631,51 @@ function copyTempDouble(ptr) {
 
 // {{PRE_LIBRARY}}
 
+
+  function ___cxa_uncaught_exception() {
+      return !!__ZSt18uncaught_exceptionv.uncaught_exception;
+    }
+  Module["___cxa_uncaught_exception"] = ___cxa_uncaught_exception;
+
+  function ___gxx_personality_v0() {
+    }
+  Module["___gxx_personality_v0"] = ___gxx_personality_v0;
+
+  function _abort() {
+      Module['abort']();
+    }
+  Module["_abort"] = _abort;
+
+  function _emscripten_get_heap_size() {
+      return HEAP8.length;
+    }
+  Module["_emscripten_get_heap_size"] = _emscripten_get_heap_size;
+
+  
+  function _emscripten_memcpy_big(dest, src, num) {
+      HEAPU8.set(HEAPU8.subarray(src, src+num), dest);
+    }
+  Module["_emscripten_memcpy_big"] = _emscripten_memcpy_big;
+  
+   
+
+   
+
+  
+  function ___setErrNo(value) {
+      if (Module['___errno_location']) HEAP32[((Module['___errno_location']())>>2)]=value;
+      return value;
+    }
+  Module["___setErrNo"] = ___setErrNo;
+  
+  
+  function abortOnCannotGrowMemory(requestedSize) {
+      abort('OOM');
+    }
+  Module["abortOnCannotGrowMemory"] = abortOnCannotGrowMemory;function _emscripten_resize_heap(requestedSize) {
+      abortOnCannotGrowMemory(requestedSize);
+    }
+  Module["_emscripten_resize_heap"] = _emscripten_resize_heap; 
 var ASSERTIONS = false;
 
 // Copyright 2017 The Emscripten Authors.  All rights reserved.
@@ -1663,6 +1708,8 @@ function intArrayToString(array) {
 }
 
 
+// ASM_LIBRARY EXTERN PRIMITIVES: Int8Array,Int32Array
+
 
 var asmGlobalArg = {}
 
@@ -1670,6 +1717,14 @@ var asmLibraryArg = {
   "abort": abort,
   "setTempRet0": setTempRet0,
   "getTempRet0": getTempRet0,
+  "___cxa_uncaught_exception": ___cxa_uncaught_exception,
+  "___gxx_personality_v0": ___gxx_personality_v0,
+  "___setErrNo": ___setErrNo,
+  "_abort": _abort,
+  "_emscripten_get_heap_size": _emscripten_get_heap_size,
+  "_emscripten_memcpy_big": _emscripten_memcpy_big,
+  "_emscripten_resize_heap": _emscripten_resize_heap,
+  "abortOnCannotGrowMemory": abortOnCannotGrowMemory,
   "tempDoublePtr": tempDoublePtr,
   "DYNAMICTOP_PTR": DYNAMICTOP_PTR
 }
@@ -1678,12 +1733,176 @@ var asm =Module["asm"]// EMSCRIPTEN_END_ASM
 (asmGlobalArg, asmLibraryArg, buffer);
 
 Module["asm"] = asm;
-var __Z3fibi = Module["__Z3fibi"] = function() {
-  return Module["asm"]["__Z3fibi"].apply(null, arguments)
+var __ZN10__cxxabiv116__shim_type_infoD2Ev = Module["__ZN10__cxxabiv116__shim_type_infoD2Ev"] = function() {
+  return Module["asm"]["__ZN10__cxxabiv116__shim_type_infoD2Ev"].apply(null, arguments)
+};
+
+var __ZN10__cxxabiv117__class_type_infoD0Ev = Module["__ZN10__cxxabiv117__class_type_infoD0Ev"] = function() {
+  return Module["asm"]["__ZN10__cxxabiv117__class_type_infoD0Ev"].apply(null, arguments)
+};
+
+var __ZN10__cxxabiv120__si_class_type_infoD0Ev = Module["__ZN10__cxxabiv120__si_class_type_infoD0Ev"] = function() {
+  return Module["asm"]["__ZN10__cxxabiv120__si_class_type_infoD0Ev"].apply(null, arguments)
+};
+
+var __ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b = Module["__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b"] = function() {
+  return Module["asm"]["__ZN10__cxxabiv18is_equalEPKSt9type_infoS2_b"].apply(null, arguments)
+};
+
+var __ZN3Fib4nextEv = Module["__ZN3Fib4nextEv"] = function() {
+  return Module["asm"]["__ZN3Fib4nextEv"].apply(null, arguments)
+};
+
+var __ZN3FibC2Ev = Module["__ZN3FibC2Ev"] = function() {
+  return Module["asm"]["__ZN3FibC2Ev"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv116__shim_type_info5noop1Ev = Module["__ZNK10__cxxabiv116__shim_type_info5noop1Ev"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv116__shim_type_info5noop1Ev"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv116__shim_type_info5noop2Ev = Module["__ZNK10__cxxabiv116__shim_type_info5noop2Ev"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv116__shim_type_info5noop2Ev"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib = Module["__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib = Module["__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi = Module["__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi = Module["__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i = Module["__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi = Module["__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info29process_static_type_below_dstEPNS_19__dynamic_cast_infoEPKvi"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv = Module["__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib = Module["__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib = Module["__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib"].apply(null, arguments)
+};
+
+var __ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi = Module["__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"] = function() {
+  return Module["asm"]["__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi"].apply(null, arguments)
+};
+
+var __ZNSt9type_infoD2Ev = Module["__ZNSt9type_infoD2Ev"] = function() {
+  return Module["asm"]["__ZNSt9type_infoD2Ev"].apply(null, arguments)
+};
+
+var __ZSt18uncaught_exceptionv = Module["__ZSt18uncaught_exceptionv"] = function() {
+  return Module["asm"]["__ZSt18uncaught_exceptionv"].apply(null, arguments)
+};
+
+var __ZSt19uncaught_exceptionsv = Module["__ZSt19uncaught_exceptionsv"] = function() {
+  return Module["asm"]["__ZSt19uncaught_exceptionsv"].apply(null, arguments)
+};
+
+var __ZdlPv = Module["__ZdlPv"] = function() {
+  return Module["asm"]["__ZdlPv"].apply(null, arguments)
+};
+
+var ___cxa_can_catch = Module["___cxa_can_catch"] = function() {
+  return Module["asm"]["___cxa_can_catch"].apply(null, arguments)
+};
+
+var ___cxa_guard_acquire = Module["___cxa_guard_acquire"] = function() {
+  return Module["asm"]["___cxa_guard_acquire"].apply(null, arguments)
+};
+
+var ___cxa_guard_release = Module["___cxa_guard_release"] = function() {
+  return Module["asm"]["___cxa_guard_release"].apply(null, arguments)
+};
+
+var ___cxa_is_pointer_type = Module["___cxa_is_pointer_type"] = function() {
+  return Module["asm"]["___cxa_is_pointer_type"].apply(null, arguments)
+};
+
+var ___dynamic_cast = Module["___dynamic_cast"] = function() {
+  return Module["asm"]["___dynamic_cast"].apply(null, arguments)
+};
+
+var ___errno_location = Module["___errno_location"] = function() {
+  return Module["asm"]["___errno_location"].apply(null, arguments)
+};
+
+var _free = Module["_free"] = function() {
+  return Module["asm"]["_free"].apply(null, arguments)
 };
 
 var _main = Module["_main"] = function() {
   return Module["asm"]["_main"].apply(null, arguments)
+};
+
+var _malloc = Module["_malloc"] = function() {
+  return Module["asm"]["_malloc"].apply(null, arguments)
+};
+
+var _memcpy = Module["_memcpy"] = function() {
+  return Module["asm"]["_memcpy"].apply(null, arguments)
+};
+
+var _memset = Module["_memset"] = function() {
+  return Module["asm"]["_memset"].apply(null, arguments)
+};
+
+var _sbrk = Module["_sbrk"] = function() {
+  return Module["asm"]["_sbrk"].apply(null, arguments)
+};
+
+var establishStackSpace = Module["establishStackSpace"] = function() {
+  return Module["asm"]["establishStackSpace"].apply(null, arguments)
+};
+
+var stackAlloc = Module["stackAlloc"] = function() {
+  return Module["asm"]["stackAlloc"].apply(null, arguments)
+};
+
+var stackRestore = Module["stackRestore"] = function() {
+  return Module["asm"]["stackRestore"].apply(null, arguments)
+};
+
+var stackSave = Module["stackSave"] = function() {
+  return Module["asm"]["stackSave"].apply(null, arguments)
+};
+
+var dynCall_iiii = Module["dynCall_iiii"] = function() {
+  return Module["asm"]["dynCall_iiii"].apply(null, arguments)
+};
+
+var dynCall_vi = Module["dynCall_vi"] = function() {
+  return Module["asm"]["dynCall_vi"].apply(null, arguments)
+};
+
+var dynCall_viiii = Module["dynCall_viiii"] = function() {
+  return Module["asm"]["dynCall_viiii"].apply(null, arguments)
+};
+
+var dynCall_viiiii = Module["dynCall_viiiii"] = function() {
+  return Module["asm"]["dynCall_viiiii"].apply(null, arguments)
+};
+
+var dynCall_viiiiii = Module["dynCall_viiiiii"] = function() {
+  return Module["asm"]["dynCall_viiiiii"].apply(null, arguments)
 };
 ;
 

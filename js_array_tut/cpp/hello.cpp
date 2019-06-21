@@ -1,8 +1,20 @@
-// #include<iostream>
+#include <iostream>
 #include "fib.h"
 
-int main() {
-  fib(10);
-  return 0;
+int fib() {
+  static Fib fib = Fib();
+  return fib.next();
 }
 
+int main() {
+  // Fib fib{};
+  // std::cout << fib.next() << std::endl;
+  // std::cout << fib.next() << std::endl;
+  // std::cout << fib.next() << std::endl;
+  // std::cout << fib.next() << std::endl;
+  // std::cout << fib.next() << std::endl;
+  
+  // using fib so that the compiler does not optimize away the fib function
+  fib();
+  return 0;
+}
