@@ -1797,6 +1797,10 @@ var _next_val = Module["_next_val"] = function() {
   return Module["asm"]["_next_val"].apply(null, arguments)
 };
 
+var _rec_fib = Module["_rec_fib"] = function() {
+  return Module["asm"]["_rec_fib"].apply(null, arguments)
+};
+
 var _sbrk = Module["_sbrk"] = function() {
   return Module["asm"]["_sbrk"].apply(null, arguments)
 };

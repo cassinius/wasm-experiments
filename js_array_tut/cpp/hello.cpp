@@ -6,6 +6,7 @@
 extern "C" {
   int new_fib();
   int next_val(int fib_instance);
+  int rec_fib(int x);
 }
 
 
@@ -21,6 +22,15 @@ int new_fib() {
 int next_val(int fib_instance) {
   // instances[fib_instance].bla();
   return instances[fib_instance].next();
+}
+
+
+int rec_fib(int x) {
+  if (x < 1)
+    return 0;
+  if (x == 1)
+    return 1;
+  return rec_fib(x-1) + rec_fib(x-2);
 }
 
 

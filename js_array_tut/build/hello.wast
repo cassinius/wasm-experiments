@@ -38,6 +38,7 @@
  (export "_memset" (func $_memset))
  (export "_new_fib" (func $_new_fib))
  (export "_next_val" (func $_next_val))
+ (export "_rec_fib" (func $_rec_fib))
  (export "_sbrk" (func $_sbrk))
  (export "dynCall_ii" (func $dynCall_ii))
  (export "dynCall_iiii" (func $dynCall_iiii))
@@ -157,7 +158,7 @@
     )
    )
   )
-  ;;@ ../cpp/hello.cpp:17:0
+  ;;@ ../cpp/hello.cpp:18:0
   (local.set $0
    (i32.add
     (i32.shr_s
@@ -408,14 +409,70 @@
   ;;@ ../cpp/fib.cpp:9:0
   (local.get $1)
  )
- (func $_main (; 17 ;) (; has Stack IR ;) (result i32)
-  ;;@ ../cpp/hello.cpp:31:0
+ (func $_rec_fib (; 17 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+  (local $1 i32)
+  (if
+   ;;@ ../cpp/hello.cpp:29:0
+   (i32.lt_s
+    (local.get $0)
+    (i32.const 1)
+   )
+   ;;@ ../cpp/hello.cpp:34:0
+   (return
+    (i32.const 0)
+   )
+  )
+  (if (result i32)
+   ;;@ ../cpp/hello.cpp:31:0
+   (i32.eq
+    (local.get $0)
+    (i32.const 1)
+   )
+   ;;@ ../cpp/hello.cpp:34:0
+   (i32.const 1)
+   (block (result i32)
+    ;;@ ../cpp/hello.cpp:33:0
+    (local.set $1
+     (i32.add
+      (local.get $0)
+      (i32.const -2)
+     )
+    )
+    (local.set $0
+     (i32.add
+      (local.get $0)
+      (i32.const -1)
+     )
+    )
+    (local.set $0
+     (call $_rec_fib
+      (local.get $0)
+     )
+    )
+    (local.set $1
+     (call $_rec_fib
+      (local.get $1)
+     )
+    )
+    (local.set $0
+     (i32.add
+      (local.get $0)
+      (local.get $1)
+     )
+    )
+    ;;@ ../cpp/hello.cpp:34:0
+    (local.get $0)
+   )
+  )
+ )
+ (func $_main (; 18 ;) (; has Stack IR ;) (result i32)
+  ;;@ ../cpp/hello.cpp:41:0
   (i32.const 0)
  )
- (func $___errno_location (; 18 ;) (; has Stack IR ;) (result i32)
+ (func $___errno_location (; 19 ;) (; has Stack IR ;) (result i32)
   (i32.const 1588)
  )
- (func $_strlen (; 19 ;) (; has Stack IR ;) (result i32)
+ (func $_strlen (; 20 ;) (; has Stack IR ;) (result i32)
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
@@ -482,7 +539,7 @@
    (i32.const 1272)
   )
  )
- (func $_malloc (; 20 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $_malloc (; 21 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -6010,7 +6067,7 @@
   )
   (i32.const 0)
  )
- (func $_free (; 21 ;) (; has Stack IR ;) (param $0 i32)
+ (func $_free (; 22 ;) (; has Stack IR ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -7760,7 +7817,7 @@
    (i32.const -1)
   )
  )
- (func $__ZSt18uncaught_exceptionv (; 22 ;) (; has Stack IR ;) (result i32)
+ (func $__ZSt18uncaught_exceptionv (; 23 ;) (; has Stack IR ;) (result i32)
   (i32.gt_s
    (i32.and
     (call $___cxa_uncaught_exception)
@@ -7769,7 +7826,7 @@
    (i32.const 0)
   )
  )
- (func $__Znwm (; 23 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $__Znwm (; 24 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local.set $1
    (select
@@ -7809,7 +7866,7 @@
    )
   )
  )
- (func $__ZNSt3__218__libcpp_refstringC2EPKc (; 24 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt3__218__libcpp_refstringC2EPKc (; 25 ;) (; has Stack IR ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
   (i32.store
@@ -7853,15 +7910,15 @@
    (local.get $1)
   )
  )
- (func $__ZN10__cxxabiv116__shim_type_infoD2Ev (; 25 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZN10__cxxabiv116__shim_type_infoD2Ev (; 26 ;) (; has Stack IR ;) (param $0 i32)
   (nop)
  )
- (func $__ZN10__cxxabiv117__class_type_infoD0Ev (; 26 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZN10__cxxabiv117__class_type_infoD0Ev (; 27 ;) (; has Stack IR ;) (param $0 i32)
   (call $_free
    (local.get $0)
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv (; 27 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $__ZNK10__cxxabiv117__class_type_info9can_catchEPKNS_16__shim_type_infoERPv (; 28 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local.set $3
    (global.get $STACKTOP)
@@ -7982,7 +8039,7 @@
   )
   (local.get $0)
  )
- (func $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 28 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 29 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (if
    (i32.eq
     (i32.load offset=8
@@ -7998,7 +8055,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 29 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 30 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (if
    (i32.eq
     (i32.load offset=8
@@ -8108,7 +8165,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 30 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 31 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (if
    (i32.eq
     (i32.load offset=8
@@ -8123,7 +8180,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi (; 31 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info24process_found_base_classEPNS_19__dynamic_cast_infoEPvi (; 32 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
   (if
    (local.tee $3
@@ -8187,7 +8244,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i (; 32 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $__ZNK10__cxxabiv117__class_type_info29process_static_type_above_dstEPNS_19__dynamic_cast_infoEPKvS4_i (; 33 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (i32.store8 offset=53
    (local.get $0)
    (i32.const 1)
@@ -8308,7 +8365,7 @@
    )
   )
  )
- (func $___dynamic_cast (; 33 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
+ (func $___dynamic_cast (; 34 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
@@ -8539,7 +8596,7 @@
   )
   (local.get $0)
  )
- (func $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 34 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $__ZNK10__cxxabiv120__si_class_type_info16search_above_dstEPNS_19__dynamic_cast_infoEPKvS4_ib (; 35 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (local $6 i32)
   (if
    (i32.eq
@@ -8584,7 +8641,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 35 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $__ZNK10__cxxabiv120__si_class_type_info16search_below_dstEPNS_19__dynamic_cast_infoEPKvib (; 36 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (local $5 i32)
   (if
    (i32.eq
@@ -8799,7 +8856,7 @@
    )
   )
  )
- (func $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 36 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $__ZNK10__cxxabiv120__si_class_type_info27has_unambiguous_public_baseEPNS_19__dynamic_cast_infoEPvi (; 37 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (local $4 i32)
   (if
    (i32.eq
@@ -8841,7 +8898,7 @@
    )
   )
  )
- (func $__ZNSt11logic_errorD2Ev (; 37 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt11logic_errorD2Ev (; 38 ;) (; has Stack IR ;) (param $0 i32)
   (i32.store
    (local.get $0)
    (i32.const 1240)
@@ -8853,7 +8910,7 @@
    )
   )
  )
- (func $__ZNSt11logic_errorD0Ev (; 38 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt11logic_errorD0Ev (; 39 ;) (; has Stack IR ;) (param $0 i32)
   (call $__ZNSt11logic_errorD2Ev
    (local.get $0)
   )
@@ -8861,12 +8918,12 @@
    (local.get $0)
   )
  )
- (func $__ZNKSt11logic_error4whatEv (; 39 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $__ZNKSt11logic_error4whatEv (; 40 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (i32.load offset=4
    (local.get $0)
   )
  )
- (func $__ZNSt3__218__libcpp_refstringD2Ev (; 40 ;) (; has Stack IR ;) (param $0 i32)
+ (func $__ZNSt3__218__libcpp_refstringD2Ev (; 41 ;) (; has Stack IR ;) (param $0 i32)
   (local $1 i32)
   (local.set $1
    (i32.load offset=8
@@ -8900,7 +8957,7 @@
    )
   )
  )
- (func $___cxa_can_catch (; 41 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $___cxa_can_catch (; 42 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local.set $3
@@ -8955,7 +9012,7 @@
    (i32.const 1)
   )
  )
- (func $___cxa_is_pointer_type (; 42 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $___cxa_is_pointer_type (; 43 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (if (result i32)
    (local.get $0)
    (i32.ne
@@ -8968,7 +9025,7 @@
    (i32.const 0)
   )
  )
- (func $_memcpy (; 43 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $_memcpy (; 44 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -9301,7 +9358,7 @@
   )
   (local.get $4)
  )
- (func $_memset (; 44 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $_memset (; 45 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
@@ -9507,7 +9564,7 @@
    (local.get $2)
   )
  )
- (func $_sbrk (; 45 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $_sbrk (; 46 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -9581,7 +9638,7 @@
   )
   (local.get $2)
  )
- (func $dynCall_ii (; 46 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
+ (func $dynCall_ii (; 47 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (result i32)
   (call_indirect (type $FUNCSIG$ii)
    (local.get $1)
    (i32.and
@@ -9590,7 +9647,7 @@
    )
   )
  )
- (func $dynCall_iiii (; 47 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
+ (func $dynCall_iiii (; 48 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (result i32)
   (call_indirect (type $FUNCSIG$iiii)
    (local.get $1)
    (local.get $2)
@@ -9604,12 +9661,12 @@
    )
   )
  )
- (func $dynCall_v (; 48 ;) (; has Stack IR ;) (param $0 i32)
+ (func $dynCall_v (; 49 ;) (; has Stack IR ;) (param $0 i32)
   (call_indirect (type $FUNCSIG$v)
    (i32.const 4)
   )
  )
- (func $dynCall_vi (; 49 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
+ (func $dynCall_vi (; 50 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32)
   (call_indirect (type $FUNCSIG$vi)
    (local.get $1)
    (i32.add
@@ -9621,7 +9678,7 @@
    )
   )
  )
- (func $dynCall_viiii (; 50 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $dynCall_viiii (; 51 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (call_indirect (type $FUNCSIG$viiii)
    (local.get $1)
    (local.get $2)
@@ -9636,7 +9693,7 @@
    )
   )
  )
- (func $dynCall_viiiii (; 51 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $dynCall_viiiii (; 52 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (call_indirect (type $FUNCSIG$viiiii)
    (local.get $1)
    (local.get $2)
@@ -9652,7 +9709,7 @@
    )
   )
  )
- (func $dynCall_viiiiii (; 52 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32) (param $6 i32)
+ (func $dynCall_viiiiii (; 53 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32) (param $6 i32)
   (call_indirect (type $FUNCSIG$viiiiii)
    (local.get $1)
    (local.get $2)
@@ -9669,39 +9726,39 @@
    )
   )
  )
- (func $b0 (; 53 ;) (; has Stack IR ;) (param $0 i32) (result i32)
+ (func $b0 (; 54 ;) (; has Stack IR ;) (param $0 i32) (result i32)
   (call $abort
    (i32.const 0)
   )
   (i32.const 0)
  )
- (func $b1 (; 54 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $b1 (; 55 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (call $abort
    (i32.const 1)
   )
   (i32.const 0)
  )
- (func $b2 (; 55 ;) (; has Stack IR ;)
+ (func $b2 (; 56 ;) (; has Stack IR ;)
   (call $abort
    (i32.const 2)
   )
  )
- (func $b3 (; 56 ;) (; has Stack IR ;) (param $0 i32)
+ (func $b3 (; 57 ;) (; has Stack IR ;) (param $0 i32)
   (call $abort
    (i32.const 3)
   )
  )
- (func $b4 (; 57 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $b4 (; 58 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (call $abort
    (i32.const 4)
   )
  )
- (func $b5 (; 58 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+ (func $b5 (; 59 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
   (call $abort
    (i32.const 5)
   )
  )
- (func $b6 (; 59 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
+ (func $b6 (; 60 ;) (; has Stack IR ;) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32) (param $5 i32)
   (call $abort
    (i32.const 6)
   )
