@@ -38,5 +38,6 @@ int rec_fib(int x) {
  * we need to call the functions above in main() so the compiler does not optimize them away...
  */
 int main() {
-  return 0;
+  return rec_fib(42);
+  // return 0;
 }

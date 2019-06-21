@@ -466,8 +466,14 @@
   )
  )
  (func $_main (; 18 ;) (; has Stack IR ;) (result i32)
+  (local $0 i32)
   ;;@ ../cpp/hello.cpp:41:0
-  (i32.const 0)
+  (local.set $0
+   (call $_rec_fib
+    (i32.const 42)
+   )
+  )
+  (local.get $0)
  )
  (func $___errno_location (; 19 ;) (; has Stack IR ;) (result i32)
   (i32.const 1588)

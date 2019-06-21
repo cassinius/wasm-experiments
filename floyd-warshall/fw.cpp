@@ -95,6 +95,9 @@ void FWDenseDoubleArray() {
 }
 
 
+//=========================================
+//            MUTUNUS TESTUNUS
+//=========================================
 void testDictGraphPerformance() {
   Clock::time_point time_creation_start = Clock::now();
   generateGraphDict();  

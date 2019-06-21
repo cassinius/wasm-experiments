@@ -1858,8 +1858,8 @@ Module['asm'] = asm;
 
 
 
-Module["ccall"] = ccall;
-Module["cwrap"] = cwrap;
+
+
 
 
 
