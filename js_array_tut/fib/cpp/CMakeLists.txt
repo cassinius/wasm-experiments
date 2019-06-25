@@ -4,8 +4,8 @@ project(${project})
 cmake_minimum_required(VERSION 3.12)
 
 set(src 
-   ../cpp/hello.cpp
-   ../cpp/fib.cpp
+   hello.cpp
+   fib.cpp
  )
 
 set(exports 

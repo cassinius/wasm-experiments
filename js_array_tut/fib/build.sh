@@ -19,4 +19,4 @@ em++ \
 # make
 mv hello.js ../web/gen/
 mv hello.wasm ../web/gen/
-mv hello.wasm.map ../web/gen/
+# mv hello.wasm.map ../web/gen/
