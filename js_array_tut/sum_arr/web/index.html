@@ -8,10 +8,15 @@
 
     function transferToHeap(floatArray) {
 
-      // 1) Reserve memory on WASM heap
+      /* 
+       * 1) Reserve memory on WASM HEAP
+       */
       heapSpace = Module._malloc(floatArray.length * floatArray.BYTES_PER_ELEMENT);
 
-      Module.HEAPF32.set(floatArray, heapSpace >> 2); // 2 
+      /*
+       * 2) Copy the actual data to the HEAP
+       */
+      Module.HEAPF32.set(floatArray, heapSpace >> 2);
       return heapSpace;
     }
 
@@ -23,16 +28,22 @@
         return Module._sum_up(arrayOnHeap, arr.length);
       } 
       finally {
-        Module._free(arrayOnHeap); // 5.
+        /**
+         * 3) Free memory, since we don't have a GC in WASM
+         */
+        // Module._free(arrayOnHeap);
       }
     }
 
 
     Module.onRuntimeInitialized = function () {
       /**
-       * 2e6 seems to be a good limit (3e6 gives OOM...)
+       * @description set -s ALLOW_MEMORY_GROWTH=1 compile flag in order to be able to increase memory (up to array length of 500e6 for Float32Arrays (~2GB Browser-process allocated memory))
+       * @description otherwise, 2e6 seems to be the limit (3e6 gives OOM...)
        */
-      const float_arr = new Float32Array([1, 2, 3, 4, 5, 6]);
+      const arr = [1, 2, 3, 4, 5, 6];
+      const float_arr = new Float32Array(arr);
+      // const float_arr = new Float32Array(500e6);
       console.log(
         sumUp(float_arr)
       );
@@ -46,7 +57,7 @@
      * @todo try with 2D array && Floyd Warshal algorithm !
      */
     function toFloatArr(arr) {
-      const res = new Float32Array(arr.length); // 3 
+      const res = new Float32Array(arr.length);
       for (let i = 0; i < arr.length; i++)
         res[i] = arr[i];
       return res;

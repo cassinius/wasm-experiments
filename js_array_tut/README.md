@@ -24,6 +24,7 @@ EXPORTED_FUNCTIONS='["_new_fib", "_next_val", "_rec_fib", "_main"]'
  * -s ONLY_MY_CODE=1 => dont compile STL functions
  * -s EXPORT_ALL=1 => do not just export main()
  * -s EXPORTED_FUNCTIONS='[]' => array of functions to export (prefixed with underscore)
+ * -s ALLOW_MEMORY_GROWTH=1 => allows to grow the memory at runtime (beyond the initial size, up to ~2GB in practice (no limit in theory))
  * || exit 1  => abort in case of error
  **/
 ```
