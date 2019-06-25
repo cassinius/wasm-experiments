@@ -1,3 +1,3 @@
 #!/bin/bash
 
-emrun --port 8080 web/
+live-server --port=8080 ./web/

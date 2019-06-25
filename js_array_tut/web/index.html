@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <body>
     <script src="gen/hello.js"></script>
@@ -18,15 +19,22 @@
       Module.onRuntimeInitialized = function() {
         let tic = new Date;
 
-        console.log(`main() gives ${Module._main()}`);
+        // We don't export _main anymore.
+        // console.log(`main() gives ${Module._main()}`);
 
         let fib1 = new Fib();
+        console.log(fib1);
         let fib2 = new Fib();
+        console.log(fib2);
+
+        console.log('\nFib1 Class:\n');
 
         console.log(fib1.next());
         console.log(fib1.next());
         console.log(fib1.next());
         console.log(fib1.next());
+
+        console.log('\nFib2 Class:\n');
 
         console.log(fib2.next());
         console.log(fib2.next());

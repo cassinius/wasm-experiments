@@ -1,6 +1,8 @@
 // #include <iostream>
-#include <vector>
+// #include <vector>
 #include "fib.h"
+
+// using namespace std;
 
 
 extern "C" {
@@ -10,17 +12,30 @@ extern "C" {
 }
 
 
-auto instances = std::vector<Fib>();
+const int MAX = 10;
+/**
+ * Not good - does not instantiate just Fib array pointers, but pre-instantiates MAX Fib instances ...
+ */
+Fib * instances = new Fib[MAX]();
+int last = 0;
+// auto instances = std::vector<Fib>();
 
 
 int new_fib() {
-  instances.push_back(Fib());
-  return instances.size() - 1;
+  if (last == MAX - 1) {
+    return -1;
+  }
+  instances[last] = Fib();
+  return last++;
+  // instances.push_back(Fib());
+  // return instances.size() - 1;
 }
 
 
 int next_val(int fib_instance) {
-  // instances[fib_instance].bla();
+  if ( fib_instance >= last ) {
+    return -1;
+  }
   return instances[fib_instance].next();
 }
 
@@ -35,9 +50,11 @@ int rec_fib(int x) {
 
 
 /**
- * we need to call the functions above in main() so the compiler does not optimize them away...
+ * @describe we define functions to export in `extern "C"` above, then include them in the em++ - call within our ./build.sh script
+ * @describe otherwise we would need to call the functions defined above in main() so the compiler does not optimize them away...
  */
 int main() {
-  return rec_fib(42);
-  // return 0;
+  // cout << 'MAIN' << endl;
+  // return rec_fib(42);
+  return 0;
 }

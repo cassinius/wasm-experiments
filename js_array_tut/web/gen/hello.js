@@ -1194,11 +1194,11 @@ function updateGlobalBufferViews() {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 3328,
+    STACK_BASE = 3136,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 5246208,
-    DYNAMIC_BASE = 5246208,
-    DYNAMICTOP_PTR = 3296;
+    STACK_MAX = 5246016,
+    DYNAMIC_BASE = 5246016,
+    DYNAMICTOP_PTR = 3104;
 
 
 
@@ -1576,8 +1576,8 @@ Module['asm'] = function(global, env, providedBuffer) {
   ;
   // import table
   env['table'] = wasmTable = new WebAssembly.Table({
-    'initial': 33,
-    'maximum': 33,
+    'initial': 23,
+    'maximum': 23,
     'element': 'anyfunc'
   });
   // With the wasm backend __memory_base and __table_base and only needed for
@@ -1598,8 +1598,8 @@ var ASM_CONSTS = [];
 
 
 
-// STATICTOP = STATIC_BASE + 2304;
-/* global initializers */ /*__ATINIT__.push();*/
+// STATICTOP = STATIC_BASE + 2112;
+/* global initializers */  __ATINIT__.push({ func: function() { __GLOBAL__sub_I_hello_cpp() } });
 
 
 
@@ -1609,7 +1609,7 @@ var ASM_CONSTS = [];
 
 
 /* no memory initializer */
-var tempDoublePtr = 3312
+var tempDoublePtr = 3120
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
   HEAP8[tempDoublePtr] = HEAP8[ptr];
@@ -1631,32 +1631,6 @@ function copyTempDouble(ptr) {
 
 // {{PRE_LIBRARY}}
 
-
-  function ___cxa_allocate_exception(size) {
-      return _malloc(size);
-    }
-
-  
-  var ___exception_infos={};
-  
-  var ___exception_last=0;function ___cxa_throw(ptr, type, destructor) {
-      ___exception_infos[ptr] = {
-        ptr: ptr,
-        adjusted: [ptr],
-        type: type,
-        destructor: destructor,
-        refcount: 0,
-        caught: false,
-        rethrown: false
-      };
-      ___exception_last = ptr;
-      if (!("uncaught_exception" in __ZSt18uncaught_exceptionv)) {
-        __ZSt18uncaught_exceptionv.uncaught_exception = 1;
-      } else {
-        __ZSt18uncaught_exceptionv.uncaught_exception++;
-      }
-      throw ptr;
-    }
 
   function ___cxa_uncaught_exception() {
       return !!__ZSt18uncaught_exceptionv.uncaught_exception;
@@ -1735,8 +1709,6 @@ var asmLibraryArg = {
   "abort": abort,
   "setTempRet0": setTempRet0,
   "getTempRet0": getTempRet0,
-  "___cxa_allocate_exception": ___cxa_allocate_exception,
-  "___cxa_throw": ___cxa_throw,
   "___cxa_uncaught_exception": ___cxa_uncaught_exception,
   "___gxx_personality_v0": ___gxx_personality_v0,
   "___setErrNo": ___setErrNo,
@@ -1753,6 +1725,10 @@ var asm =Module["asm"]// EMSCRIPTEN_END_ASM
 (asmGlobalArg, asmLibraryArg, buffer);
 
 Module["asm"] = asm;
+var __GLOBAL__sub_I_hello_cpp = Module["__GLOBAL__sub_I_hello_cpp"] = function() {
+  return Module["asm"]["__GLOBAL__sub_I_hello_cpp"].apply(null, arguments)
+};
+
 var __ZSt18uncaught_exceptionv = Module["__ZSt18uncaught_exceptionv"] = function() {
   return Module["asm"]["__ZSt18uncaught_exceptionv"].apply(null, arguments)
 };
@@ -1771,10 +1747,6 @@ var ___errno_location = Module["___errno_location"] = function() {
 
 var _free = Module["_free"] = function() {
   return Module["asm"]["_free"].apply(null, arguments)
-};
-
-var _main = Module["_main"] = function() {
-  return Module["asm"]["_main"].apply(null, arguments)
 };
 
 var _malloc = Module["_malloc"] = function() {
@@ -1819,10 +1791,6 @@ var stackRestore = Module["stackRestore"] = function() {
 
 var stackSave = Module["stackSave"] = function() {
   return Module["asm"]["stackSave"].apply(null, arguments)
-};
-
-var dynCall_ii = Module["dynCall_ii"] = function() {
-  return Module["asm"]["dynCall_ii"].apply(null, arguments)
 };
 
 var dynCall_iiii = Module["dynCall_iiii"] = function() {
@@ -1952,50 +1920,6 @@ dependenciesFulfilled = function runCaller() {
   if (!Module['calledRun']) dependenciesFulfilled = runCaller; // try this again later, after new deps are fulfilled
 }
 
-Module['callMain'] = function callMain(args) {
-
-  args = args || [];
-
-  ensureInitRuntime();
-
-  var argc = args.length+1;
-  var argv = stackAlloc((argc + 1) * 4);
-  HEAP32[argv >> 2] = allocateUTF8OnStack(Module['thisProgram']);
-  for (var i = 1; i < argc; i++) {
-    HEAP32[(argv >> 2) + i] = allocateUTF8OnStack(args[i - 1]);
-  }
-  HEAP32[(argv >> 2) + argc] = 0;
-
-
-  try {
-
-    var ret = Module['_main'](argc, argv, 0);
-
-
-    // if we're not running an evented main loop, it's time to exit
-      exit(ret, /* implicit = */ true);
-  }
-  catch(e) {
-    if (e instanceof ExitStatus) {
-      // exit() throws this once it's done to make sure execution
-      // has been stopped completely
-      return;
-    } else if (e == 'SimulateInfiniteLoop') {
-      // running an evented main loop, don't immediately exit
-      Module['noExitRuntime'] = true;
-      return;
-    } else {
-      var toLog = e;
-      if (e && typeof e === 'object' && e.stack) {
-        toLog = [e, e.stack];
-      }
-      err('exception thrown: ' + toLog);
-      Module['quit'](1, e);
-    }
-  } finally {
-    calledMain = true;
-  }
-}
 
 
 
@@ -2026,7 +1950,6 @@ function run(args) {
 
     if (Module['onRuntimeInitialized']) Module['onRuntimeInitialized']();
 
-    if (Module['_main'] && shouldRunNow) Module['callMain'](args);
 
     postRun();
   }
@@ -2099,11 +2022,6 @@ if (Module['preInit']) {
   }
 }
 
-// shouldRunNow refers to calling main(), not run().
-var shouldRunNow = true;
-if (Module['noInitialRun']) {
-  shouldRunNow = false;
-}
 
   Module["noExitRuntime"] = true;
 
