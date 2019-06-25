@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h1> Pagerank! </h1>
+  <script src="gen/pr.js"></script>
+
+  <script>
+    function transferToHeapFloats(floatArray) {
+      heapSpace = Module._malloc(floatArray.length * floatArray.BYTES_PER_ELEMENT);
+      Module.HEAPF32.set(floatArray, heapSpace >> 2);
+      return heapSpace;
+    }
+
+
+    function transferToHeapInts(intArray) {
+      heapSpace = Module._malloc(intArray.length * intArray.BYTES_PER_ELEMENT);
+      Module.HEAP32.set(intArray, heapSpace >> 2);
+      return heapSpace;
+    }
+
+
+    function PageRank(init, deg, p1d) {
+      init = new Float32Array(init);
+      deg = new Uint32Array(deg);
+      p1d = new Int32Array(p1d);
+      console.log(init, deg, p1d);
+
+
+      let initOnHeap, degOnHeap, p1dOnHeap;
+      try {
+        initOnHeap = transferToHeapFloats(init);
+        degOnHeap = transferToHeapInts(deg);
+        p1dOnHeap = transferToHeapInts(p1d);
+
+        return Module._pagerank(initOnHeap, init.length, degOnHeap, deg.length, p1dOnHeap, p1d.length);
+      }
+      catch(e) {
+        console.log(e);
+      }
+      finally {
+        Module._free(initOnHeap);
+      }
+    }
+
+
+    Module.onRuntimeInitialized = function() {
+      console.log(`Starting PageRank in WASM...`);
+
+      /**
+       * Init equals 'curr' and 'old' ...
+       */
+      const init = [0.3333333333333333, 0.3333333333333333, 0.3333333333333333];
+      const out_deg = [2, 0, 1];
+      const pull_1d = [-1, 0, 2, -1, 0];
+
+      PageRank(init, out_deg, pull_1d);
+
+      console.log(
+        PageRank(init, out_deg, pull_1d)
+      )
+
+    };
+
+  </script>
+</body>
+
+</html>
