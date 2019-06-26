@@ -20,23 +20,6 @@ export function add(a: i32, b: i32): i32 {
 
 
 /**
- * Uint8Array -> i32
- */
-export function sum(arr: Float32Array, length: i32) : f32 {
-  // NO reducer in AS ??
-  // const summer = (acc: f32, n: f32) => acc + n;
-  // return arr.reduce(summer, 42);
-
-  let sum: f32 = 0.0;
-  let i: i32;
-  for (i = 0; i < length; i++ ) {
-    sum += arr[i];
-  }
-  return sum;
-}
-
-
-/**
  * String -> Number
  */
 export function sayHiToRobot(name: string) : i32 {
@@ -50,7 +33,6 @@ export function sayHiToRobot(name: string) : i32 {
 }
 
 
-
 /**
  * String -> String
  */
@@ -59,6 +41,32 @@ export function sayHiTo(name: string) : string {
   // return name;
 }
 
+
+/**
+ * Float32Array -> i32
+ */
+export function sum(arr: Float32Array, length: i32) : f32 {
+  // NO reducer in AS ??
+
+  let sum: f32 = 0.0;
+  let i: i32;
+  for (i = 0; i < length; i++ ) {
+    sum += arr[i];
+  }
+  return sum;
+}
+
+
+/**
+ * Float32Array -> Float32Array
+ */
+export function doubleArr(arr: Float32Array, length: i32) : Float32Array {
+  let result = new Float32Array(length);
+  for (let i: i32 = 0; i < length; i++ ) {
+    result[i] = 2 * arr[i];
+  }
+  return result;
+}
 
 // const arrptr = new Array<f32>(400);
 // const bla = new Float32Array(1000);

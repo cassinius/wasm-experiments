@@ -17,6 +17,10 @@ interface MyApi {
    */  
   sayHiToRobot(name: string) : number;
   sayHiTo(name: number) : number;
+  /**
+   * same with array types as return values...?
+   */
+  doubleArr(arr: Float32Array, length: number) : Float32Array;
 }
 
 // Input / output pointers & results
@@ -25,20 +29,20 @@ let pInput, pOutput, result;
 
 const file = fs.readFileSync("./build/optimized.wasm")
 const lib : loader.ASUtil & MyApi = loader.instantiateBuffer(file, {});
-console.log(lib);
+// console.log(lib);
 
 
-console.log('\n===== Number -> Number =====\n');
+console.log('\n===== Number => Number =====\n');
 console.log(`'3 + 5' in Wasm gives: ${lib.add(3, 5)}`);
 
 
-console.log('\n===== String -> Number =====\n');
+console.log('\n===== String => Number =====\n');
 pInput = lib.__retain(lib.__allocString("r2d2"));
 console.log(`Robot should be '1': ${lib.sayHiToRobot(pInput)}`);
 lib.__release(pInput);
 
 
-console.log('\n===== String -> String =====\n');
+console.log('\n===== String => String =====\n');
 pInput = lib.__retain(lib.__allocString("Bernie"));
 pOutput = lib.sayHiTo(pInput);
 result = lib.__getString(pOutput);
@@ -47,10 +51,18 @@ lib.__release(pInput);
 lib.__release(pOutput);
 
 
-console.log('\n===== Float32Array -> Number =====\n');
+console.log('\n===== Array => Number =====\n');
 let arr = [1, 2, 3, 4, 5, 6];
 pInput = lib.__retain(lib.__allocArray(lib.Float32ArrayID, arr));
-console.log(lib.sum(pInput, arr.length));
+console.log(`The sum of 1-6 gives: ${lib.sum(pInput, arr.length)}`);
 lib.__release(pInput);
 
 
+console.log('\n===== Array => Array =====\n');
+arr = [1, 2, 3, 4, 5, 6];
+pInput = lib.__retain(lib.__allocArray(lib.Float32ArrayID, arr));
+pOutput = lib.doubleArr(pInput, arr.length);
+result = lib.__getArray(pOutput);
+console.log(result);
+lib.__release(pInput);
+lib.__release(pOutput);
