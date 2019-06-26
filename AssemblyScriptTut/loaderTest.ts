@@ -112,6 +112,13 @@ for ( let i = 0; i < N*N; i++ ) {
   graph.push(Math.random()*9 + 1);
 }
 
+/**
+ * Creating, passing & retrieving an array of 1e6 alone
+ * takes about 130-150 millis...
+ * 
+ * WHICH MEANS THAT THIS IS !!! USELESS !!! FOR AN O(n^2) algorithm
+ * like Pagerank...
+ */
 function FloydWarshallWasm(graph: number[]) : number[] {
   pInput = lib.__retain(lib.__allocArray(lib.Float32ArrayID, graph));
   pOutput = lib.FloydWarshall(pInput);

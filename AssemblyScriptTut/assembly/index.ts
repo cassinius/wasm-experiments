@@ -92,12 +92,13 @@ export function FloydWarshall(graph: Float32Array) : Float32Array {
   for ( k = 0; k < N; ++k ) {
     for ( i = 0; i < N; ++i ) {
       for ( j = 0; j < N; ++j ) {
+
         // new_dist = graph[i*N+k] + graph[k*N+j];
         
         // if ( new_dist < graph[i*N+j] ) {
         //   graph[i*N+j] = new_dist;
         // }
-        new_dist = <f32>(k * i / (j+1));
+        new_dist = <f32>(k * i /  (j+1));
       }
     }
   }
