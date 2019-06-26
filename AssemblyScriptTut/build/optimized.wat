@@ -6,7 +6,9 @@
  (type $FUNCSIG$ii (func (param i32) (result i32)))
  (type $FUNCSIG$viii (func (param i32 i32 i32)))
  (type $FUNCSIG$vi (func (param i32)))
+ (type $FUNCSIG$fi (func (param i32) (result f32)))
  (type $FUNCSIG$fii (func (param i32 i32) (result f32)))
+ (type $FUNCSIG$ffii (func (param f32 i32 i32) (result f32)))
  (type $FUNCSIG$viif (func (param i32 i32 f32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (memory $0 1)
@@ -24,6 +26,8 @@
  (data (i32.const 424) "\1c\00\00\00\01\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h")
  (data (i32.const 472) "&\00\00\00\01\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s")
  (data (i32.const 528) "\06\00\00\00\10\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00Q\00\00\00\02\00\00\00\91\00\00\00\02\00\00\00\91\0c\00\00\02")
+ (table $0 2 funcref)
+ (elem (i32.const 0) $null $assembly/index/doubleArr~anonymous|0)
  (global $~lib/rt/tlsf/ROOT (mut i32) (i32.const 0))
  (global $~lib/rt/pure/CUR (mut i32) (i32.const 0))
  (global $~lib/rt/pure/END (mut i32) (i32.const 0))
@@ -32,6 +36,7 @@
  (global $assembly/index/Uint32ArrayID i32 (i32.const 4))
  (global $assembly/index/Float32ArrayID i32 (i32.const 5))
  (global $assembly/index/StringID i32 (i32.const 1))
+ (global $~lib/argc (mut i32) (i32.const 0))
  (global $~lib/rt/__rtti_base i32 (i32.const 528))
  (export "memory" (memory $0))
  (export "__alloc" (func $~lib/rt/tlsf/__alloc))
@@ -48,6 +53,7 @@
  (export "sayHiTo" (func $assembly/index/sayHiTo))
  (export "sum" (func $assembly/index/sum))
  (export "doubleArr" (func $assembly/index/doubleArr))
+ (export "FloydWarshall" (func $assembly/index/FloydWarshall))
  (func $~lib/rt/tlsf/removeBlock (; 1 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -1958,7 +1964,13 @@
   local.get $0
   call $~lib/rt/pure/__release
  )
- (func $~lib/typedarray/Float32Array#__get (; 34 ;) (type $FUNCSIG$fii) (param $0 i32) (param $1 i32) (result f32)
+ (func $~lib/typedarray/Float32Array#get:length (; 34 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+ )
+ (func $~lib/typedarray/Float32Array#__get (; 35 ;) (type $FUNCSIG$fii) (param $0 i32) (param $1 i32) (result f32)
   local.get $1
   local.get $0
   i32.load offset=8
@@ -1981,36 +1993,47 @@
   i32.add
   f32.load
  )
- (func $assembly/index/sum (; 35 ;) (type $FUNCSIG$fii) (param $0 i32) (param $1 i32) (result f32)
-  (local $2 i32)
-  (local $3 f32)
+ (func $assembly/index/sum (; 36 ;) (type $FUNCSIG$fi) (param $0 i32) (result f32)
+  (local $1 i32)
+  (local $2 f32)
   local.get $0
   call $~lib/rt/pure/__retain
   drop
   loop $loop|0
    block $break|0
-    local.get $2
     local.get $1
+    local.get $0
+    call $~lib/typedarray/Float32Array#get:length
     i32.ge_s
     br_if $break|0
-    local.get $3
-    local.get $0
     local.get $2
+    local.get $0
+    local.get $1
     call $~lib/typedarray/Float32Array#__get
     f32.add
-    local.set $3
-    local.get $2
+    local.set $2
+    local.get $1
     i32.const 1
     i32.add
-    local.set $2
+    local.set $1
     br $loop|0
    end
   end
   local.get $0
   call $~lib/rt/pure/__release
-  local.get $3
+  local.get $2
  )
- (func $~lib/memory/memory.fill (; 36 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $assembly/index/doubleArr~anonymous|0 (; 37 ;) (type $FUNCSIG$ffii) (param $0 f32) (param $1 i32) (param $2 i32) (result f32)
+  local.get $2
+  call $~lib/rt/pure/__retain
+  drop
+  local.get $2
+  call $~lib/rt/pure/__release
+  local.get $0
+  f32.const 2
+  f32.mul
+ )
+ (func $~lib/memory/memory.fill (; 38 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   (local $2 i32)
   block $~lib/util/memory/memset|inlined.0
    local.get $1
@@ -2219,7 +2242,7 @@
    end
   end
  )
- (func $~lib/arraybuffer/ArrayBufferView#constructor (; 37 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/arraybuffer/ArrayBufferView#constructor (; 39 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   local.get $1
@@ -2283,7 +2306,83 @@
   i32.store offset=8
   local.get $0
  )
- (func $~lib/typedarray/Float32Array#__set (; 38 ;) (type $FUNCSIG$viif) (param $0 i32) (param $1 i32) (param $2 f32)
+ (func $~lib/typedarray/Float32Array#map (; 40 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  (local $1 i32)
+  (local $2 i32)
+  (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 i32)
+  (local $7 i32)
+  (local $8 f32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  local.tee $1
+  call $~lib/typedarray/Float32Array#get:length
+  local.set $2
+  local.get $1
+  i32.load offset=4
+  local.set $3
+  i32.const 12
+  i32.const 5
+  call $~lib/rt/tlsf/__alloc
+  call $~lib/rt/pure/__retain
+  local.get $2
+  call $~lib/arraybuffer/ArrayBufferView#constructor
+  local.tee $0
+  local.get $0
+  call $~lib/rt/pure/__retain
+  local.tee $5
+  i32.load offset=4
+  local.set $6
+  i32.const 0
+  local.set $0
+  loop $loop|0
+   local.get $0
+   local.get $2
+   i32.lt_s
+   if
+    i32.const 3
+    global.set $~lib/argc
+    local.get $0
+    i32.const 2
+    i32.shl
+    local.tee $7
+    local.get $3
+    i32.add
+    f32.load
+    local.get $0
+    local.get $1
+    call $assembly/index/doubleArr~anonymous|0
+    local.set $8
+    local.get $6
+    local.get $7
+    i32.add
+    local.get $8
+    f32.store
+    local.get $0
+    i32.const 1
+    i32.add
+    local.set $0
+    br $loop|0
+   end
+  end
+  local.get $1
+  call $~lib/rt/pure/__release
+  call $~lib/rt/pure/__release
+  local.get $5
+ )
+ (func $assembly/index/doubleArr (; 41 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  (local $1 i32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  drop
+  local.get $0
+  call $~lib/typedarray/Float32Array#map
+  local.get $0
+  call $~lib/rt/pure/__release
+ )
+ (func $~lib/typedarray/Float32Array#__set (; 42 ;) (type $FUNCSIG$viif) (param $0 i32) (param $1 i32) (param $2 f32)
   local.get $1
   local.get $0
   i32.load offset=8
@@ -2307,44 +2406,122 @@
   local.get $2
   f32.store
  )
- (func $assembly/index/doubleArr (; 39 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $assembly/index/FloydWarshall (; 43 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+  (local $1 i32)
   (local $2 i32)
   (local $3 i32)
+  (local $4 i32)
+  (local $5 i32)
+  (local $6 f32)
+  (local $7 f32)
+  (local $8 f32)
   local.get $0
   call $~lib/rt/pure/__retain
   drop
-  i32.const 12
-  i32.const 5
-  call $~lib/rt/tlsf/__alloc
-  call $~lib/rt/pure/__retain
-  local.get $1
-  call $~lib/arraybuffer/ArrayBufferView#constructor
-  local.set $3
+  local.get $0
+  call $~lib/typedarray/Float32Array#get:length
+  f64.convert_i32_s
+  f64.sqrt
+  i32.trunc_f64_s
+  local.set $1
   loop $loop|0
-   local.get $2
-   local.get $1
-   i32.lt_s
-   if
-    local.get $3
-    local.get $2
-    f32.const 2
-    local.get $0
-    local.get $2
-    call $~lib/typedarray/Float32Array#__get
-    f32.mul
-    call $~lib/typedarray/Float32Array#__set
-    local.get $2
+   block $break|0
+    local.get $5
+    local.get $1
+    i32.ge_s
+    br_if $break|0
+    i32.const 0
+    local.set $3
+    loop $loop|1
+     block $break|1
+      local.get $3
+      local.get $1
+      i32.ge_s
+      br_if $break|1
+      i32.const 0
+      local.set $4
+      loop $loop|2
+       block $break|2
+        local.get $4
+        local.get $1
+        i32.ge_s
+        br_if $break|2
+        local.get $0
+        call $~lib/rt/pure/__retain
+        local.tee $2
+        local.get $1
+        local.get $3
+        i32.mul
+        local.get $5
+        i32.add
+        call $~lib/typedarray/Float32Array#__get
+        local.get $2
+        call $~lib/rt/pure/__release
+        local.get $0
+        call $~lib/rt/pure/__retain
+        local.tee $2
+        local.get $1
+        local.get $5
+        i32.mul
+        local.get $4
+        i32.add
+        call $~lib/typedarray/Float32Array#__get
+        local.get $2
+        call $~lib/rt/pure/__release
+        local.get $0
+        call $~lib/rt/pure/__retain
+        local.tee $2
+        local.get $1
+        local.get $3
+        i32.mul
+        local.get $4
+        i32.add
+        call $~lib/typedarray/Float32Array#__get
+        local.set $8
+        local.get $2
+        call $~lib/rt/pure/__release
+        f32.add
+        local.tee $6
+        local.get $8
+        f32.lt
+        if
+         local.get $0
+         call $~lib/rt/pure/__retain
+         local.tee $2
+         local.get $1
+         local.get $3
+         i32.mul
+         local.get $4
+         i32.add
+         local.get $6
+         call $~lib/typedarray/Float32Array#__set
+         local.get $2
+         call $~lib/rt/pure/__release
+        end
+        local.get $4
+        i32.const 1
+        i32.add
+        local.set $4
+        br $loop|2
+       end
+      end
+      local.get $3
+      i32.const 1
+      i32.add
+      local.set $3
+      br $loop|1
+     end
+    end
+    local.get $5
     i32.const 1
     i32.add
-    local.set $2
+    local.set $5
     br $loop|0
    end
   end
   local.get $0
-  call $~lib/rt/pure/__release
-  local.get $3
  )
- (func $~lib/rt/pure/__visit (; 40 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/pure/__visit (; 44 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   local.get $0
   i32.const 580
   i32.lt_u
@@ -2454,7 +2631,7 @@
    unreachable
   end
  )
- (func $~lib/rt/__visit_members (; 41 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/__visit_members (; 45 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   block $switch$1$default
    block $switch$1$case$4
     block $switch$1$case$2
@@ -2478,7 +2655,7 @@
   end
   unreachable
  )
- (func $null (; 42 ;) (type $FUNCSIG$v)
+ (func $null (; 46 ;) (type $FUNCSIG$v)
   nop
  )
 )
