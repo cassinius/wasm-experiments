@@ -107,7 +107,7 @@ function doubleArrJS(arr: number[]) : number[] {
  * @description modelling the graph as 1D array...
  */
 const graph = [];
-const N = 5e2;
+const N = 1e3;
 for ( let i = 0; i < N*N; i++ ) {
   graph.push(Math.random()*9 + 1);
 }
@@ -165,4 +165,10 @@ const eps = 1e-6;
 for ( let i = 0; i < N; i++ ) {
   assert(results.JS[i] < results.WASM[i] + eps);
   assert(results.JS[i] > results.WASM[i] - eps);
+
+  /**
+   * can not be...
+   */
+  assert(results.JS[i] < graph[i] + eps);
+  assert(results.JS[i] > graph[i] - eps);
 }

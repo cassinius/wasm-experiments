@@ -61,31 +61,30 @@ export function sum(arr: Float32Array) : f32 {
  */
 export function doubleArr(arr: Float32Array) : Float32Array {
   return arr.map(n => n*2);
-  // let result = new Float32Array(arr.length);
-  // for (let i: i32 = 0; i < arr.length; i++ ) {
-  //   result[i] = 2 * arr[i];
-  // }
-  // return result;
 }
 
 
+var N: i32;
 
 // @inline
-// function get(graph: Float32Array, N: i32, i: i32, j: i32) : f32 {
-//   return graph[i*N + j];
+// function get(x: u32, y: u32): f32 {
+//   return load<u32>((y * N + x) << 2);
 // }
 
+
+// /** Sets an output pixel in the range [s, 2*s]. */
 // @inline
-// function set(graph: Float32Array, N: i32, i: i32, j: i32, val: f32) : void {
-//   graph[i*N + j] = val;
+// function set(x: u32, y: u32, v: f32): void {
+//   store<u32>((s + y * w + x) << 2, v);
 // }
+
 
 /**
  * Floyd Warshall (1D array)
  */
 export function FloydWarshall(graph: Float32Array) : Float32Array {
-  let N: i32 = <i32>Math.sqrt(graph.length),
-      k: i32,
+  N = <i32>Math.sqrt(graph.length);
+  let k: i32,
       i: i32,
       j: i32,
       new_dist: f32;
@@ -93,11 +92,12 @@ export function FloydWarshall(graph: Float32Array) : Float32Array {
   for ( k = 0; k < N; ++k ) {
     for ( i = 0; i < N; ++i ) {
       for ( j = 0; j < N; ++j ) {
-        new_dist = graph[i*N+k] + graph[k*N+j];
+        // new_dist = graph[i*N+k] + graph[k*N+j];
         
-        if ( new_dist < graph[i*N+j] ) {
-          graph[i*N+j] = new_dist;
-        }
+        // if ( new_dist < graph[i*N+j] ) {
+        //   graph[i*N+j] = new_dist;
+        // }
+        new_dist = <f32>(k * i / (j+1));
       }
     }
   }
