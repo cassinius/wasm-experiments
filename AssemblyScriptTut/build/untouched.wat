@@ -4053,12 +4053,7 @@
   (local $3 i32)
   (local $4 i32)
   (local $5 i32)
-  (local $6 i32)
-  (local $7 i32)
-  (local $8 i32)
-  (local $9 i32)
-  (local $10 f32)
-  (local $11 f32)
+  (local $6 f32)
   local.get $0
   call $~lib/rt/pure/__retain
   drop
@@ -4098,91 +4093,39 @@
         i32.eqz
         br_if $break|2
         local.get $0
-        call $~lib/rt/pure/__retain
-        local.set $9
-        local.get $2
-        local.set $8
         local.get $4
-        local.set $7
-        local.get $3
-        local.set $6
-        local.get $9
-        local.get $7
-        local.get $8
-        i32.mul
-        local.get $6
-        i32.add
-        call $~lib/typedarray/Float32Array#__get
-        local.set $10
-        local.get $9
-        call $~lib/rt/pure/__release
-        local.get $10
-        local.get $0
-        call $~lib/rt/pure/__retain
-        local.set $9
         local.get $2
-        local.set $8
-        local.get $3
-        local.set $7
-        local.get $5
-        local.set $6
-        local.get $9
-        local.get $7
-        local.get $8
         i32.mul
-        local.get $6
+        local.get $3
         i32.add
         call $~lib/typedarray/Float32Array#__get
-        local.set $10
-        local.get $9
-        call $~lib/rt/pure/__release
-        local.get $10
+        local.get $0
+        local.get $3
+        local.get $2
+        i32.mul
+        local.get $5
+        i32.add
+        call $~lib/typedarray/Float32Array#__get
         f32.add
-        local.set $10
-        local.get $10
-        local.get $0
-        call $~lib/rt/pure/__retain
-        local.set $9
-        local.get $2
-        local.set $8
-        local.get $4
-        local.set $7
-        local.get $5
         local.set $6
-        local.get $9
-        local.get $7
-        local.get $8
-        i32.mul
         local.get $6
+        local.get $0
+        local.get $4
+        local.get $2
+        i32.mul
+        local.get $5
         i32.add
         call $~lib/typedarray/Float32Array#__get
-        local.set $11
-        local.get $9
-        call $~lib/rt/pure/__release
-        local.get $11
         f32.lt
         if
          local.get $0
-         call $~lib/rt/pure/__retain
-         local.set $9
-         local.get $2
-         local.set $8
          local.get $4
-         local.set $7
-         local.get $5
-         local.set $6
-         local.get $10
-         local.set $11
-         local.get $9
-         local.get $7
-         local.get $8
+         local.get $2
          i32.mul
-         local.get $6
+         local.get $5
          i32.add
-         local.get $11
+         local.get $6
          call $~lib/typedarray/Float32Array#__set
-         local.get $9
-         call $~lib/rt/pure/__release
         end
         local.get $5
         i32.const 1

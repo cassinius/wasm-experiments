@@ -70,29 +70,33 @@ export function doubleArr(arr: Float32Array) : Float32Array {
 
 
 
-@inline
-function get(graph: Float32Array, N: i32, i: i32, j: i32) : f32 {
-  return graph[i*N + j];
-}
+// @inline
+// function get(graph: Float32Array, N: i32, i: i32, j: i32) : f32 {
+//   return graph[i*N + j];
+// }
 
-@inline
-function set(graph: Float32Array, N: i32, i: i32, j: i32, val: f32) : void {
-  graph[i*N + j] = val;
-}
+// @inline
+// function set(graph: Float32Array, N: i32, i: i32, j: i32, val: f32) : void {
+//   graph[i*N + j] = val;
+// }
 
 /**
  * Floyd Warshall (1D array)
  */
 export function FloydWarshall(graph: Float32Array) : Float32Array {
-  let N: i32 = <i32>Math.sqrt(graph.length);
+  let N: i32 = <i32>Math.sqrt(graph.length),
+      k: i32,
+      i: i32,
+      j: i32,
+      new_dist: f32;
   
-  for ( let k: i32 = 0; k < N; ++k ) {
-    for ( let i: i32 = 0; i < N; ++i ) {
-      for ( let j: i32 = 0; j < N; ++j ) {
-        let new_dist: f32 = get(graph,N,i,k) + get(graph,N,k,j);
+  for ( k = 0; k < N; ++k ) {
+    for ( i = 0; i < N; ++i ) {
+      for ( j = 0; j < N; ++j ) {
+        new_dist = graph[i*N+k] + graph[k*N+j];
         
-        if ( new_dist < get(graph,N,i,j) ) {
-          set(graph, N, i, j, new_dist);
+        if ( new_dist < graph[i*N+j] ) {
+          graph[i*N+j] = new_dist;
         }
       }
     }

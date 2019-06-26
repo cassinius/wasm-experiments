@@ -4,12 +4,12 @@ import * as path from 'path';
 import * as assert from 'assert';
 import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
-const WASM_FILE = path.join(__dirname, './build/optimized.wasm');
+const WASM_FILE = path.join(__dirname, './build/testus.wasm');
 
 
 interface MyApi {
   Uint16ArrayID   : number;
-  Uint32ArrayID   : number;
+  Uint32ArrayID   : number;but
   Float32ArrayID  : number;
   StringID        : number;
 
@@ -107,7 +107,7 @@ function doubleArrJS(arr: number[]) : number[] {
  * @description modelling the graph as 1D array...
  */
 const graph = [];
-const N = 100;
+const N = 5e2;
 for ( let i = 0; i < N*N; i++ ) {
   graph.push(Math.random()*9 + 1);
 }
