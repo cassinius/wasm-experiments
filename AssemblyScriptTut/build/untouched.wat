@@ -11,7 +11,6 @@
  (type $FUNCSIG$fi (func (param i32) (result f32)))
  (type $FUNCSIG$fii (func (param i32 i32) (result f32)))
  (type $FUNCSIG$ffii (func (param f32 i32 i32) (result f32)))
- (type $FUNCSIG$viif (func (param i32 i32 f32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (memory $0 1)
  (data (i32.const 8) "\1e\00\00\00\01\00\00\00\01\00\00\00\1e\00\00\00~\00l\00i\00b\00/\00r\00t\00/\00t\00l\00s\00f\00.\00t\00s\00")
@@ -39,6 +38,7 @@
  (global $assembly/index/Uint32ArrayID i32 (i32.const 4))
  (global $assembly/index/Float32ArrayID i32 (i32.const 5))
  (global $assembly/index/StringID i32 (i32.const 1))
+ (global $assembly/index/N (mut i32) (i32.const 0))
  (global $~lib/argc (mut i32) (i32.const 0))
  (global $~lib/rt/__rtti_base i32 (i32.const 528))
  (global $~lib/heap/__heap_base i32 (i32.const 580))
@@ -4023,37 +4023,12 @@
   call $~lib/rt/pure/__release
   local.get $1
  )
- (func $~lib/typedarray/Float32Array#__set (; 45 ;) (type $FUNCSIG$viif) (param $0 i32) (param $1 i32) (param $2 f32)
-  local.get $1
-  local.get $0
-  i32.load offset=8
-  i32.const 2
-  i32.shr_u
-  i32.ge_u
-  if
-   i32.const 176
-   i32.const 384
-   i32.const 879
-   i32.const 63
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  i32.load offset=4
-  local.get $1
-  i32.const 2
-  i32.shl
-  i32.add
-  local.get $2
-  f32.store
- )
- (func $assembly/index/FloydWarshall (; 46 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+ (func $assembly/index/FloydWarshall (; 45 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
   (local $1 f64)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
-  (local $5 i32)
-  (local $6 f32)
+  (local $5 f32)
   local.get $0
   call $~lib/rt/pure/__retain
   drop
@@ -4064,96 +4039,70 @@
   local.get $1
   f64.sqrt
   i32.trunc_f64_s
-  local.set $2
+  global.set $assembly/index/N
   block $break|0
    i32.const 0
-   local.set $3
+   local.set $2
    loop $loop|0
-    local.get $3
     local.get $2
+    global.get $assembly/index/N
     i32.lt_s
     i32.eqz
     br_if $break|0
     block $break|1
      i32.const 0
-     local.set $4
+     local.set $3
      loop $loop|1
-      local.get $4
-      local.get $2
+      local.get $3
+      global.get $assembly/index/N
       i32.lt_s
       i32.eqz
       br_if $break|1
       block $break|2
        i32.const 0
-       local.set $5
+       local.set $4
        loop $loop|2
-        local.get $5
-        local.get $2
+        local.get $4
+        global.get $assembly/index/N
         i32.lt_s
         i32.eqz
         br_if $break|2
-        local.get $0
-        local.get $4
         local.get $2
-        i32.mul
         local.get $3
-        i32.add
-        call $~lib/typedarray/Float32Array#__get
-        local.get $0
-        local.get $3
-        local.get $2
         i32.mul
-        local.get $5
-        i32.add
-        call $~lib/typedarray/Float32Array#__get
-        f32.add
-        local.set $6
-        local.get $6
-        local.get $0
         local.get $4
-        local.get $2
-        i32.mul
-        local.get $5
-        i32.add
-        call $~lib/typedarray/Float32Array#__get
-        f32.lt
-        if
-         local.get $0
-         local.get $4
-         local.get $2
-         i32.mul
-         local.get $5
-         i32.add
-         local.get $6
-         call $~lib/typedarray/Float32Array#__set
-        end
-        local.get $5
         i32.const 1
         i32.add
+        i32.div_s
+        f32.convert_i32_s
         local.set $5
+        local.get $4
+        i32.const 1
+        i32.add
+        local.set $4
         br $loop|2
        end
        unreachable
       end
-      local.get $4
+      local.get $3
       i32.const 1
       i32.add
-      local.set $4
+      local.set $3
       br $loop|1
      end
      unreachable
     end
-    local.get $3
+    local.get $2
     i32.const 1
     i32.add
-    local.set $3
+    local.set $2
     br $loop|0
    end
    unreachable
   end
   local.get $0
  )
- (func $~lib/rt/pure/__visit (; 47 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/pure/__visit (; 46 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   (local $2 i32)
   (local $3 i32)
   local.get $0
@@ -4287,7 +4236,7 @@
    end
   end
  )
- (func $~lib/rt/__visit_members (; 48 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/__visit_members (; 47 ;) (type $FUNCSIG$vii) (param $0 i32) (param $1 i32)
   (local $2 i32)
   block $switch$1$default
    block $switch$1$case$4
@@ -4312,6 +4261,6 @@
   end
   unreachable
  )
- (func $null (; 49 ;) (type $FUNCSIG$v)
+ (func $null (; 48 ;) (type $FUNCSIG$v)
  )
 )

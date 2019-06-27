@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as assert from 'assert';
 import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
-const WASM_FILE = path.join(__dirname, './build/testus.wasm');
+const WASM_FILE = path.join(__dirname, './build/optimized.wasm');
 
 
 interface MyApi {
