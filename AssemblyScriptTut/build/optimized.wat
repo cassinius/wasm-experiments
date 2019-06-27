@@ -3271,7 +3271,7 @@
   i32.trunc_f64_s
   global.set $assembly/index/N
   loop $loop|0
-   local.get $2
+   local.get $3
    global.get $assembly/index/N
    i32.lt_s
    if
@@ -3283,21 +3283,16 @@
      i32.lt_s
      if
       i32.const 0
-      local.set $3
+      local.set $2
       loop $loop|2
-       local.get $3
+       local.get $2
        global.get $assembly/index/N
        i32.lt_s
        if
-        local.get $1
         local.get $2
-        i32.mul
-        local.get $3
         i32.const 1
         i32.add
-        local.tee $3
-        i32.div_s
-        drop
+        local.set $2
         br $loop|2
        end
       end
@@ -3308,10 +3303,10 @@
       br $loop|1
      end
     end
-    local.get $2
+    local.get $3
     i32.const 1
     i32.add
-    local.set $2
+    local.set $3
     br $loop|0
    end
   end

@@ -143,10 +143,10 @@ function FloydWarshallJS(graph: number[]) : number[] {
   for ( let k = 0; k < N; k++ ) {
     for ( let i = 0; i < N; i++ ) {
       for ( let j = 0; j < N; j++ ) {
-        let new_dist = get(graph,i,k) + get(graph,k,j);
-        if ( new_dist < get(graph,i,j) ) {
-          set(graph, i, j, new_dist);
-        }
+        // let new_dist = get(graph,i,k) + get(graph,k,j);
+        // if ( new_dist < get(graph,i,j) ) {
+        //   set(graph, i, j, new_dist);
+        // }
       }
     }
   }

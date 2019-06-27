@@ -4067,15 +4067,6 @@
         i32.lt_s
         i32.eqz
         br_if $break|2
-        local.get $2
-        local.get $3
-        i32.mul
-        local.get $4
-        i32.const 1
-        i32.add
-        i32.div_s
-        f32.convert_i32_s
-        local.set $5
         local.get $4
         i32.const 1
         i32.add

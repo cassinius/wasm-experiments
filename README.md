@@ -5,9 +5,16 @@ Testing performance of native c compiled code vs pure JavaScript (Mozilla, Chrom
 
 ## Results
 
-* Floyd-Warshall O(n^3) iterations are about twice as fast as JS
+* Floyd-Warshall O(n^3) iterations are about 1.5x as fast as JS
 * Instantiating, passing & retrieving graph of |V|=1e3 (Array of length 1e6) takes 130ms alone
   - which is MUCH slower than an O(n^2) iteration (=Pagerank) in JS...
+* Performance comparison with 100k writings / readings to WASM:
+  - 100k times array mapping in JS took 27 ms.
+  - 100k times array mapping in WASM took 344 ms.
+* Pure O(n^3) performance on 1e3 graph:
+  - Floyd Warshall on graph of size: 1000000 took 1220 ms in JS.
+  - Floyd Warshall on graph of size: 1000000 took 869 ms in WASM.
+
 
 ## DONE
 

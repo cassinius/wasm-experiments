@@ -98,7 +98,7 @@ export function FloydWarshall(graph: Float32Array) : Float32Array {
         // if ( new_dist < graph[i*N+j] ) {
         //   graph[i*N+j] = new_dist;
         // }
-        new_dist = <f32>(k * i /  (j+1));
+        // new_dist = <f32>(k * i /  (j+1));
       }
     }
   }
