@@ -45,8 +45,7 @@ void computePagerank() {
   // seems to have no effect...
   memset(pr, 0, curr.size() * sizeof(float));
 
-  old = create_copy(curr);
-  
+  old = create_copy(curr);  
 }
 
 

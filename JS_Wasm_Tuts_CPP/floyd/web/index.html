@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  <h1> Floyd (no pink)! </h1>
+  <script src="gen/fw.js"></script>
+
+  <script>
+    function transferToHeapFloats(floatArray) {
+      heapSpace = Module._malloc(floatArray.length * floatArray.BYTES_PER_ELEMENT);
+      Module.HEAPF32.set(floatArray, heapSpace >> 2);
+      return heapSpace;
+    }
+
+
+    function transferToHeapInts(intArray) {
+      heapSpace = Module._malloc(intArray.length * intArray.BYTES_PER_ELEMENT);
+      Module.HEAP32.set(intArray, heapSpace >> 2);
+      return heapSpace;
+    }
+
+
+    function FWToFromWasm(graph) {
+      graph = new Float32Array(graph);
+
+      let graphOnHeap;
+      try {
+        graphOnHeap = transferToHeapFloats(graph);
+        return Module._floydWarshall(graphOnHeap, graph.length);
+      }
+      catch (e) {
+        console.log(e);
+      }
+      finally {
+        Module._free(graphOnHeap);
+      }
+    }
+
+
+
+    Module.onRuntimeInitialized = function () {
+      console.log(`Starting FloydWarshall in JS / WASM (CPP, Emscripten)...`);
+
+      /**
+       * Creating graph as 1D-array (don't know how to pass nested arrays to WASM...)
+       */
+      const graph = [];
+      const N = 3e2;
+      for (let i = 0; i < N * N; i++) {
+        if (Math.random() > 0.3) {
+          graph.push(Math.random() * 9 + 1);
+        }
+        else {
+          graph.push(9999);
+        }
+      }
+
+      /**
+       * Creating, passing & retrieving an array of 1e6 alone
+       * takes about 130-150 millis...
+       * 
+       * WHICH MEANS THAT THIS IS !!! USELESS !!! FOR AN O(n^2) algorithm
+       * like Pagerank...
+       */
+      function FloydWarshallWasm(graph) {
+        return FWToFromWasm(graph);
+      }
+
+      function get(graph, i, j) {
+        return graph[i * N + j];
+      }
+
+      function set(graph, i, j, val) {
+        graph[i * N + j] = val;
+      }
+
+      function FloydWarshallJS(graph) {
+        let g = new Float32Array(graph);
+        let N = Math.sqrt(graph.length);
+        let new_dist;
+
+        for (let k = 0; k < N; k++) {
+          for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+              let new_dist = get(g, i, k) + get(g, k, j);
+              if (new_dist < get(g, i, j)) {
+                set(g, i, j, new_dist);
+              }
+            }
+
+            // new_dist = Math.random();
+          }
+        }
+        return g;
+      }
+
+      let results = {
+        JS: null,
+        WASM: null
+      };
+
+      [{ exe: FloydWarshallJS, name: 'JS' }, { exe: FloydWarshallWasm, name: 'WASM' }].forEach(fw => {
+        let tic = +new Date;
+
+        result = fw.exe(graph);
+        results[fw.name] = result;
+        // console.log(graph);
+        // console.log(result);
+
+        let toc = +new Date;
+        console.log(`Floyd Warshall on Array of size: ${graph.length} took ${toc - tic} ms in ${fw.name}.`);
+      });
+
+
+      /**
+       * since both are TypedArrays in JS, we can go for epsilon=0
+       */
+      // for (let i = 0; i < N; i++) {
+      //   assert(results.JS[i] == results.WASM[i]);
+      // }
+
+    };
+
+  </script>
+</body>
+
+</html>
