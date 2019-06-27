@@ -1,11 +1,11 @@
 #include <iostream>
-#include <emscripten.h>
-#include <emscripten/bind.h>
+// #include <emscripten.h>
+// #include <emscripten/bind.h>
 #include <vector>
 #include <math.h>
 
 using namespace std;
-using namespace emscripten;
+// using namespace emscripten;
 
 extern "C"
 {
@@ -66,3 +66,12 @@ float * floydWarshall(float graph[], int size)
 // EMSCRIPTEN_BINDINGS(my_module) {
 //   emscripten::function("pagerank", &pagerank, allow_raw_pointers());
 // }
+
+int main() {
+  int size = 1000000;
+  float * graph = new float[size];
+  for ( int v = 0; v < size; ++v ) {
+    graph[v] = rand();
+  }
+  floydWarshall(graph, size);
+}

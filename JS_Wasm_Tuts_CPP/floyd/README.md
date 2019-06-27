@@ -16,6 +16,8 @@
   - Firefox: WASM about 2x as SLOW as JS
   - JS in Chrome 10x as slow as FF (huh???)
   - WASM in Chrome about 2x as slow as FF
+* Tested against pure C++ -> GCC -> binay
+  - about ~2x as fast as WASM
 
 > I am just **stumped**, but at this point it seems Wasm is MUCH to unreliable / volatile, in itself and amongst platforms, to directly pursue it right now..
 
