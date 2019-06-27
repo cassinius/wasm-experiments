@@ -11,8 +11,7 @@ extern "C" {
   void * pagerank(float init[], int size_init, int deg[], int size_deg, int pull1D[], int size_pull1D);
 }
 
-template<typename T>
-std::vector<T> create_copy(std::vector<T> const &vec)
+template<typename T> std::vector<T> create_copy(std::vector<T> const &vec)
 {
 	std::vector<T> v(vec);
 	return v;

@@ -371,7 +371,7 @@
      (i32.const 21312)
      (i32.const 0)
     )
-    ;;@ ../cpp/pr.cpp:36:0
+    ;;@ ../cpp/pr.cpp:35:0
     (return)
    )
   )
@@ -494,13 +494,13 @@
    )
   )
   (if
-   ;;@ ../cpp/pr.cpp:40:0
+   ;;@ ../cpp/pr.cpp:39:0
    (local.tee $0
     (i32.load
      (i32.const 21264)
     )
    )
-   ;;@ ../cpp/pr.cpp:41:0
+   ;;@ ../cpp/pr.cpp:40:0
    (call $_free
     (local.get $0)
    )
@@ -523,7 +523,7 @@
     (i32.const 2)
    )
   )
-  ;;@ ../cpp/pr.cpp:44:0
+  ;;@ ../cpp/pr.cpp:43:0
   (i32.store
    (i32.const 21264)
    (local.tee $0
@@ -532,7 +532,7 @@
     )
    )
   )
-  ;;@ ../cpp/pr.cpp:47:0
+  ;;@ ../cpp/pr.cpp:46:0
   (drop
    (call $_memset
     (local.get $0)
@@ -673,7 +673,7 @@
     (global.set $STACKTOP
      (local.get $2)
     )
-    ;;@ ../cpp/pr.cpp:51:0
+    ;;@ ../cpp/pr.cpp:50:0
     (return)
    )
   )
@@ -732,16 +732,16 @@
     (i32.const 16)
    )
   )
-  ;;@ ../cpp/pr.cpp:64:0
+  ;;@ ../cpp/pr.cpp:63:0
   (call $__Z12reInitializev)
   (if
-   ;;@ ../cpp/pr.cpp:69:0
+   ;;@ ../cpp/pr.cpp:68:0
    (i32.gt_s
     (local.get $1)
     (i32.const 0)
    )
    (loop $while-in
-    ;;@ ../cpp/pr.cpp:70:0
+    ;;@ ../cpp/pr.cpp:69:0
     (local.set $7
      (i32.add
       (i32.shl
@@ -821,7 +821,7 @@
       )
      )
     )
-    ;;@ ../cpp/pr.cpp:69:0
+    ;;@ ../cpp/pr.cpp:68:0
     (br_if $while-in
      (i32.ne
       (local.tee $9
@@ -836,7 +836,7 @@
    )
   )
   (if
-   ;;@ ../cpp/pr.cpp:74:0
+   ;;@ ../cpp/pr.cpp:73:0
    (i32.gt_s
     (local.get $3)
     (i32.const 0)
@@ -846,7 +846,7 @@
      (i32.const 0)
     )
     (loop $while-in1
-     ;;@ ../cpp/pr.cpp:75:0
+     ;;@ ../cpp/pr.cpp:74:0
      (local.set $1
       (i32.add
        (i32.shl
@@ -891,7 +891,7 @@
        )
       )
      )
-     ;;@ ../cpp/pr.cpp:74:0
+     ;;@ ../cpp/pr.cpp:73:0
      (br_if $while-in1
       (i32.ne
        (local.get $3)
@@ -1019,7 +1019,7 @@
    )
   )
   (if
-   ;;@ ../cpp/pr.cpp:82:0
+   ;;@ ../cpp/pr.cpp:81:0
    (i32.gt_s
     (local.get $5)
     (i32.const 0)
@@ -1033,7 +1033,7 @@
     )
     (loop $while-in3
      (if
-      ;;@ ../cpp/pr.cpp:83:0
+      ;;@ ../cpp/pr.cpp:82:0
       (i32.eq
        (local.tee $9
         (i32.load
@@ -1163,7 +1163,7 @@
          )
         )
        )
-       ;;@ ../cpp/pr.cpp:85:0
+       ;;@ ../cpp/pr.cpp:84:0
        (local.set $0
         (i32.add
          (local.get $0)
@@ -1230,7 +1230,7 @@
        )
       )
      )
-     ;;@ ../cpp/pr.cpp:82:0
+     ;;@ ../cpp/pr.cpp:81:0
      (br_if $while-in3
       (i32.lt_s
        (local.tee $1
@@ -1250,7 +1250,7 @@
    (local.tee $1
     (i32.load offset=28
      (i32.add
-      ;;@ ../cpp/pr.cpp:92:0
+      ;;@ ../cpp/pr.cpp:91:0
       (local.tee $0
        (call $__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEm
         (call $__ZNSt3__224__put_character_sequenceIcNS_11char_traitsIcEEEERNS_13basic_ostreamIT_T0_EES7_PKS4_m
@@ -1403,9 +1403,9 @@
     (call $__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEE5flushEv
      (i32.const 22112)
     )
-    ;;@ ../cpp/pr.cpp:109:0
+    ;;@ ../cpp/pr.cpp:108:0
     (call $__Z15computePagerankv)
-    ;;@ ../cpp/pr.cpp:111:0
+    ;;@ ../cpp/pr.cpp:110:0
     (local.set $0
      (i32.load
       (i32.const 21264)
@@ -1420,7 +1420,7 @@
    )
   )
   (loop $while-in5
-   ;;@ ../cpp/pr.cpp:94:0
+   ;;@ ../cpp/pr.cpp:93:0
    (local.set $1
     (call $__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEf
      (f32.load
@@ -1518,9 +1518,9 @@
   (call $__ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEE5flushEv
    (i32.const 22112)
   )
-  ;;@ ../cpp/pr.cpp:109:0
+  ;;@ ../cpp/pr.cpp:108:0
   (call $__Z15computePagerankv)
-  ;;@ ../cpp/pr.cpp:111:0
+  ;;@ ../cpp/pr.cpp:110:0
   (local.set $0
    (i32.load
     (i32.const 21264)

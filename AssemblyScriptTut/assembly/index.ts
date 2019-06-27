@@ -46,13 +46,7 @@ export function sayHiTo(name: string) : string {
  * Float32Array -> i32
  */
 export function sum(arr: Float32Array) : f32 {
-  // No reducer in AS ?? ...
-  let sum: f32 = 0.0;
-  let i: i32;
-  for (i = 0; i < arr.length; i++ ) {
-    sum += arr[i];
-  }
-  return sum;
+  return arr.reduce<f32>((acc, n) => acc + n, 0);
 }
 
 
@@ -64,45 +58,43 @@ export function doubleArr(arr: Float32Array) : Float32Array {
 }
 
 
-var N: i32;
-
-// @inline
-// function get(x: u32, y: u32): f32 {
-//   return load<u32>((y * N + x) << 2);
-// }
-
-
-// /** Sets an output pixel in the range [s, 2*s]. */
-// @inline
-// function set(x: u32, y: u32, v: f32): void {
-//   store<u32>((s + y * w + x) << 2, v);
-// }
-
-
 /**
  * Floyd Warshall (1D array)
+ * 
+ * @param graph array vs. pointer to array !?
  */
 export function FloydWarshall(graph: Float32Array) : Float32Array {
-  N = <i32>Math.sqrt(graph.length);
+  let g = graph; // seems to copy !?
+
+  let N: i32 = <i32>Math.sqrt(graph.length);
   let k: i32,
       i: i32,
       j: i32,
+      // ij: i32,
+      // ik: i32,
+      // kj: i32
       new_dist: f32;
   
   for ( k = 0; k < N; ++k ) {
     for ( i = 0; i < N; ++i ) {
       for ( j = 0; j < N; ++j ) {
 
-        // new_dist = graph[i*N+k] + graph[k*N+j];
-        
-        // if ( new_dist < graph[i*N+j] ) {
-        //   graph[i*N+j] = new_dist;
+        // ij = load<f32>(graph + i*N+j);
+        // ik = load<f32>(graph + i*N+k);
+        // kj = load<f32>(graph + k*N+j);
+        // if ( ik + kj < ij) {
+        //   store<f32>(graph + i*N+j, ik+kj);
         // }
-        // new_dist = <f32>(k * i /  (j+1));
+
+        new_dist = g[i*N+k] + g[k*N+j];
+        
+        if ( new_dist < g[i*N+j] ) {
+          g[i*N+j] = new_dist;
+        }
       }
     }
   }
-  return graph;
+  return g;
 }
 
 
