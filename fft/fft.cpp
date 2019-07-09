@@ -12,7 +12,7 @@ const double PI = 3.141592653589793238460;
  
 typedef std::complex<double> Complex;
 typedef std::valarray<Complex> CArray;
- 
+
 // Cooley–Tukey FFT (in-place, divide-and-conquer)
 // Higher memory requirements and redundancy although more intuitive
 void fft(CArray& x)
@@ -105,32 +105,38 @@ void ifft(CArray& x)
  
 int main()
 {
-  int data_length = 8;
-
-  Clock::time_point t0 = Clock::now();
-
-  for ( int i = 0; i < 100000; ++i ) {
-   
+    
+    int data_length = 8;
     const Complex test[] = { 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0 };
     CArray data(test, data_length);
- 
+
     // forward fft
     fft(data);
  
-    // std::cout << "fft" << std::endl;
-    // for (int i = 0; i < data_length; ++i)
-    // {
-    //     std::cout << data[i] << std::endl;
-    // }
+    std::cout << "fft" << std::endl;
+    for (int i = 0; i < data_length; ++i)
+    {
+        std::cout << data[i] << std::endl;
+    }
  
     // inverse fft
     ifft(data);
  
-    // std::cout << std::endl << "ifft" << std::endl;
-    // for (int i = 0; i < data_length; ++i)
-    // {
-    //     std::cout << data[i] << std::endl;
-    // }
+    std::cout << std::endl << "ifft" << std::endl;
+    for (int i = 0; i < data_length; ++i)
+    {
+        std::cout << data[i] << std::endl;
+    }
+
+
+
+  Clock::time_point t0 = Clock::now();
+
+  for ( int i = 0; i < 100000; ++i ) {
+    // forward fft
+    fft(data);
+    // inverse fft
+    ifft(data);
   }
 
   Clock::time_point t1 = Clock::now();

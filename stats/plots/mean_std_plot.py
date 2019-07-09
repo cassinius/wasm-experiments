@@ -1,7 +1,7 @@
 from stats.plots.input_csv import readFromCSV, INPUT_CSV, INPUT_COLS, K_FOLD_VAL
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.misc import imread
+# from scipy.misc import imread
 import colorsys
 
 
@@ -22,7 +22,7 @@ for i in range(101):
 
 print(colors)
 
-img = imread("./img/raster.jpg")
+# img = imread("./img/raster.jpg")
 # colors = ['orange', 'g', 'r', 'y', 'k', 'cyan']
 data = readFromCSV(INPUT_CSV, INPUT_COLS, K_FOLD_VAL)
 

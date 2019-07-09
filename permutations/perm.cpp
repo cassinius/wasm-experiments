@@ -24,29 +24,21 @@ void print(const std::vector<T> &vec)
 int main()
 {
   Clock::time_point t0 = Clock::now();
+  vector<std::string> permutations;
 
-  //Permutations for strings
-  std::string example("Hello world!");
-  std::sort(example.begin(), example.end());
-  do {
-      // std::cout << example << '\n';
-  } while (std::next_permutation(example.begin(), example.end()));
-
-  // And for vectors
-  // std::vector<int> another;
-  // another.push_back(1234);
-  // another.push_back(4321);
-  // another.push_back(1234);
-  // another.push_back(9999);
-
-  // std::sort(another.begin(), another.end());
-  // do {
-  //     // print(another);
-  // } while (std::next_permutation(another.begin(), another.end()));
+  for ( int i = 0; i < 10; i++ ) {
+    //Permutations for strings
+    std::string example("Hello World");
+    std::sort(example.begin(), example.end());
+    do {
+        // std::cout << example << '\n';
+        permutations.push_back( example );
+    } while (std::next_permutation(example.begin(), example.end()));
+  }
 
   Clock::time_point t1 = Clock::now();
   milliseconds ms = std::chrono::duration_cast<milliseconds>(t1 - t0);
-  cout << "Permutation of string took " << ms.count() << " ms." << endl;
+  cout << "Permutation of string took " << ms.count() / 10 << " ms." << endl;
   
 
   return 0;

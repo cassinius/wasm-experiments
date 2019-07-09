@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <script src="gen/sum.js"></script>
+
+  <script>
+
+    function transferToHeap(floatArray) {
+
+      /* 
+       * 1) Reserve memory on WASM HEAP
+       */
+      heapSpace = Module._malloc(floatArray.length * floatArray.BYTES_PER_ELEMENT);
+
+      /*
+       * 2) Copy the actual data to the HEAP
+       */
+      Module.HEAPF32.set(floatArray, heapSpace >> 2);
+      return heapSpace;
+    }
+
+
+    function sumUp(arr) {
+      let arrayOnHeap;
+      try {
+        arrayOnHeap = transferToHeap(arr);
+        return Module._sum_up(arrayOnHeap, arr.length);
+      } 
+      finally {
+        /**
+         * 3) Free memory, since we don't have a GC in WASM
+         */
+        // Module._free(arrayOnHeap);
+      }
+    }
+
+
+    Module.onRuntimeInitialized = function () {
+      /**
+       * @description set -s ALLOW_MEMORY_GROWTH=1 compile flag in order to be able to increase memory (up to array length of 500e6 for Float32Arrays (~2GB Browser-process allocated memory))
+       * @description otherwise, 2e6 seems to be the limit (3e6 gives OOM...)
+       */
+      const arr = [1, 2, 3, 4, 5, 6];
+      const float_arr = new Float32Array(arr);
+      // const float_arr = new Float32Array(500e6);
+      console.log(
+        sumUp(float_arr)
+      );
+    }
+
+
+    /**
+     * Pure copy function (Array -> TypedArray)
+     * 
+     * @todo extend for nested arrays...
+     * @todo try with 2D array && Floyd Warshal algorithm !
+     */
+    function toFloatArr(arr) {
+      const res = new Float32Array(arr.length);
+      for (let i = 0; i < arr.length; i++)
+        res[i] = arr[i];
+      return res;
+    }
+
+  </script>
+</body>
+
+</html>

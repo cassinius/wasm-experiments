@@ -1,8 +1,8 @@
 from stats.plots.input_csv import readFromCSV, INPUT_CSV, INPUT_COLS, K_FOLD_VAL
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.misc import imread
-import colorsys
+# from scipy.misc import imread
+# import colorsys
 
 
 """

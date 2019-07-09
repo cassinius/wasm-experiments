@@ -1,0 +1,38 @@
+<html>
+  <body>
+    <h1>AssemblyScript, just the effing basics...</h1>
+    <script>
+
+      const imports = {
+        env: {
+          abort(_msg, _file, line, column) {
+            console.error("abort called at index.ts:" + line + ":" + column);
+          }
+        }
+      };
+    
+      WebAssembly.instantiateStreaming(fetch('./build/optimized.wasm'), imports)
+      .then(obj => {
+        // console.log(obj);
+        api = obj.instance.exports;
+        console.log(api);
+
+        console.log('\nNumber -> Number\n');
+        console.log(api.add(3, 5));
+
+        console.log('\nString -> String\n');
+        const pInput = api.__retain(api.__alloc("bla", api.StringID));
+        const pOutput = api.sayHiTo(pInput);
+        // const result = api.__getString(pOutput);
+        // console.log(api.memory.buffer);
+
+
+        /**
+         * table does not exist...
+         */
+        // console.log(api.table.get(0)());
+      });
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="gen/hello.js"></script>
+
+    <script>
+
+      class Fib {
+        constructor() {
+          this.cppInstance = Module._new_fib();
+        }
+
+        next() {
+          return Module._next_val(this.cppInstance);
+        }
+      }
+      
+
+      Module.onRuntimeInitialized = function() {
+        let tic = new Date;
+
+        // We don't export _main anymore.
+        // console.log(`main() gives ${Module._main()}`);
+
+        let fib1 = new Fib();
+        console.log(fib1);
+        let fib2 = new Fib();
+        console.log(fib2);
+
+        console.log('\nFib1 Class:\n');
+
+        console.log(fib1.next());
+        console.log(fib1.next());
+        console.log(fib1.next());
+        console.log(fib1.next());
+
+        console.log('\nFib2 Class:\n');
+
+        console.log(fib2.next());
+        console.log(fib2.next());
+        console.log(fib2.next());
+        console.log(fib2.next());
+        
+        let toc = new Date;
+        console.log(`Some fibs took ${toc-tic} ms in WASM`)
+      }
+
+
+      // function fib_js(x) {
+      //   if (x < 1)
+      //     return 0;
+      //   if (x == 1)
+      //     return 1;
+      //   return fib_js(x-1) + fib_js(x-2);
+      // }
+
+      // async function initFib () {
+      //   const fetchPromise = fetch('gen/hello.wasm');
+      //   const module = await WebAssembly.compileStreaming(fetchPromise);
+      //   const instance = await WebAssembly.instantiate(module);
+      //   const fib = instance.exports.__Z3fibi;
+      //   return fib;
+      // }
+
+      // (async () => {
+      //   const fib_wasm = await initFib();
+      //   console.log(fib_wasm);
+
+      //   [{rt: fib_js, name: "JS"}, {rt: fib_wasm, name: "WASM"}].forEach(fib_rt => {
+      //     let tic = new Date;
+      //     // console.log(`fib_wasm(1) = ${fib_rt.rt(1)}`);
+      //     // console.log(`fib_wasm(20) = ${fib_rt.rt(20)}`);
+      //     console.log(`fib_wasm(42) = ${fib_rt.rt(42)}`);
+      //     let toc = new Date;
+      //     console.log(`Fib(42) took ${toc-tic} ms in ${fib_rt.name}`)
+      //   });
+      // })();
+
+
+    </script>
+  </body>
+</html>
