@@ -32,5 +32,5 @@ em++ \
 # make
 
 mv pr.js ../web/gen/
-mv pr.wasm ../web/gen/
-mv pr.wasm.map ../web/gen/
+mv pr.dom ../web/gen/
+mv pr.dom.map ../web/gen/

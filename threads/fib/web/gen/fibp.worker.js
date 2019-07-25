@@ -131,7 +131,7 @@ this.onmessage = function(e) {
       STACK_BASE = e.data.stackBase;
       STACKTOP = top;
       STACK_MAX = max;
-      // Call inside asm.js/wasm module to set up the stack frame for this pthread in asm.js/wasm module scope
+      // Call inside asm.js/dom module to set up the stack frame for this pthread in asm.js/dom module scope
       Module['establishStackSpace'](e.data.stackBase, e.data.stackBase + e.data.stackSize);
 
       PThread.receiveObjectTransfer(e.data);

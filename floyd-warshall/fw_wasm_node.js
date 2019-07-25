@@ -1454,12 +1454,12 @@ var memoryInitializer = null;
 
 
 function integrateWasmJS() {
-  // wasm.js has several methods for creating the compiled code module here:
-  //  * 'native-wasm' : use native WebAssembly support in the browser
+  // dom.js has several methods for creating the compiled code module here:
+  //  * 'native-dom' : use native WebAssembly support in the browser
   //  * 'interpret-s-expr': load s-expression code from a .wast and interpret
-  //  * 'interpret-binary': load binary wasm and interpret
-  //  * 'interpret-asm2wasm': load asm.js code, translate to wasm, and interpret
-  //  * 'asmjs': no wasm, just load the asm.js code and use that (good for testing)
+  //  * 'interpret-binary': load binary dom and interpret
+  //  * 'interpret-asm2wasm': load asm.js code, translate to dom, and interpret
+  //  * 'asmjs': no dom, just load the asm.js code and use that (good for testing)
   // The method is set at compile time (BINARYEN_METHOD)
   // The method can be a comma-separated list, in which case, we will try the
   // options one by one. Some of them can fail gracefully, and then we can try
@@ -1467,10 +1467,10 @@ function integrateWasmJS() {
 
   // inputs
 
-  var method = 'native-wasm';
+  var method = 'native-dom';
 
   var wasmTextFile = 'fw_wasm_node.wast';
-  var wasmBinaryFile = 'fw_wasm_node.wasm';
+  var wasmBinaryFile = 'fw_wasm_node.dom';
   var asmjsCodeFile = 'fw_wasm_node.temp.asm.js';
 
   if (typeof Module['locateFile'] === 'function') {
@@ -1494,20 +1494,20 @@ function integrateWasmJS() {
         debugger;
       }
     },
-    'parent': Module // Module inside wasm-js.cpp refers to wasm-js.cpp; this allows access to the outside program.
+    'parent': Module // Module inside dom-js.cpp refers to dom-js.cpp; this allows access to the outside program.
   };
 
   var exports = null;
 
 
   function mergeMemory(newBuffer) {
-    // The wasm instance creates its memory. But static init code might have written to
+    // The dom instance creates its memory. But static init code might have written to
     // buffer already, including the mem init file, and we must copy it over in a proper merge.
     // TODO: avoid this copy, by avoiding such static init writes
     // TODO: in shorter term, just copy up to the last static init write
     var oldBuffer = Module['buffer'];
     if (newBuffer.byteLength < oldBuffer.byteLength) {
-      Module['printErr']('the new buffer in mergeMemory is smaller than the previous one. in native wasm, we should grow memory here');
+      Module['printErr']('the new buffer in mergeMemory is smaller than the previous one. in native dom, we should grow memory here');
     }
     var oldView = new Int8Array(oldBuffer);
     var newView = new Int8Array(newBuffer);
@@ -1530,7 +1530,7 @@ function integrateWasmJS() {
       if (Module['readBinary']) {
         return Module['readBinary'](wasmBinaryFile);
       } else {
-        throw "on the web, we need the wasm binary to be preloaded and set on Module['wasmBinary']. emcc.py will do that for you when generating HTML (but not JS)";
+        throw "on the web, we need the dom binary to be preloaded and set on Module['wasmBinary']. emcc.py will do that for you when generating HTML (but not JS)";
       }
     }
     catch (err) {
@@ -1544,7 +1544,7 @@ function integrateWasmJS() {
     if (!Module['wasmBinary'] && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) && typeof fetch === 'function') {
       return fetch(wasmBinaryFile, { credentials: 'same-origin' }).then(function(response) {
         if (!response['ok']) {
-          throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+          throw "failed to load dom binary file at '" + wasmBinaryFile + "'";
         }
         return response['arrayBuffer']();
       }).catch(function () {
@@ -1562,32 +1562,32 @@ function integrateWasmJS() {
 
   function doNativeWasm(global, env, providedBuffer) {
     if (typeof WebAssembly !== 'object') {
-      Module['printErr']('no native wasm support detected');
+      Module['printErr']('no native dom support detected');
       return false;
     }
     // prepare memory import
     if (!(Module['wasmMemory'] instanceof WebAssembly.Memory)) {
-      Module['printErr']('no native wasm Memory in use');
+      Module['printErr']('no native dom Memory in use');
       return false;
     }
     env['memory'] = Module['wasmMemory'];
-    // Load the wasm module and create an instance of using native support in the JS engine.
+    // Load the dom module and create an instance of using native support in the JS engine.
     info['global'] = {
       'NaN': NaN,
       'Infinity': Infinity
     };
     info['global.Math'] = Math;
     info['env'] = env;
-    // handle a generated wasm instance, receiving its exports and
+    // handle a generated dom instance, receiving its exports and
     // performing other necessary setup
     function receiveInstance(instance, module) {
       exports = instance.exports;
       if (exports.memory) mergeMemory(exports.memory);
       Module['asm'] = exports;
       Module["usingWasm"] = true;
-      removeRunDependency('wasm-instantiate');
+      removeRunDependency('dom-instantiate');
     }
-    addRunDependency('wasm-instantiate');
+    addRunDependency('dom-instantiate');
 
     // User shell pages can write their own Module.instantiateWasm = function(imports, successCallback) callback
     // to manually instantiate the Wasm module themselves. This allows pages to run the instantiation parallel
@@ -1616,7 +1616,7 @@ function integrateWasmJS() {
       getBinaryPromise().then(function(binary) {
         return WebAssembly.instantiate(binary, info);
       }).then(receiver).catch(function(reason) {
-        Module['printErr']('failed to asynchronously prepare wasm: ' + reason);
+        Module['printErr']('failed to asynchronously prepare dom: ' + reason);
         abort(reason);
       });
     }
@@ -1630,7 +1630,7 @@ function integrateWasmJS() {
         .catch(function(reason) {
           // We expect the most common failure cause to be a bad MIME type for the binary,
           // in which case falling back to ArrayBuffer instantiation should work.
-          Module['printErr']('wasm streaming compile failed: ' + reason);
+          Module['printErr']('dom streaming compile failed: ' + reason);
           Module['printErr']('falling back to ArrayBuffer instantiation');
           instantiateArrayBuffer(receiveInstantiatedSource);
         });
@@ -1649,16 +1649,16 @@ function integrateWasmJS() {
   var asmjsReallocBuffer = Module['reallocBuffer'];
 
   var wasmReallocBuffer = function(size) {
-    var PAGE_MULTIPLE = Module["usingWasm"] ? WASM_PAGE_SIZE : ASMJS_PAGE_SIZE; // In wasm, heap size must be a multiple of 64KB. In asm.js, they need to be multiples of 16MB.
-    size = alignUp(size, PAGE_MULTIPLE); // round up to wasm page size
+    var PAGE_MULTIPLE = Module["usingWasm"] ? WASM_PAGE_SIZE : ASMJS_PAGE_SIZE; // In dom, heap size must be a multiple of 64KB. In asm.js, they need to be multiples of 16MB.
+    size = alignUp(size, PAGE_MULTIPLE); // round up to dom page size
     var old = Module['buffer'];
     var oldSize = old.byteLength;
     if (Module["usingWasm"]) {
-      // native wasm support
+      // native dom support
       try {
         var result = Module['wasmMemory'].grow((size - oldSize) / wasmPageSize); // .grow() takes a delta compared to the previous size
         if (result !== (-1 | 0)) {
-          // success in native wasm memory growth, get the buffer from the memory
+          // success in native dom memory growth, get the buffer from the memory
           return Module['buffer'] = Module['wasmMemory'].buffer;
         } else {
           return null;
@@ -1682,8 +1682,8 @@ function integrateWasmJS() {
   var finalMethod = '';
 
   // Provide an "asm.js function" for the application, called to "link" the asm.js module. We instantiate
-  // the wasm module at that time, and it receives imports and provides exports and so forth, the app
-  // doesn't need to care that it is wasm or olyfilled wasm or asm.js.
+  // the dom module at that time, and it receives imports and provides exports and so forth, the app
+  // doesn't need to care that it is dom or olyfilled dom or asm.js.
 
   Module['asm'] = function(global, env, providedBuffer) {
     env = fixImports(env);

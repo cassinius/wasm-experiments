@@ -17,8 +17,8 @@ var Oa=[Hd,dd,qd,od,pd,Hd,Hd,Hd];var Pa=[Id,id,hd,Id];var Qa=[Jd,Xc,Yc,_c,bd,$c,
 
 
 
-// src/load-wasm-worker.js: this file is concatenated at the end of the
-// Emscripten-compiled unpack.cpp into jslib/load-wasm-worker.js.
+// src/load-dom-worker.js: this file is concatenated at the end of the
+// Emscripten-compiled unpack.cpp into jslib/load-dom-worker.js.
 
 // This file implements a worker that responds to a single initial message
 // containing a url to fetch and unpack and the name of the global callback

@@ -32,5 +32,5 @@ em++ \
 # make
 
 mv fw.js ../web/gen/
-mv fw.wasm ../web/gen/
-mv fw.wasm.map ../web/gen/
+mv fw.dom ../web/gen/
+mv fw.dom.map ../web/gen/

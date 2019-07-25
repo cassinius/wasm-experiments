@@ -327,10 +327,10 @@ var asm2wasmImports = { // special asm2wasm imports
 var jsCallStartIndex = 1;
 var functionPointers = new Array(0);
 
-// Wraps a JS function as a wasm function with a given signature.
+// Wraps a JS function as a dom function with a given signature.
 // In the future, we may get a WebAssembly.Function constructor. Until then,
-// we create a wasm module that takes the JS function as an import with a given
-// signature, and re-exports that as a wasm function.
+// we create a dom module that takes the JS function as an import with a given
+// signature, and re-exports that as a dom function.
 function convertJsFunctionToWasm(func, sig) {
 
   // The module is static, with the exception of the type section, which is
@@ -381,7 +381,7 @@ function convertJsFunctionToWasm(func, sig) {
       0x01, 0x01, 0x66, 0x00, 0x00,
   ]));
 
-   // We can compile this wasm module synchronously because it is very small.
+   // We can compile this dom module synchronously because it is very small.
   // This accepts an import (at "e.f"), that it reroutes to an export (at "f")
   var module = new WebAssembly.Module(bytes);
   var instance = new WebAssembly.Instance(module, {
@@ -393,7 +393,7 @@ function convertJsFunctionToWasm(func, sig) {
   return wrappedFunc;
 }
 
-// Add a wasm function to the table.
+// Add a dom function to the table.
 function addFunctionWasm(func, sig) {
   var table = wasmTable;
   var ret = table.length;
@@ -405,7 +405,7 @@ function addFunctionWasm(func, sig) {
     if (!err instanceof RangeError) {
       throw err;
     }
-    throw 'Unable to grow wasm table. Use a higher value for RESERVED_FUNCTION_POINTERS or set ALLOW_TABLE_GROWTH.';
+    throw 'Unable to grow dom table. Use a higher value for RESERVED_FUNCTION_POINTERS or set ALLOW_TABLE_GROWTH.';
   }
 
   // Insert new element
@@ -831,7 +831,7 @@ function UTF8ArrayToString(u8Array, idx, maxBytesToRead) {
       if ((u0 & 0xF0) == 0xE0) {
         u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
       } else {
-        if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte 0x' + u0.toString(16) + ' encountered when deserializing a UTF-8 string on the asm.js/wasm heap to a JS string!');
+        if ((u0 & 0xF8) != 0xF0) warnOnce('Invalid UTF-8 leading byte 0x' + u0.toString(16) + ' encountered when deserializing a UTF-8 string on the asm.js/dom heap to a JS string!');
         u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (u8Array[idx++] & 63);
       }
 
@@ -907,7 +907,7 @@ function stringToUTF8Array(str, outU8Array, outIdx, maxBytesToWrite) {
       outU8Array[outIdx++] = 0x80 | (u & 63);
     } else {
       if (outIdx + 3 >= endIdx) break;
-      if (u >= 0x200000) warnOnce('Invalid Unicode code point 0x' + u.toString(16) + ' encountered when serializing a JS string to an UTF-8 string on the asm.js/wasm heap! (Valid unicode code points should be in range 0-0x1FFFFF).');
+      if (u >= 0x200000) warnOnce('Invalid Unicode code point 0x' + u.toString(16) + ' encountered when serializing a JS string to an UTF-8 string on the asm.js/dom heap! (Valid unicode code points should be in range 0-0x1FFFFF).');
       outU8Array[outIdx++] = 0xF0 | (u >> 18);
       outU8Array[outIdx++] = 0x80 | ((u >> 12) & 63);
       outU8Array[outIdx++] = 0x80 | ((u >> 6) & 63);
@@ -1575,7 +1575,7 @@ function isDataURI(filename) {
 
 
 
-var wasmBinaryFile = 'mandelbrot.wasm';
+var wasmBinaryFile = 'mandelbrot.dom';
 if (!isDataURI(wasmBinaryFile)) {
   wasmBinaryFile = locateFile(wasmBinaryFile);
 }
@@ -1588,7 +1588,7 @@ function getBinary() {
     if (Module['readBinary']) {
       return Module['readBinary'](wasmBinaryFile);
     } else {
-      throw "both async and sync fetching of the wasm failed";
+      throw "both async and sync fetching of the dom failed";
     }
   }
   catch (err) {
@@ -1602,7 +1602,7 @@ function getBinaryPromise() {
   if (!Module['wasmBinary'] && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) && typeof fetch === 'function') {
     return fetch(wasmBinaryFile, { credentials: 'same-origin' }).then(function(response) {
       if (!response['ok']) {
-        throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+        throw "failed to load dom binary file at '" + wasmBinaryFile + "'";
       }
       return response['arrayBuffer']();
     }).catch(function () {
@@ -1617,8 +1617,8 @@ function getBinaryPromise() {
 
 
 
-// Create the wasm instance.
-// Receives the wasm imports, returns the exports.
+// Create the dom instance.
+// Receives the dom imports, returns the exports.
 function createWasm(env) {
 
   // prepare imports
@@ -1632,15 +1632,15 @@ function createWasm(env) {
     'global.Math': Math,
     'asm2wasm': asm2wasmImports
   };
-  // Load the wasm module and create an instance of using native support in the JS engine.
-  // handle a generated wasm instance, receiving its exports and
+  // Load the dom module and create an instance of using native support in the JS engine.
+  // handle a generated dom instance, receiving its exports and
   // performing other necessary setup
   function receiveInstance(instance, module) {
     var exports = instance.exports;
     Module['asm'] = exports;
-    removeRunDependency('wasm-instantiate');
+    removeRunDependency('dom-instantiate');
   }
-  addRunDependency('wasm-instantiate');
+  addRunDependency('dom-instantiate');
 
 
   // Async compilation can be confusing when an error on the page overwrites Module
@@ -1662,7 +1662,7 @@ function createWasm(env) {
     return getBinaryPromise().then(function(binary) {
       return WebAssembly.instantiate(binary, info);
     }).then(receiver, function(reason) {
-      err('failed to asynchronously prepare wasm: ' + reason);
+      err('failed to asynchronously prepare dom: ' + reason);
       abort(reason);
     });
   }
@@ -1678,7 +1678,7 @@ function createWasm(env) {
           .then(receiveInstantiatedSource, function(reason) {
             // We expect the most common failure cause to be a bad MIME type for the binary,
             // in which case falling back to ArrayBuffer instantiation should work.
-            err('wasm streaming compile failed: ' + reason);
+            err('dom streaming compile failed: ' + reason);
             err('falling back to ArrayBuffer instantiation');
             instantiateArrayBuffer(receiveInstantiatedSource);
           });
@@ -1704,8 +1704,8 @@ function createWasm(env) {
 }
 
 // Provide an "asm.js function" for the application, called to "link" the asm.js module. We instantiate
-// the wasm module at that time, and it receives imports and provides exports and so forth, the app
-// doesn't need to care that it is wasm or asm.js.
+// the dom module at that time, and it receives imports and provides exports and so forth, the app
+// doesn't need to care that it is dom or asm.js.
 
 Module['asm'] = function(global, env, providedBuffer) {
   // memory was already allocated (so js could use the buffer)
@@ -1717,14 +1717,14 @@ Module['asm'] = function(global, env, providedBuffer) {
     'maximum': 326,
     'element': 'anyfunc'
   });
-  // With the wasm backend __memory_base and __table_base and only needed for
+  // With the dom backend __memory_base and __table_base and only needed for
   // relocatable output.
   env['__memory_base'] = 1024; // tell the memory segments where to place themselves
   // table starts at 0 by default (even in dynamic linking, for the main module)
   env['__table_base'] = 0;
 
   var exports = createWasm(env);
-  assert(exports, 'binaryen setup failed (no wasm support?)');
+  assert(exports, 'binaryen setup failed (no dom support?)');
   return exports;
 };
 
@@ -2886,9 +2886,9 @@ function copyTempDouble(ptr) {
   
   function emscripten_realloc_buffer(size) {
       var PAGE_MULTIPLE = 65536;
-      size = alignUp(size, PAGE_MULTIPLE); // round up to wasm page size
+      size = alignUp(size, PAGE_MULTIPLE); // round up to dom page size
       var oldSize = buffer.byteLength;
-      // native wasm support
+      // native dom support
       // note that this is *not* threadsafe. multiple threads can call .grow(), and each
       // presents a delta, so in theory we may over-allocate here (e.g. if two threads
       // ask to grow from 256MB to 512MB, we get 2 requests to add +256MB, and may end
@@ -2897,7 +2897,7 @@ function copyTempDouble(ptr) {
       try {
         var result = wasmMemory.grow((size - oldSize) / 65536); // .grow() takes a delta compared to the previous size
         if (result !== (-1 | 0)) {
-          // success in native wasm memory growth, get the buffer from the memory
+          // success in native dom memory growth, get the buffer from the memory
           buffer = wasmMemory.buffer;
           return true;
         } else {

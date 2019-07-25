@@ -31,5 +31,5 @@ em++ \
 # make
 
 mv sum.js ../web/gen/
-mv sum.wasm ../web/gen/
-mv sum.wasm.map ../web/gen/
+mv sum.dom ../web/gen/
+mv sum.dom.map ../web/gen/

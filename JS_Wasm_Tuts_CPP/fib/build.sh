@@ -18,5 +18,5 @@ em++ \
 # cmake ../cpp
 # make
 mv hello.js ../web/gen/
-mv hello.wasm ../web/gen/
-# mv hello.wasm.map ../web/gen/
+mv hello.dom ../web/gen/
+# mv hello.dom.map ../web/gen/

@@ -61,7 +61,7 @@ Module.onRuntimeInitialized = function() {
 
 
 
-// const source = fs.readFileSync(path.join(__dirname, '../web/gen/hello.wasm'));
+// const source = fs.readFileSync(path.join(__dirname, '../web/gen/hello.dom'));
 // const typedArray = new Uint8Array(source);
 
 // const env = {
