@@ -10,7 +10,7 @@ use core_arch::wasm32::*;
 use std::time::{Instant}; // Duration, 
 use rand::Rng;
 
-const N: usize = 5e4 as usize;
+const N: usize = 1e7 as usize;
 
 
 // Terrible beginner code - just for measurement ;-)
