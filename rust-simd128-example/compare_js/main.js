@@ -1,18 +1,18 @@
-a = new Uint32Array([111, 111, 111, 111]);
-b = new Uint32Array([42, 42, 42, 42]);
+const a = new Uint32Array([111, 111, 111, 111]);
+const b = new Uint32Array([42, 42, 42, 42]);
 
-const N = 1e5;
-const res_arr = [];
+const N = 5e4;
+const res_arr = new Uint32Array(N*4);
+const c = new Uint32Array(4);
+
 
 let tic = Date.now();
 let tic_ns = process.hrtime()[1];
 
-c = new Uint32Array(4);
 for ( let n = 0; n < N; ++n ) {
   for ( let i = 0; i < 4; ++i ) {
-    c[i] = a[i] * b[i];
-  }
-  res_arr.push(c);
+    res_arr[n*4+i] = a[i] * b[i];
+  }  
 }
 
 let toc = Date.now();

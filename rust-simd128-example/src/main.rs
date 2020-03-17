@@ -10,12 +10,12 @@ use core_arch::wasm32::*;
 use std::time::{Instant}; // Duration, 
 use rand::Rng;
 
-const N: usize = 1e4 as usize;
+const N: usize = 5e4 as usize;
 
 
 // Terrible beginner code - just for measurement ;-)
-fn test_mult_loop_no_simd(x: [u32; 4], y: [u32; 4]) -> [[u32; 4]; N] {
-	let mut res_arr = [[0; 4]; N];
+fn test_mult_loop_no_simd(x: [u32; 4], y: [u32; 4]) -> Vec<[u32; 4]> {
+	let mut res_arr = vec![[0; 4]; N];
 	let mut result: [u32; 4] = [0; 4];
 
 	let start = Instant::now();
@@ -36,7 +36,7 @@ fn test_mult_loop_no_simd(x: [u32; 4], y: [u32; 4]) -> [[u32; 4]; N] {
 /**
  * @todo WAIT-A-MOMENT... we can define an argument mutable although it was not outside ???
  */
-fn test_mult_loop_simd(x: v128, y: v128, mut res_arr: [v128; N]) -> [v128; N] {
+fn test_mult_loop_simd(x: v128, y: v128, mut res_arr: Vec<v128>) -> Vec<v128> {
 	let start = Instant::now();	
 	for n in 0..N {
 		res_arr[n] = i32x4_mul(x, y);
@@ -57,13 +57,13 @@ fn main() {
 	let b: [u32; 4] = [42; 4];
 
 	// Test W/O simd
-	let res_no_simd: [[u32; 4]; N] = test_mult_loop_no_simd(a, b);
+	let res_no_simd: Vec<[u32; 4]> = test_mult_loop_no_simd(a, b);
 	println!("{:?}", res_no_simd[rng.gen_range(0, N)]);
 
 	// Test WITH simd
 	unsafe {
-		let res_arr: [v128; N] = [::std::mem::transmute([0, 0, 0, 0]); N];
-		let res_simd: [v128; N] = test_mult_loop_simd(::std::mem::transmute(a), ::std::mem::transmute(b), res_arr);
+		let res_arr: Vec<v128> = vec![::std::mem::transmute([0, 0, 0, 0]); N];
+		let res_simd: Vec<v128> = test_mult_loop_simd(::std::mem::transmute(a), ::std::mem::transmute(b), res_arr);
 		println!("{:?}", res_simd[rng.gen_range(0, N)]);
 	}
 
