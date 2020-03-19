@@ -1,8 +1,5 @@
-use std::time::{Instant}; // , Duration
+use std::time::{Instant};
 
-// extern crate rand;
-// use rand::{thread_rng, Rng};
-// use rand::distributions::{Alphanumeric, Uniform, Standard};
 
 const GRAPH_SIZE: usize = 1034;
 
