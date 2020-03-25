@@ -1,6 +1,6 @@
 #![feature(stdsimd)]
 // #![cfg(target_feature = "simd128")]
-#![cfg(target_arch = "wasm32")]
+// #![cfg(target_arch = "wasm32")]
 
 extern crate core_arch;
 use core_arch::wasm32::*;
