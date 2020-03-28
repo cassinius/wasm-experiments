@@ -20,7 +20,7 @@ rustup toolchain install nightly-2019-05-20
 rustup target add wasm32-wasi --toolchain=nightly-2019-05-20
 
 # Build the instance
-RUSTFLAGS='-C target-feature=+simd128' cargo +nightly-2019-05-20 build --release --target=wasm32-wasi
+RUSTFLAGS='-C target-feature=+simd128' cargo +nightly build --release --target=wasm32-wasi
 
 # Verify that it's working!
 wasm2wat --enable-simd ./target/wasm32-wasi/release/rust-wasm-simd128-example.wasm
@@ -29,7 +29,7 @@ wasm2wat --enable-simd ./target/wasm32-wasi/release/rust-wasm-simd128-example.wa
 ## Run it!
 
 ```
-wasmer-release run --backend=llvm ./target/wasm32-wasi/release/rust-wasm-simd128-example.wasm
+wasmer --backend=llvm --enable-simd ./target/wasm32-wasi/release/rust-wasm-simd128-example.wasm
 
 # TADA!
 ```
