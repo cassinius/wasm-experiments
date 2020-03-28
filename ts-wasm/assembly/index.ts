@@ -1,11 +1,13 @@
 // The entry file of your WebAssembly module.
 /**
- * @todo FUCKING javascript doesn't support i64, so we
+ * @todo javascript doesn't support i64, so we
  *       cannot export any function that uses it...
  *       flag --experimental-wasm-bigint works in node, 
  *       but not ts-node (of cours-e-di-doodle, why would it !?!?)
  */
+
 declare function log(arg0: i32): void;
+
 
 /**
  * @description just for a first test
