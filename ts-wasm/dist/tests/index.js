@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var assert_1 = require("assert");
 var loader_1 = require("../loader");
-var N = 1e7;
 assert_1.strict.equal(loader_1.wasm.add(1, 2), 3);
 console.log("Sum in Wasm: OK");
+var N = 1e7;
+var res_arr = new Array(N);
 var a = new Float32Array([Math.random(), Math.random(), Math.random(), Math.random()]);
 var b = new Float32Array([Math.random(), Math.random(), Math.random(), Math.random()]);
 // console.log(a);
 // console.log(b);
-var res_arr = new Array(N);
 // /**
 //  * JS
 //  */

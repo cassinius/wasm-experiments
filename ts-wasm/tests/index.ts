@@ -4,19 +4,18 @@ import {strict as assert} from 'assert';
 import {wasm} from '../loader'
 
 
-const N: number = 1e7;
-
-
 assert.equal(wasm.add(1, 2), 3);
 console.log("Sum in Wasm: OK");
 
+
+const N: number = 1e7;
+let res_arr = new Array(N);
 
 const a = new Float32Array([Math.random(), Math.random(), Math.random(), Math.random()]);
 const b = new Float32Array([Math.random(), Math.random(), Math.random(), Math.random()]);
 // console.log(a);
 // console.log(b);
 
-let res_arr = new Array(N);
 
 
 // /**

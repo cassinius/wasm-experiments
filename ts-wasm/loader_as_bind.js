@@ -7,6 +7,8 @@ const importObject = {
   }
 };
 
+const N = 1e7;
+
 
 const wasm = fs.readFileSync("./dist/build/optimized.wasm");
 
@@ -19,22 +21,45 @@ const asyncTask = async () => {
   );
   console.log(response); // AsBind: Hello World!
 
-  const N = 1e7;
-  let res_arr = new Float32Array(4*N);
-  const a = new Float32Array([Math.random(), Math.random(), Math.random(), Math.random()]);
-  const b = new Float32Array([Math.random(), Math.random(), Math.random(), Math.random()]);
-  
-  tic = process.hrtime();
-  res_arr = instance.exports.mult_loop(a, b, res_arr);
-  toc = process.hrtime();
-  console.log(`Result array is ${res_arr.length} integers long.`);
-  console.log(res_arr[Math.floor(Math.random()*res_arr.length)]);
-  console.log(`Multiplying two 4-integer vectors via loop in Assemblyscript/WASM took ${diffMicros(tic, toc)} us.`);
-
+	test_u32_mult(instance.exports.mult_loop_u32);
+  test_f32_mult(instance.exports.mult_loop_f32);
 
 };
 asyncTask();
 
+
+function test_u32_mult(mult_loop_u32) {
+  let u32_res_arr = new Uint32Array(4*N);
+  const u32_a = new Uint32Array([randU32(), randU32(), randU32(), randU32()]);
+  const u32_b = new Uint32Array([randU32(), randU32(), randU32(), randU32()]);
+  tic = process.hrtime();
+  u32_res_arr = mult_loop_u32(u32_a, u32_b, u32_res_arr);
+  toc = process.hrtime();
+  console.log(`Result array is ${u32_res_arr.length} integers long.`);
+  console.log(u32_res_arr[Math.floor(Math.random()*u32_res_arr.length)]);
+  console.log(`Multiplying ${N} 4-d vectors via loop in Assemblyscript/WASM took ${diffMicros(tic, toc)} us.`);
+}
+
+
+function test_f32_mult(mult_loop_f32) {
+  let f32_res_arr = new Float32Array(4*N);
+  const f32_a = new Float32Array([randF32(), randF32(), randF32(), randF32()]);
+  const f32_b = new Float32Array([randF32(), randF32(), randF32(), randF32()]);
+  tic = process.hrtime();
+  f32_res_arr = mult_loop_f32(f32_a, f32_b, f32_res_arr);
+  toc = process.hrtime();
+  console.log(`Result array is ${f32_res_arr.length} integers long.`);
+  console.log(f32_res_arr[Math.floor(Math.random()*f32_res_arr.length)]);
+  console.log(`Multiplying ${N} 4-d vectors via loop in Assemblyscript/WASM took ${diffMicros(tic, toc)} us.`);
+}
+
+function randF32() {
+	return Math.random();
+}
+
+function randU32() {
+	return Math.floor(Math.random()*10);
+}
 
 function diffSecs(tic, toc) {
   return toc[0] - tic[0];

@@ -18,7 +18,7 @@ for ( let n = 0; n < N; ++n ) {
 let toc = Date.now();
 let toc_ns = process.hrtime()[1];
 
-console.log(`1e4 mults on d4 vecs took ${(toc_ns-tic_ns)/1e3} micros.`);
+console.log(`${N} mults on 4d vecs took ${(toc_ns-tic_ns)/1e3} micros.`);
 console.log(`Comparison in millis: ${toc-tic}`);
 
 console.log(res_arr[Math.floor(Math.random()*N)]);

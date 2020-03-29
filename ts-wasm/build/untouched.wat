@@ -2,9 +2,9 @@
  (type $i32_i32_=>_none (func (param i32 i32)))
  (type $i32_=>_i32 (func (param i32) (result i32)))
  (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
- (type $i32_=>_none (func (param i32)))
  (type $i32_i32_i32_=>_none (func (param i32 i32 i32)))
  (type $i32_i32_i32_=>_i32 (func (param i32 i32 i32) (result i32)))
+ (type $i32_=>_none (func (param i32)))
  (type $none_=>_none (func))
  (type $i32_i32_i32_i32_=>_none (func (param i32 i32 i32 i32)))
  (type $i32_i32_f32_=>_none (func (param i32 i32 f32)))
@@ -58,7 +58,8 @@
  (export "__asbind_Float64Array_ID" (global $node_modules/as-bind/lib/assembly/as-bind/__asbind_Float64Array_ID))
  (export "add" (func $assembly/index/add))
  (export "echoString" (func $assembly/index/echoString))
- (export "mult_loop" (func $assembly/index/mult_loop))
+ (export "mult_loop_u32" (func $assembly/index/mult_loop_u32))
+ (export "mult_loop_f32" (func $assembly/index/mult_loop_f32))
  (func $~lib/rt/tlsf/removeBlock (; 1 ;) (param $0 i32) (param $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -2862,13 +2863,149 @@
   call $~lib/rt/pure/__release
   local.get $2
  )
- (func $~lib/typedarray/Float32Array#get:length (; 21 ;) (param $0 i32) (result i32)
+ (func $~lib/typedarray/Uint32Array#get:length (; 21 ;) (param $0 i32) (result i32)
   local.get $0
   i32.load offset=8
   i32.const 2
   i32.shr_u
  )
- (func $~lib/typedarray/Float32Array#__get (; 22 ;) (param $0 i32) (param $1 i32) (result f32)
+ (func $~lib/typedarray/Uint32Array#__get (; 22 ;) (param $0 i32) (param $1 i32) (result i32)
+  local.get $1
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+  i32.ge_u
+  if
+   i32.const 272
+   i32.const 336
+   i32.const 792
+   i32.const 63
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 2
+  i32.shl
+  i32.add
+  i32.load
+ )
+ (func $~lib/typedarray/Uint32Array#__set (; 23 ;) (param $0 i32) (param $1 i32) (param $2 i32)
+  local.get $1
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+  i32.ge_u
+  if
+   i32.const 272
+   i32.const 336
+   i32.const 803
+   i32.const 63
+   call $~lib/builtins/abort
+   unreachable
+  end
+  local.get $0
+  i32.load offset=4
+  local.get $1
+  i32.const 2
+  i32.shl
+  i32.add
+  local.get $2
+  i32.store
+ )
+ (func $assembly/index/mult_loop_u32 (; 24 ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (local $3 i32)
+  (local $4 i32)
+  local.get $0
+  call $~lib/rt/pure/__retain
+  local.set $0
+  local.get $1
+  call $~lib/rt/pure/__retain
+  local.set $1
+  local.get $2
+  call $~lib/rt/pure/__retain
+  local.set $2
+  i32.const 0
+  local.set $3
+  loop $for-loop|0
+   local.get $3
+   local.get $2
+   call $~lib/typedarray/Uint32Array#get:length
+   i32.lt_u
+   local.set $4
+   local.get $4
+   if
+    local.get $2
+    local.get $3
+    local.get $0
+    i32.const 0
+    call $~lib/typedarray/Uint32Array#__get
+    local.get $1
+    i32.const 0
+    call $~lib/typedarray/Uint32Array#__get
+    i32.mul
+    call $~lib/typedarray/Uint32Array#__set
+    local.get $2
+    local.get $3
+    i32.const 1
+    i32.add
+    local.get $0
+    i32.const 1
+    call $~lib/typedarray/Uint32Array#__get
+    local.get $1
+    i32.const 1
+    call $~lib/typedarray/Uint32Array#__get
+    i32.mul
+    call $~lib/typedarray/Uint32Array#__set
+    local.get $2
+    local.get $3
+    i32.const 2
+    i32.add
+    local.get $0
+    i32.const 2
+    call $~lib/typedarray/Uint32Array#__get
+    local.get $1
+    i32.const 2
+    call $~lib/typedarray/Uint32Array#__get
+    i32.mul
+    call $~lib/typedarray/Uint32Array#__set
+    local.get $2
+    local.get $3
+    i32.const 3
+    i32.add
+    local.get $0
+    i32.const 3
+    call $~lib/typedarray/Uint32Array#__get
+    local.get $1
+    i32.const 3
+    call $~lib/typedarray/Uint32Array#__get
+    i32.mul
+    call $~lib/typedarray/Uint32Array#__set
+    local.get $3
+    i32.const 4
+    i32.add
+    local.set $3
+    br $for-loop|0
+   end
+  end
+  local.get $2
+  local.set $3
+  local.get $0
+  call $~lib/rt/pure/__release
+  local.get $1
+  call $~lib/rt/pure/__release
+  local.get $3
+ )
+ (func $~lib/typedarray/Float32Array#get:length (; 25 ;) (param $0 i32) (result i32)
+  local.get $0
+  i32.load offset=8
+  i32.const 2
+  i32.shr_u
+ )
+ (func $~lib/typedarray/Float32Array#__get (; 26 ;) (param $0 i32) (param $1 i32) (result f32)
   local.get $1
   local.get $0
   i32.load offset=8
@@ -2891,7 +3028,7 @@
   i32.add
   f32.load
  )
- (func $~lib/typedarray/Float32Array#__set (; 23 ;) (param $0 i32) (param $1 i32) (param $2 f32)
+ (func $~lib/typedarray/Float32Array#__set (; 27 ;) (param $0 i32) (param $1 i32) (param $2 f32)
   local.get $1
   local.get $0
   i32.load offset=8
@@ -2915,7 +3052,7 @@
   local.get $2
   f32.store
  )
- (func $assembly/index/mult_loop (; 24 ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $assembly/index/mult_loop_f32 (; 28 ;) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (local $3 i32)
   (local $4 i32)
   local.get $0
@@ -2998,10 +3135,10 @@
   call $~lib/rt/pure/__release
   local.get $3
  )
- (func $~lib/rt/pure/__collect (; 25 ;)
+ (func $~lib/rt/pure/__collect (; 29 ;)
   return
  )
- (func $~lib/rt/tlsf/freeBlock (; 26 ;) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/tlsf/freeBlock (; 30 ;) (param $0 i32) (param $1 i32)
   (local $2 i32)
   local.get $1
   i32.load
@@ -3015,7 +3152,7 @@
   local.get $1
   call $~lib/rt/tlsf/insertBlock
  )
- (func $~lib/rt/pure/decrement (; 27 ;) (param $0 i32)
+ (func $~lib/rt/pure/decrement (; 31 ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
   local.get $0
@@ -3090,7 +3227,7 @@
    i32.store offset=4
   end
  )
- (func $~lib/rt/pure/__visit (; 28 ;) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/pure/__visit (; 32 ;) (param $0 i32) (param $1 i32)
   local.get $0
   global.get $~lib/heap/__heap_base
   i32.lt_u
@@ -3114,7 +3251,7 @@
   i32.sub
   call $~lib/rt/pure/decrement
  )
- (func $~lib/rt/__visit_members (; 29 ;) (param $0 i32) (param $1 i32)
+ (func $~lib/rt/__visit_members (; 33 ;) (param $0 i32) (param $1 i32)
   (local $2 i32)
   block $switch$1$default
    block $switch$1$case$4

@@ -34,12 +34,22 @@ export function echoString(value: string): string {
 }
 
 
+export function mult_loop_u32(x: Uint32Array, y: Uint32Array, res_arr: Uint32Array) : Uint32Array {
+	for ( let n: u32 = 0; n < <u32>res_arr.length; n+=4 ) {
+    res_arr[n] = x[0] * y[0];
+    res_arr[n+1] = x[1] * y[1];
+    res_arr[n+2] = x[2] * y[2];
+    res_arr[n+3] = x[3] * y[3];
+	}
+	return res_arr;
+}
+
+
 /**
  * Multiply vectors of 4 unsigned integers w/o vectorization
  * 
  */
-export function mult_loop(x: Float32Array, y: Float32Array, res_arr: Float32Array) : Float32Array {
-
+export function mult_loop_f32(x: Float32Array, y: Float32Array, res_arr: Float32Array) : Float32Array {
 	for ( let n: u32 = 0; n < <u32>res_arr.length; n+=4 ) {
     res_arr[n] = x[0] * y[0];
     res_arr[n+1] = x[1] * y[1];
