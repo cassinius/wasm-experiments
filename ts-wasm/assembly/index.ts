@@ -5,13 +5,13 @@
  *       flag --experimental-wasm-bigint works in node, 
  *       but not ts-node (of cours-e-di-doodle, why would it !?!?)
  */
-declare namespace console {
-  function log(ptr: i32): void;
-  function log_i64(arg0: i64): void;
-}
-console.log(42);
-const date = Date.now();
-console.log_i64(date);
+// declare namespace console {
+//   function log(ptr: i32): void;
+//   function log_i64(arg0: i64): void;
+// }
+// console.log(42);
+// const date = Date.now();
+// console.log_i64(date);
 
 
 /**
@@ -19,6 +19,14 @@ console.log_i64(date);
  */
 export function add(a: i32, b: i32): i32 {
   return a + b;
+}
+
+
+/**
+ * AS Bind test (string)
+ */
+export function echoString(value: string): string {
+  return "AsBind: " + value;
 }
 
 
@@ -36,3 +44,4 @@ export function add(a: i32, b: i32): i32 {
 // 	}
 // 	return res_arr;
 // }
+

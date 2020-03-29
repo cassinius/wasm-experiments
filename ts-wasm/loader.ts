@@ -3,6 +3,8 @@ import * as fs from "fs";
 const compiled = new WebAssembly.Module(
   fs.readFileSync(__dirname + "/build/optimized.wasm")
 );
+
+
 const importObject = {
   env: {
     abort(_msg: any, _file: any, line: any, column: any) {
