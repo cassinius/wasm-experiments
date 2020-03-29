@@ -10,6 +10,10 @@
 //   function log_i64(arg0: i64): void;
 // }
 // console.log(42);
+
+// declare function log(msg: string): void;
+// log("blahoo");
+
 // const date = Date.now();
 // console.log_i64(date);
 
@@ -34,14 +38,14 @@ export function echoString(value: string): string {
  * Multiply vectors of 4 unsigned integers w/o vectorization
  * 
  */
-// export function mult_loop(x: Float32Array, y: Float32Array, res_arr: Float32Array[]) : Float32Array[] {
-// 	const vector_product: Float32Array = new Float32Array(4);
-// 	for ( let n: u32 = 0; n < <u32>res_arr.length; ++n ) {
-// 		for ( let i: u32 = 0; i < <u32>vector_product.length; ++i ) {
-// 			vector_product[i] = x[i] * y[i];
-// 		}
-// 		res_arr[n] = vector_product;
-// 	}
-// 	return res_arr;
-// }
+export function mult_loop(x: Float32Array, y: Float32Array, res_arr: Float32Array) : Float32Array {
+
+	for ( let n: u32 = 0; n < <u32>res_arr.length; n+=4 ) {
+    res_arr[n] = x[0] * y[0];
+    res_arr[n+1] = x[1] * y[1];
+    res_arr[n+2] = x[2] * y[2];
+    res_arr[n+3] = x[3] * y[3];
+	}
+	return res_arr;
+}
 
