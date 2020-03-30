@@ -1,5 +1,4 @@
-const V = 1034;
-// const V = 500;
+const V = 1e3;
 
 // Graph instantiation
 let time_start = +new Date;

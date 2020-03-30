@@ -13,7 +13,7 @@ mod mults;
 mod floyd;
 
 const N: usize = 1e7 as usize;
-const GRAPH_SIZE: usize = 1034;
+const GRAPH_SIZE: usize = 1e3 as usize;
 
 
 fn test_mult() {

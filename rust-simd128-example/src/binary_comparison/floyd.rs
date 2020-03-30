@@ -1,7 +1,7 @@
 use std::time::{Instant};
 
 
-const GRAPH_SIZE: usize = 1034;
+const GRAPH_SIZE: usize = 1e3 as usize;
 
 
 pub fn fw_dense(graph: &mut Vec<f32>) {

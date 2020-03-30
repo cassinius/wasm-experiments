@@ -8,7 +8,7 @@ using namespace std;
 typedef std::chrono::high_resolution_clock Clock;
 typedef std::chrono::milliseconds milliseconds;
 
-const unsigned int V = 1034;
+const unsigned int V = 1000;
 unsigned int graph[V][V];
 unsigned int graphSingleArray[V*V];
 std::map<int, std::map<int, int>> graphDict;
