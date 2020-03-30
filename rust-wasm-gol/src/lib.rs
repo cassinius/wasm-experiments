@@ -1,8 +1,7 @@
 mod utils;
 
-extern crate rand;
+// extern crate rand;
 
-use std::fmt;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -31,14 +30,26 @@ pub struct Universe {
 
 #[wasm_bindgen]
 impl Universe {
+	pub fn width(&self) -> u32 {
+		self.width
+	}
+
+	pub fn height(&self) -> u32 {
+		self.height
+	}
+
+	pub fn cells(&self) -> *const Cell {
+		self.cells.as_ptr()
+	}
+
 	pub fn new() -> Universe {
-		let width = 64;
-		let height = 64;
+		let width = 128;
+		let height = 128;
 
 		let cells = (0..width * height)
 			.map(|i| {
 				/* a poor man's initialization... */
-				if i % 2 == 0 || i % 7 == 0 {
+				if i%2 == 0 || i%7 == 0 { // rand::random::<f32>() < 0.5 {
 					Cell::Alive
 				} else {
 					Cell::Dead
@@ -53,9 +64,6 @@ impl Universe {
 		}
 	}
 
-	pub fn render(&self) -> String {
-		self.to_string()
-	}
 
 	pub fn tick(&mut self) {
 		let mut next = self.cells.clone();
@@ -118,25 +126,10 @@ impl Universe {
 }
 
 
-
-impl fmt::Display for Universe {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		for line in self.cells.as_slice().chunks(self.width as usize) {
-			for &cell in line {
-				let symbol = if cell == Cell::Dead { '◻' } else { '◼' };
-				write!(f, "{}", symbol)?;
-			}
-			write!(f, "\n")?;
-		}
-
-		Ok(())
-	}
-}
-
-
 #[wasm_bindgen]
 pub fn greet(name: &str) {
 	utils::console_log(&format!("Hello, {}!", name));
+	// utils::console_log(&format!("Random f32: {}", rand::random::<f32>()));
 	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
 }
 
