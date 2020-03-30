@@ -12,6 +12,7 @@
 // console.log(42);
 
 NativeMath.seedRandom(42);
+
 // declare function log_i64(arg: i64): void;
 // const date = Date.now();
 // log_i64(date);

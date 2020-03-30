@@ -5,8 +5,17 @@ const N = 1e7;
 
 const wasm = fs.readFileSync("./dist/build/optimized.wasm");
 
+/**
+ * @todo import doesn't work, why would it...it's just *EXACTLY* what the tutorials say...
+ */
 const asyncTask = async () => {
-  const instance = await AsBind.instantiate(wasm);
+  const instance = await AsBind.instantiate(wasm, {
+		index: {
+			log_i64(arg) {
+				console.log(arg);
+			}
+		}
+	});
 
   // You can now use your wasm / as-bind instance!
   // const response = instance.exports.echoString("Hello World!");

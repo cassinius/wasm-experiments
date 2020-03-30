@@ -1,14 +1,15 @@
 /* tslint:disable */
 import * as wasm from './wasm_game_of_life_bg';
+console.log(wasm);
 
 /**
 */
-export const Cell = Object.freeze({ Dead:0,Alive:1, });
+export const Cell = Object.freeze({ Dead: 0, Alive: 1, });
 
 function freeUniverse(ptr) {
-
     wasm.__wbg_universe_free(ptr);
 }
+
 /**
 */
 export class Universe {
