@@ -3,6 +3,9 @@ name = "rust-wasm-gol"
 version = "0.1.0"
 authors = ["Bernd Malle <bernd.malle@gmail.com>"]
 edition = "2018"
+description="Rust Wasm GOL tutorial"
+repository="https://github.com/cassinius/wasm-experiments"
+license="None"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

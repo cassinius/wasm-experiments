@@ -33,17 +33,11 @@ pub struct Universe {
 
 #[wasm_bindgen]
 impl Universe {
-	pub fn width(&self) -> u32 {
-		self.width
-	}
+	pub fn width(&self) -> u32 { self.width }
 
-	pub fn height(&self) -> u32 {
-		self.height
-	}
+	pub fn height(&self) -> u32 { self.height	}
 
-	pub fn cells(&self) -> *const u32 {
-		self.cells.as_slice().as_ptr()
-	}
+	pub fn cells(&self) -> *const u32 { self.cells.as_slice().as_ptr() }
 
 	pub fn new() -> Universe {
 		let width = 168;
@@ -52,6 +46,7 @@ impl Universe {
 		let mut cells = FixedBitSet::with_capacity(size);
 
 		for i in 0..size {
+			// FixedBitSet takes a boolean as value
 			cells.set(i,js_sys::Math::random() < 0.5);
 		}
 
@@ -85,6 +80,7 @@ impl Universe {
 		self.cells = next;
 	}
 
+	// #[inline(always)]
 	fn get_index(&self, row: u32, column: u32) -> usize {
 		(row * self.width + column) as usize
 	}
