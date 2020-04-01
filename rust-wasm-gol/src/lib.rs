@@ -1,9 +1,11 @@
 mod utils;
 
 extern crate js_sys;
+
 use wasm_bindgen::prelude::*;
 
 extern crate fixedbitset;
+
 use fixedbitset::FixedBitSet;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -12,6 +14,14 @@ use fixedbitset::FixedBitSet;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+extern crate web_sys;
+
+// A macro to provide `println!(..)`-style syntax for `console.log` logging.
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
+}
 
 // #[wasm_bindgen]
 // // Cell is represented as single Byte
@@ -27,9 +37,10 @@ const DEFAULT_SIZE: u32 = 128;
 
 #[wasm_bindgen]
 pub struct Universe {
+	epoch: u32,
 	width: u32,
 	height: u32,
-	cells: FixedBitSet
+	cells: FixedBitSet,
 }
 
 
@@ -55,14 +66,14 @@ impl Universe {
 impl Universe {
 	/// Getters
 	pub fn width(&self) -> u32 { self.width }
-	pub fn height(&self) -> u32 { self.height	}
+	pub fn height(&self) -> u32 { self.height }
 	pub fn cells(&self) -> *const u32 { self.cells.as_slice().as_ptr() }
 
 	/// Resets all cells to the dead state.
 	fn reset_cells(&mut self) {
 		let size = (self.width * self.height) as usize;
 		self.cells = FixedBitSet::with_capacity(size);
-		for i in 0..size {self.cells.set(i, false)}
+		for i in 0..size { self.cells.set(i, false) }
 	}
 
 	/// Setters
@@ -77,6 +88,10 @@ impl Universe {
 
 
 	pub fn new() -> Universe {
+		utils::set_panic_hook();
+		// panic!("blahoo");
+
+		let epoch = 0;
 		let width = DEFAULT_SIZE;
 		let height = DEFAULT_SIZE;
 		let size = (width * height) as usize;
@@ -84,10 +99,11 @@ impl Universe {
 
 		for i in 0..size {
 			// FixedBitSet takes a boolean as value
-			cells.set(i,js_sys::Math::random() < 0.5);
+			cells.set(i, js_sys::Math::random() < 0.5);
 		}
 
 		Universe {
+			epoch,
 			width,
 			height,
 			cells,
@@ -96,23 +112,32 @@ impl Universe {
 
 
 	pub fn tick(&mut self) {
+		self.epoch += 1;
 		let mut next = self.cells.clone();
+		let mut dead_alive = 0;
+		let mut alive_dead = 0;
 
 		for row in 0..self.height {
 			for col in 0..self.width {
 				let idx = self.get_index(row, col);
 				let cell = self.cells[idx];
 				let live_neighbors = self.live_neighbor_count(row, col);
+				// log!("cell[{}, {}] is initially {:?} and has {} live neighbors", row, col, cell, live_neighbors);
 
-				next.set(idx, match (cell, live_neighbors) {
+				let new_val = match (cell, live_neighbors) {
 					(true, x) if x < 2 => false,
 					(true, 2) | (true, 3) => true,
 					(true, x) if x > 3 => false,
 					(false, 3) => true,
 					(otherwise, _) => otherwise
-				});
+				};
+				if cell && new_val != cell { alive_dead+= 1 };
+				if !cell && new_val != cell { dead_alive += 1 };
+				next.set(idx, new_val);
+				// log!("    it becomes {:?}", next[idx]);
 			}
 		}
+		log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, alive_dead, dead_alive);
 
 		self.cells = next;
 	}
