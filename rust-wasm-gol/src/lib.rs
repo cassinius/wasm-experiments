@@ -22,6 +22,8 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 // 	Alive = 1,
 // }
 
+const DEFAULT_SIZE: u32 = 128;
+
 
 #[wasm_bindgen]
 pub struct Universe {
@@ -31,17 +33,52 @@ pub struct Universe {
 }
 
 
+/// Private implementation, for testing
+impl Universe {
+	/// Get the dead and alive values of the entire universe.
+	pub fn get_cells(&self) -> &FixedBitSet {
+		&self.cells
+	}
+
+	/// Set cells to be alive in a universe by passing the row and column
+  /// of each (living) cell as an array.
+	pub fn set_cells(&mut self, cells: &[(u32, u32)]) {
+		for (row, col) in cells.iter().as_ref() {
+			let idx = self.get_index(*row, *col);
+			self.cells.set(idx, true);
+		}
+	}
+}
+
+
 #[wasm_bindgen]
 impl Universe {
+	/// Getters
 	pub fn width(&self) -> u32 { self.width }
-
 	pub fn height(&self) -> u32 { self.height	}
-
 	pub fn cells(&self) -> *const u32 { self.cells.as_slice().as_ptr() }
 
+	/// Resets all cells to the dead state.
+	fn reset_cells(&mut self) {
+		let size = (self.width * self.height) as usize;
+		self.cells = FixedBitSet::with_capacity(size);
+		for i in 0..size {self.cells.set(i, false)}
+	}
+
+	/// Setters
+	pub fn set_width(&mut self, width: u32) {
+		self.width = width;
+		self.reset_cells();
+	}
+	pub fn set_height(&mut self, height: u32) {
+		self.height = height;
+		self.reset_cells();
+	}
+
+
 	pub fn new() -> Universe {
-		let width = 168;
-		let height = 168;
+		let width = DEFAULT_SIZE;
+		let height = DEFAULT_SIZE;
 		let size = (width * height) as usize;
 		let mut cells = FixedBitSet::with_capacity(size);
 
@@ -80,6 +117,7 @@ impl Universe {
 		self.cells = next;
 	}
 
+	// #[inline]
 	// #[inline(always)]
 	fn get_index(&self, row: u32, column: u32) -> usize {
 		(row * self.width + column) as usize

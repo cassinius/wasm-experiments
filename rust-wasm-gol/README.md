@@ -16,4 +16,11 @@ import * as wasm from "rust-wasm-gol";
 ```bash
 npm run start
 ```
-
+* run the tests
+  - also works with
+    + --firefox
+    + --safari
+    + --node
+```bash
+wasm-pack test --chrome --headless
+```
