@@ -13,10 +13,19 @@ const fps_meter = new window.FPSMeter({
 });
 
 
-const CELL_SIZE = 5; // px
+const CELL_SIZE = 3; // px
 const GRID_COLOR = "#111111";
-const DEAD_COLOR = "#111111";
-const ALIVE_COLOR = "#33ff54";
+
+const CELL_CONDITIONS = {
+	alive: {
+		value: true,
+		color: "#33ff54"
+	},
+	dead: {
+		value: false,
+		color: "#ff3000" // "#111111"
+	}
+};
 const TICKS_PER_DRAW_TEXT = "Speed: ";
 let TICKS_PER_ROUND = 1;
 
@@ -45,17 +54,13 @@ ticks_per_draw_slider.addEventListener('change', e => {
 
 reset_dead.addEventListener('click', () => {
 	universe.reset_cells();
-	ctx.globalAlpha = 1;
 	drawGrid();
 	drawCells();
-	ctx.globalAlpha = 0.5;
 });
 reset_random.addEventListener('click', () => {
 	universe.randomize_cells();
-	ctx.globalAlpha = 1;
 	drawGrid();
 	drawCells();
-	ctx.globalAlpha = 0.5;
 });
 
 /**
@@ -86,24 +91,28 @@ const drawCells = () => {
 	const cellsPtr = universe.cells();
 	const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
 
+	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);
 	ctx.beginPath();
 
-	for (let row = 0; row < height; row++) {
-		for (let col = 0; col < width; col++) {
-			const idx = getIndex(row, col);
+	// Object.values(CELL_CONDITIONS).forEach(condition => {
+		ctx.fillStyle = CELL_CONDITIONS.alive.color;
+		for (let row = 0; row < height; row++) {
+			for (let col = 0; col < width; col++) {
+				const idx = getIndex(row, col);
 
-			ctx.fillStyle = bitIsSet(idx, cells)
-				? ALIVE_COLOR
-				: DEAD_COLOR;
+				if ( !bitIsSet(idx, cells) ) { // !== condition.value ) {
+					continue;
+				}
 
-			ctx.fillRect(
-				col * (CELL_SIZE + 1) + 1,
-				row * (CELL_SIZE + 1) + 1,
-				CELL_SIZE,
-				CELL_SIZE
-			);
+				ctx.fillRect(
+					col * (CELL_SIZE + 1) + 1,
+					row * (CELL_SIZE + 1) + 1,
+					CELL_SIZE,
+					CELL_SIZE
+				);
+			}
 		}
-	}
+	// });
 
 	ctx.stroke();
 };
@@ -126,7 +135,6 @@ const isPaused = () => {
 const playPauseButton = document.querySelector("#play-pause");
 
 const play = () => {
-	ctx.globalAlpha = 0.5;
 	playPauseButton.classList.remove('paused');
 	playPauseButton.classList.add('playing');
 	playPauseButton.textContent = "⏸";

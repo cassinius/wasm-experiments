@@ -1,11 +1,11 @@
 mod utils;
-
-extern crate js_sys;
+mod timer;
 
 use wasm_bindgen::prelude::*;
+extern crate js_sys;
+extern crate web_sys;
 
 extern crate fixedbitset;
-
 use fixedbitset::FixedBitSet;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -13,8 +13,6 @@ use fixedbitset::FixedBitSet;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
-extern crate web_sys;
 
 
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
@@ -34,7 +32,7 @@ macro_rules! log {
 // 	Alive = 1,
 // }
 
-const DEFAULT_SIZE: u32 = 128;
+const DEFAULT_SIZE: u32 = 164;
 const DEFAULT_ALIVE_INIT: f64 = 0.3;
 
 
@@ -133,11 +131,12 @@ impl Universe {
 		}
 		let died: u32 = changes.iter().map(|&x| x.0).sum();
 		let born: u32 = changes.iter().map(|&x| x.1).sum();
-		log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, died, born);
+		// log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, died, born);
 	}
 
 
 	fn tick(&mut self) -> (u32, u32) {
+		let _timer = timer::Timer::new("Universe::tick");
 		self.epoch += 1;
 		let mut next = self.cells.clone();
 		let mut dead_alive = 0;
