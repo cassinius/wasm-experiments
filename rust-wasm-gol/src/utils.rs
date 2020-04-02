@@ -1,4 +1,4 @@
-use wasm_bindgen::prelude::*;
+// use wasm_bindgen::prelude::*;
 
 
 #[allow(dead_code)]
@@ -14,11 +14,11 @@ pub fn set_panic_hook() {
 }
 
 
-#[wasm_bindgen]
+// #[wasm_bindgen]
 extern {
-    #[wasm_bindgen(js_namespace = console, js_name=log)]
+    // #[wasm_bindgen(js_namespace = console, js_name=log)]
     pub fn console_log(s: &str);
-    #[wasm_bindgen(js_namespace = console, js_name=error)]
+    // #[wasm_bindgen(js_namespace = console, js_name=error)]
     pub fn console_error(s: &str);
 }
 

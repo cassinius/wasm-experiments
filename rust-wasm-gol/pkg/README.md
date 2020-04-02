@@ -24,3 +24,7 @@ npm run start
 ```bash
 wasm-pack test --chrome --headless
 ```
+
+### Benchmarking
+
+We have to comment out all the #[wasm_bindgen] annotations, and the "cdylib" bits from Cargo.toml or else building native code will fail and have link errors.

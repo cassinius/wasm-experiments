@@ -1,9 +1,10 @@
 mod utils;
-mod timer;
+// mod timer;
+// use timer::Timer;
 
-use wasm_bindgen::prelude::*;
-extern crate js_sys;
-extern crate web_sys;
+// use wasm_bindgen::prelude::*;
+// extern crate js_sys;
+// extern crate web_sys;
 
 extern crate fixedbitset;
 use fixedbitset::FixedBitSet;
@@ -17,11 +18,11 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
 // #[allow(unused_macros)]
-macro_rules! log {
-    ( $( $t:tt )* ) => {
-        web_sys::console::log_1(&format!( $( $t )* ).into());
-    }
-}
+// macro_rules! log {
+//     ( $( $t:tt )* ) => {
+//         web_sys::console::log_1(&format!( $( $t )* ).into());
+//     }
+// }
 
 // #[wasm_bindgen]
 // // Cell is represented as single Byte
@@ -36,7 +37,13 @@ const DEFAULT_SIZE: u32 = 164;
 const DEFAULT_ALIVE_INIT: f64 = 0.3;
 
 
-#[wasm_bindgen]
+fn get_random_boolean() -> bool {
+	// return js_sys::Math::random() < DEFAULT_ALIVE_INIT;
+	return false;
+}
+
+
+// #[wasm_bindgen]
 pub struct Universe {
 	epoch: u32,
 	width: u32,
@@ -64,7 +71,7 @@ impl Universe {
 
 
 // #[allow(unused_variables)]
-#[wasm_bindgen]
+// #[wasm_bindgen]
 impl Universe {
 	/// Getters
 	pub fn width(&self) -> u32 { self.width }
@@ -86,7 +93,7 @@ impl Universe {
 	pub fn randomize_cells(&mut self) {
 		let size = (self.width * self.height) as usize;
 		for i in 0..size {
-			self.cells.set(i, js_sys::Math::random() < DEFAULT_ALIVE_INIT);
+			self.cells.set(i, get_random_boolean());
 		}
 	}
 
@@ -112,7 +119,7 @@ impl Universe {
 		let mut cells = FixedBitSet::with_capacity(size);
 		for i in 0..size {
 			// FixedBitSet takes a boolean as value
-			cells.set(i, js_sys::Math::random() < DEFAULT_ALIVE_INIT);
+			cells.set(i, get_random_boolean());
 		}
 
 		Universe {
@@ -129,38 +136,50 @@ impl Universe {
 		for i in 0..nr_ticks {
 			changes[i] = self.tick();
 		}
-		let died: u32 = changes.iter().map(|&x| x.0).sum();
-		let born: u32 = changes.iter().map(|&x| x.1).sum();
+		// let died: u32 = changes.iter().map(|&x| x.0).sum();
+		// let born: u32 = changes.iter().map(|&x| x.1).sum();
 		// log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, died, born);
 	}
 
 
 	fn tick(&mut self) -> (u32, u32) {
-		let _timer = timer::Timer::new("Universe::tick");
+		// let _timer = Timer::new("Universe::tick");
 		self.epoch += 1;
-		let mut next = self.cells.clone();
+
+		let mut next = {
+			// let _timer = Timer::new("allocate next cells");
+			self.cells.clone()
+		};
+
 		let mut dead_alive = 0;
 		let mut alive_dead = 0;
 
-		for row in 0..self.height {
-			for col in 0..self.width {
-				let idx = self.get_index(row, col);
-				let cell = self.cells[idx];
-				let live_neighbors = self.live_neighbor_count(row, col);
+		{
+			// let _timer = Timer::new("new generation");
+			for row in 0..self.height {
+				for col in 0..self.width {
+					let idx = self.get_index(row, col);
+					let cell = self.cells[idx];
+					let live_neighbors = self.live_neighbor_count(row, col);
 
-				let new_val = match (cell, live_neighbors) {
-					(true, x) if x < 2 => false,
-					(true, 2) | (true, 3) => true,
-					(true, x) if x > 3 => false,
-					(false, 3) => true,
-					(otherwise, _) => otherwise
-				};
-				if cell && new_val != cell { alive_dead += 1 };
-				if !cell && new_val != cell { dead_alive += 1 };
-				next.set(idx, new_val);
+					let new_val = match (cell, live_neighbors) {
+						(true, x) if x < 2 => false,
+						(true, 2) | (true, 3) => true,
+						(true, x) if x > 3 => false,
+						(false, 3) => true,
+						(otherwise, _) => otherwise
+					};
+					if cell && new_val != cell { alive_dead += 1 };
+					if !cell && new_val != cell { dead_alive += 1 };
+					next.set(idx, new_val);
+				}
 			}
 		}
-		self.cells = next;
+
+		{
+			// let _timer = Timer::new("free old cells");
+			self.cells = next;
+		}
 		return (dead_alive, alive_dead);
 	}
 
@@ -194,12 +213,12 @@ impl Universe {
 }
 
 
-#[wasm_bindgen]
-pub fn greet(name: &str) {
-	utils::console_log(&format!("Hello, {}!", name));
-	utils::console_log(&format!("Random f32: {}", js_sys::Math::random()));
-	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
-}
+// #[wasm_bindgen]
+// pub fn greet(name: &str) {
+// 	utils::console_log(&format!("Hello, {}!", name));
+// 	utils::console_log(&format!("Random f32: {}", js_sys::Math::random()));
+// 	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
+// }
 
 
 /// This is only necessary with private functions and w/o wasm_bindgen,
