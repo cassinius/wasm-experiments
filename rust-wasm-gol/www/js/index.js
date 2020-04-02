@@ -27,7 +27,7 @@ const CELL_CONDITIONS = {
 	}
 };
 const TICKS_PER_DRAW_TEXT = "Speed: ";
-let TICKS_PER_ROUND = 1;
+let TICKS_PER_ROUND = 5;
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new();
@@ -37,7 +37,9 @@ const height = universe.height();
 // Give the canvas room for all of our cells and a 1px border
 // around each of them.
 const canvas = document.getElementById("game-of-life-canvas");
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
+console.log('canvas CONTEXT: ', ctx);
+
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 const ticks_per_draw_slider = document.querySelector("#ticks-per-draw");
@@ -87,32 +89,59 @@ const getIndex = (row, column) => {
 	return row * width + column;
 };
 
+const drawChanges = () => {
+	const diffsPtr = universe.diffs();
+	// *times TICKS_PER_ROUND should suffice...
+	const changes = new Uint32Array(memory.buffer, diffsPtr, width * height + 1);
+	// console.log(changes);
+	// console.log(changes.length);
+
+	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);
+	ctx.beginPath();
+	ctx.fillStyle = CELL_CONDITIONS.alive.color;
+
+	/**
+	 * the number of changes is stored at index 0 of the array
+	 * since each cell has 2 coordinates, we need to iterate to 2*changes
+	 * @type {number}
+	 */
+	const min_length = Math.min(2 * changes[0], changes.length);
+	for ( let i = 1; i < min_length; i += 2) {
+		let row = changes[i];
+		let col = changes[i+1];
+		ctx.fillRect(
+			col * (CELL_SIZE + 1) + 1,
+			row * (CELL_SIZE + 1) + 1,
+			CELL_SIZE,
+			CELL_SIZE
+		);
+	}
+};
+
 const drawCells = () => {
 	const cellsPtr = universe.cells();
 	const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
 
 	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);
 	ctx.beginPath();
+	ctx.fillStyle = CELL_CONDITIONS.alive.color;
 
-	// Object.values(CELL_CONDITIONS).forEach(condition => {
-		ctx.fillStyle = CELL_CONDITIONS.alive.color;
-		for (let row = 0; row < height; row++) {
-			for (let col = 0; col < width; col++) {
-				const idx = getIndex(row, col);
+	for (let row = 0; row < height; row++) {
+		for (let col = 0; col < width; col++) {
+			const idx = getIndex(row, col);
 
-				if ( !bitIsSet(idx, cells) ) { // !== condition.value ) {
-					continue;
-				}
-
-				ctx.fillRect(
-					col * (CELL_SIZE + 1) + 1,
-					row * (CELL_SIZE + 1) + 1,
-					CELL_SIZE,
-					CELL_SIZE
-				);
+			if ( !bitIsSet(idx, cells) ) { // !== condition.value ) {
+				continue;
 			}
+
+			ctx.fillRect(
+				col * (CELL_SIZE + 1) + 1,
+				row * (CELL_SIZE + 1) + 1,
+				CELL_SIZE,
+				CELL_SIZE
+			);
 		}
-	// });
+	}
 
 	ctx.stroke();
 };
@@ -157,30 +186,31 @@ playPauseButton.addEventListener("click", event => {
 	}
 });
 
-canvas.addEventListener("click", event => {
-	const boundingRect = canvas.getBoundingClientRect();
-
-	const scaleX = canvas.width / boundingRect.width;
-	const scaleY = canvas.height / boundingRect.height;
-
-	const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
-	const canvasTop = (event.clientY - boundingRect.top) * scaleY;
-
-	const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
-	const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
-
-	universe.toggle_cell(row, col);
-
-	drawGrid();
-	drawCells();
-});
+// canvas.addEventListener("click", event => {
+// 	const boundingRect = canvas.getBoundingClientRect();
+//
+// 	const scaleX = canvas.width / boundingRect.width;
+// 	const scaleY = canvas.height / boundingRect.height;
+//
+// 	const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
+// 	const canvasTop = (event.clientY - boundingRect.top) * scaleY;
+//
+// 	const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
+// 	const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+//
+// 	universe.toggle_cell(row, col);
+//
+// 	drawGrid();
+// 	drawCells();
+// });
 
 const renderLoop = () => {
 	// debugger;
 	fps_meter.tickStart();
 	universe.ticks(TICKS_PER_ROUND);
 	drawGrid();
-	drawCells();
+	// drawCells();
+	drawChanges();
 	animationId = requestAnimationFrame(renderLoop);
 	fps_meter.tick();
 };

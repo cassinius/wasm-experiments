@@ -7,6 +7,10 @@ export function greet(name: string): void;
 export class Universe {
   free(): void;
 /**
+* @returns {Universe} 
+*/
+  static new(): Universe;
+/**
 * Getters
 * @returns {number} 
 */
@@ -19,6 +23,10 @@ export class Universe {
 * @returns {number} 
 */
   cells(): number;
+/**
+* @returns {number} 
+*/
+  diffs(): number;
 /**
 * Resets all cells to the dead state.
 */
@@ -40,10 +48,6 @@ export class Universe {
 * @param {number} height 
 */
   set_height(height: number): void;
-/**
-* @returns {Universe} 
-*/
-  static new(): Universe;
 /**
 * @param {number} nr_ticks 
 */

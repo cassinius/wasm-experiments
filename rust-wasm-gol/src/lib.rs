@@ -48,7 +48,11 @@ pub struct Universe {
 	width: u32,
 	height: u32,
 	cells: FixedBitSet,
-	tmp_cells: FixedBitSet
+	tmp_cells: FixedBitSet,
+	/// will logically store tuples of (row, column, new_val), but we
+	/// flatten it right from the start, so no conversion is necessary
+	changed_cells: Vec<u32>,
+	nr_changed: u32
 }
 
 
@@ -73,10 +77,47 @@ impl Universe {
 // #[allow(unused_variables)]
 #[wasm_bindgen]
 impl Universe {
+
+	pub fn new() -> Universe {
+		// utils::set_panic_hook();
+		// panic!("blahoo");
+
+		let epoch = 0;
+		let width = DEFAULT_SIZE;
+		let height = DEFAULT_SIZE;
+		let size = (width * height) as usize;
+		let mut cells = FixedBitSet::with_capacity(size);
+		let tmp_cells = FixedBitSet::with_capacity(size);
+		for i in 0..size {
+			// FixedBitSet takes a boolean as value
+			cells.set(i, get_random_boolean());
+		}
+		// we expect max 20 iterations (ticks) to be computed at once
+		let mut changed_cells = vec!(0; 2*size+1);
+		// first i16 is reserved for nr_changed which we also return to JS
+		changed_cells.push(0);
+		let nr_changed = 0;
+
+		Universe {
+			epoch,
+			width,
+			height,
+			cells,
+			tmp_cells,
+			changed_cells,
+			nr_changed
+		}
+	}
+
+
 	/// Getters
 	pub fn width(&self) -> u32 { self.width }
 	pub fn height(&self) -> u32 { self.height }
 	pub fn cells(&self) -> *const u32 { self.cells.as_slice().as_ptr() }
+	pub fn diffs(&mut self) -> *const u32 {
+		self.changed_cells[0] = self.nr_changed;
+		self.changed_cells.as_slice().as_ptr()
+	}
 
 	/// Resets all cells to the dead state.
 	pub fn reset_cells(&mut self) {
@@ -108,51 +149,23 @@ impl Universe {
 	}
 
 
-	pub fn new() -> Universe {
-		// utils::set_panic_hook();
-		// panic!("blahoo");
-
-		let epoch = 0;
-		let width = DEFAULT_SIZE;
-		let height = DEFAULT_SIZE;
-		let size = (width * height) as usize;
-		let mut cells = FixedBitSet::with_capacity(size);
-		let tmp_cells = FixedBitSet::with_capacity(size);
-		for i in 0..size {
-			// FixedBitSet takes a boolean as value
-			cells.set(i, get_random_boolean());
-		}
-
-		Universe {
-			epoch,
-			width,
-			height,
-			cells,
-			tmp_cells
-		}
-	}
-
-
 	pub fn ticks(&mut self, nr_ticks: usize) {
-		let mut changes = vec![(0, 0); nr_ticks];
-		for i in 0..nr_ticks {
-			changes[i] = self.tick();
+		for _i in 0..nr_ticks {
+				// Reset changes
+				self.nr_changed = 0;
+				let size = (self.width * self.height) as usize;
+				self.changed_cells = vec!(0; size*2+1);
+			self.tick();
 		}
-		let died: u32 = changes.iter().map(|&x| x.0).sum();
-		let born: u32 = changes.iter().map(|&x| x.1).sum();
-		log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, died, born);
 	}
 
 
-	fn tick(&mut self) -> (u32, u32) {
+	fn tick(&mut self) {
 		let _timer = Timer::new("Universe::tick");
 		self.epoch += 1;
 
-		let mut dead_alive = 0;
-		let mut alive_dead = 0;
-
 		{
-			let _timer = Timer::new("new generation");
+			// let _timer = Timer::new("new generation");
 			for row in 0..self.height {
 				for col in 0..self.width {
 					let idx = self.get_index(row, col);
@@ -166,18 +179,21 @@ impl Universe {
 						(false, 3) => true,
 						(otherwise, _) => otherwise
 					};
-					if cell && new_val != cell { alive_dead += 1 };
-					if !cell && new_val != cell { dead_alive += 1 };
+
+					if new_val {
+						self.nr_changed += 1;
+						self.changed_cells[self.nr_changed as usize *2] = row;
+						self.changed_cells[self.nr_changed as usize *2 + 1] = col;
+					}
 					self.tmp_cells.set(idx, new_val);
 				}
 			}
 		}
 
 		{
-			let _timer = Timer::new("switch references to FixedBitSets");
+			// let _timer = Timer::new("switch references to FixedBitSets");
 			self.cells = self.tmp_cells.clone();
 		}
-		return (dead_alive, alive_dead);
 	}
 
 	// #[inline]
