@@ -33,7 +33,7 @@ macro_rules! log {
 // 	Alive = 1,
 // }
 
-const DEFAULT_SIZE: u32 = 128;
+const DEFAULT_SIZE: u32 = 150;
 const DEFAULT_ALIVE_INIT: f64 = 0.3;
 
 
@@ -152,9 +152,9 @@ impl Universe {
 	pub fn ticks(&mut self, nr_ticks: usize) {
 		for _i in 0..nr_ticks {
 				// Reset changes
-				self.nr_changed = 0;
-				let size = (self.width * self.height) as usize;
-				self.changed_cells = vec!(0; size*2+1);
+				// self.nr_changed = 0;
+				// let size = (self.width * self.height) as usize;
+				// self.changed_cells = vec!(0; size*2+1);
 			self.tick();
 		}
 	}
@@ -180,11 +180,11 @@ impl Universe {
 						(otherwise, _) => otherwise
 					};
 
-					if new_val {
-						self.nr_changed += 1;
-						self.changed_cells[self.nr_changed as usize *2] = row;
-						self.changed_cells[self.nr_changed as usize *2 + 1] = col;
-					}
+					// if new_val {
+					// 	self.nr_changed += 1;
+					// 	self.changed_cells[self.nr_changed as usize *2] = row;
+					// 	self.changed_cells[self.nr_changed as usize *2 + 1] = col;
+					// }
 					self.tmp_cells.set(idx, new_val);
 				}
 			}

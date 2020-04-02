@@ -93,8 +93,8 @@ const drawChanges = () => {
 	const diffsPtr = universe.diffs();
 	// *times TICKS_PER_ROUND should suffice...
 	const changes = new Uint32Array(memory.buffer, diffsPtr, width * height + 1);
-	// console.log(changes);
-	// console.log(changes.length);
+	// console.log(`Length of changes array: ${changes.length}`);
+	// console.log(`Actual changes this iteration: ${changes[0]}`);
 
 	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);
 	ctx.beginPath();
@@ -209,8 +209,8 @@ const renderLoop = () => {
 	fps_meter.tickStart();
 	universe.ticks(TICKS_PER_ROUND);
 	drawGrid();
-	// drawCells();
-	drawChanges();
+	drawCells();
+	// drawChanges();
 	animationId = requestAnimationFrame(renderLoop);
 	fps_meter.tick();
 };
