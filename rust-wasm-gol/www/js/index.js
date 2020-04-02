@@ -17,7 +17,7 @@ const CELL_SIZE = 5; // px
 const GRID_COLOR = "#111111";
 const DEAD_COLOR = "#111111";
 const ALIVE_COLOR = "#33ff54";
-const TICKS_PER_DRAW_TEXT = "Ticks per draw: ";
+const TICKS_PER_DRAW_TEXT = "Speed: ";
 let TICKS_PER_ROUND = 1;
 
 // Construct the universe, and get its width and height.
@@ -33,12 +33,29 @@ canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 const ticks_per_draw_slider = document.querySelector("#ticks-per-draw");
 const ticks_per_draw_text = document.querySelector("#ticks-per-draw-text");
+const reset_dead = document.querySelector("#reset-dead");
+const reset_random = document.querySelector("#reset-random");
 
 ticks_per_draw_slider.addEventListener('change', e => {
 	const val = e.target.value;
 	console.log(`Setting ticks per draw to: ${val}`);
 	TICKS_PER_ROUND = val;
 	ticks_per_draw_text.textContent = TICKS_PER_DRAW_TEXT + val;
+});
+
+reset_dead.addEventListener('click', () => {
+	universe.reset_cells();
+	ctx.globalAlpha = 1;
+	drawGrid();
+	drawCells();
+	ctx.globalAlpha = 0.5;
+});
+reset_random.addEventListener('click', () => {
+	universe.randomize_cells();
+	ctx.globalAlpha = 1;
+	drawGrid();
+	drawCells();
+	ctx.globalAlpha = 0.5;
 });
 
 /**
@@ -119,7 +136,7 @@ const play = () => {
 const pause = () => {
 	playPauseButton.classList.remove('playing');
 	playPauseButton.classList.add('paused');
-	playPauseButton.textContent = "▶";
+	playPauseButton.textContent = "⛰";
 	cancelAnimationFrame(animationId);
 	animationId = null;
 };

@@ -29,6 +29,9 @@ export class Universe {
 */
   toggle_cell(row: number, column: number): void;
 /**
+*/
+  randomize_cells(): void;
+/**
 * Setters
 * @param {number} width 
 */

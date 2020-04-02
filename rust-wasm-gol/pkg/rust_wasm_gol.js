@@ -166,6 +166,11 @@ export class Universe {
         wasm.universe_toggle_cell(this.ptr, row, column);
     }
     /**
+    */
+    randomize_cells() {
+        wasm.universe_randomize_cells(this.ptr);
+    }
+    /**
     * Setters
     * @param {number} width
     */

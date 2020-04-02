@@ -11,7 +11,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        color: #eee;
+        color: white;
         background-color: #111;
 
         display: grid;
@@ -23,24 +23,32 @@
         cursor: crosshair;
       }
 
-      #play-pause {
-        position: absolute;
-        top: 60px;
-        right: 5px;
-        width: 60px;
+      #controls {
+        position: relative;
+        width: 100%;
+        font-size: 30px;
+      }
+
+      #controls > button {
+        min-width: 60px;
         height: 60px;
         line-height: 60px;
-        font-size: 30px;
         font-weight: bold;
         border-radius: 5px;
         border: none;
         outline: none;
         text-align: center;
+        font-size: 40px;
+      }
+
+      #play-pause {
+        /*font-size: 30px;*/
       }
 
       #play-pause.paused {
-        color: black;
+        color: #333;
         background-color: lawngreen;
+        transform: rotate(90deg);
       }
 
       #play-pause.playing {;
@@ -48,21 +56,45 @@
         background-color: red;
       }
 
-      #play-pause:hover {
+      button:hover {
         cursor: pointer;
+      }
+
+      #ticks-per-draw-text {
+        display: inline-block;
+        height: 60px;
+        line-height: 60px;
+      }
+
+      #reset-random {
+        color: white;
+        font-size: bold;
+        background-color: green;
+      }
+
+      #reset-dead {
+        /*font-size: 50px !important;*/
+        color: white;
+        background-color: #ff9505;
       }
     </style>
 
   </head>
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
-    <button id="play-pause" class="paused">▶</button>
 
     <canvas id="game-of-life-canvas"></canvas>
-    <input id="ticks-per-draw"
-           name="ticks-per-draw"
-           type="range" min="1" max="20" value="5" step="1">
-    <span id="ticks-per-draw-text">Ticks per draw: 5</span>
+
+    <div id="controls">
+      <button id="play-pause" class="paused">⛰</button>
+      <button id="reset-random">♲</button>
+      <button id="reset-dead">☠</button>
+      <input id="ticks-per-draw"
+             name="ticks-per-draw"
+             type="range" min="1" max="20" value="5" step="1">
+      <span id="ticks-per-draw-text">Speed: 5</span>
+    </div>
+
 
     <script src="./bootstrap.js"></script>
   </body>

@@ -85,6 +85,13 @@ impl Universe {
 		self.cells.set(idx, !self.cells[idx]);
 	}
 
+	pub fn randomize_cells(&mut self) {
+		let size = (self.width * self.height) as usize;
+		for i in 0..size {
+			self.cells.set(i, js_sys::Math::random() < DEFAULT_ALIVE_INIT);
+		}
+	}
+
 	/// Setters
 	pub fn set_width(&mut self, width: u32) {
 		self.width = width;
@@ -105,7 +112,6 @@ impl Universe {
 		let height = DEFAULT_SIZE;
 		let size = (width * height) as usize;
 		let mut cells = FixedBitSet::with_capacity(size);
-
 		for i in 0..size {
 			// FixedBitSet takes a boolean as value
 			cells.set(i, js_sys::Math::random() < DEFAULT_ALIVE_INIT);
@@ -142,7 +148,6 @@ impl Universe {
 				let idx = self.get_index(row, col);
 				let cell = self.cells[idx];
 				let live_neighbors = self.live_neighbor_count(row, col);
-				// log!("cell[{}, {}] is initially {:?} and has {} live neighbors", row, col, cell, live_neighbors);
 
 				let new_val = match (cell, live_neighbors) {
 					(true, x) if x < 2 => false,
@@ -154,7 +159,6 @@ impl Universe {
 				if cell && new_val != cell { alive_dead += 1 };
 				if !cell && new_val != cell { dead_alive += 1 };
 				next.set(idx, new_val);
-				// log!("    it becomes {:?}", next[idx]);
 			}
 		}
 		self.cells = next;
