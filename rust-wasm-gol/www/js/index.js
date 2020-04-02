@@ -27,7 +27,7 @@ const CELL_CONDITIONS = {
 	}
 };
 const TICKS_PER_DRAW_TEXT = "Speed: ";
-let TICKS_PER_ROUND = 5;
+let TICKS_PER_ROUND = 1;
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new();

@@ -1,6 +1,6 @@
-mod utils;
-mod timer;
-use timer::Timer;
+// mod utils;
+// mod timer;
+// use timer::Timer;
 
 use wasm_bindgen::prelude::*;
 extern crate js_sys;
@@ -17,12 +17,12 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
-#[allow(unused_macros)]
-macro_rules! log {
-    ( $( $t:tt )* ) => {
-        web_sys::console::log_1(&format!( $( $t )* ).into());
-    }
-}
+// #[allow(unused_macros)]
+// macro_rules! log {
+//     ( $( $t:tt )* ) => {
+//         web_sys::console::log_1(&format!( $( $t )* ).into());
+//     }
+// }
 
 // #[wasm_bindgen]
 // // Cell is represented as single Byte
@@ -161,7 +161,7 @@ impl Universe {
 
 
 	fn tick(&mut self) {
-		let _timer = Timer::new("Universe::tick");
+		// let _timer = Timer::new("Universe::tick");
 		self.epoch += 1;
 
 		{
@@ -259,18 +259,9 @@ impl Universe {
 }
 
 
-#[wasm_bindgen]
-pub fn greet(name: &str) {
-	utils::console_log(&format!("Hello, {}!", name));
-	utils::console_log(&format!("Random f32: {}", js_sys::Math::random()));
-	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
-}
-
-
-/// This is only necessary with private functions and w/o wasm_bindgen,
-/// since otherwise the function is exposed and *might* be called
-/// from the outside...
-#[allow(dead_code)]
-fn unused_function() {
-	println!("Don't use me!")
-}
+// #[wasm_bindgen]
+// pub fn greet(name: &str) {
+// 	utils::console_log(&format!("Hello, {}!", name));
+// 	utils::console_log(&format!("Random f32: {}", js_sys::Math::random()));
+// 	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
+// }

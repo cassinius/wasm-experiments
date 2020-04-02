@@ -13,6 +13,3 @@ export function universe_randomize_cells(a: number): void;
 export function universe_set_width(a: number, b: number): void;
 export function universe_set_height(a: number, b: number): void;
 export function universe_ticks(a: number, b: number): void;
-export function greet(a: number, b: number): void;
-export function __wbindgen_malloc(a: number): number;
-export function __wbindgen_realloc(a: number, b: number, c: number): number;
