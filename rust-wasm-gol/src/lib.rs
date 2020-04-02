@@ -16,8 +16,10 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 extern crate web_sys;
 
+
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
-macro_rules!log {
+// #[allow(unused_macros)]
+macro_rules! log {
     ( $( $t:tt )* ) => {
         web_sys::console::log_1(&format!( $( $t )* ).into());
     }
@@ -32,7 +34,8 @@ macro_rules!log {
 // 	Alive = 1,
 // }
 
-const DEFAULT_SIZE: u32 = 96;
+const DEFAULT_SIZE: u32 = 128;
+const DEFAULT_ALIVE_INIT: f64 = 0.3;
 
 
 #[wasm_bindgen]
@@ -62,6 +65,7 @@ impl Universe {
 }
 
 
+// #[allow(unused_variables)]
 #[wasm_bindgen]
 impl Universe {
 	/// Getters
@@ -99,7 +103,7 @@ impl Universe {
 
 		for i in 0..size {
 			// FixedBitSet takes a boolean as value
-			cells.set(i, js_sys::Math::random() < 0.5);
+			cells.set(i, js_sys::Math::random() < DEFAULT_ALIVE_INIT);
 		}
 
 		Universe {
@@ -131,7 +135,7 @@ impl Universe {
 					(false, 3) => true,
 					(otherwise, _) => otherwise
 				};
-				if cell && new_val != cell { alive_dead+= 1 };
+				if cell && new_val != cell { alive_dead += 1 };
 				if !cell && new_val != cell { dead_alive += 1 };
 				next.set(idx, new_val);
 				// log!("    it becomes {:?}", next[idx]);
@@ -179,3 +183,11 @@ pub fn greet(name: &str) {
 	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
 }
 
+
+/// This is only necessary with private functions and w/o wasm_bindgen,
+/// since otherwise the function is exposed and *might* be called
+/// from the outside...
+#[allow(dead_code)]
+fn unused_function() {
+	println!("Don't use me!")
+}

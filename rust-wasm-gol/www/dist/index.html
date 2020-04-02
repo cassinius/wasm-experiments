@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello wasm-pack!</title>
+
+    <style>
+      body {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #111;
+
+        display: grid;
+        align-content: center;
+        justify-content: center;
+      }
+
+
+      #resume-animation, #cancel-animation {
+        position: absolute;
+        bottom: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        padding: 12px;
+        border-radius: 5px;
+        border: none;
+      }
+      #resume-animation {
+        right: 120px;
+        background-color: lawngreen;
+      }
+      #cancel-animation {
+        right: 10px;
+        color: white;
+        background-color: red;
+      }
+      #resume-animation:hover, #cancel-animation:hover {
+        cursor: pointer;
+      }
+    </style>
+
+  </head>
+  <body>
+    <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+    <button id="resume-animation" onclick="drawAndRegister()">Resume</button>
+    <button id="cancel-animation" onclick="window.cancelAnimationFrame(render_loop)">STOP !</button>
+    <canvas id="game-of-life-canvas"></canvas>
+    <script src="./bootstrap.js"></script>
+
+    <script>
+      let drawAndRegister = null; // the Function to run the render loop
+      let render_loop = null; // the reference to the render loop
+    </script>
+  </body>
+</html>

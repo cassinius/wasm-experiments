@@ -1,0 +1,23 @@
+{
+  "name": "rust-wasm-gol",
+  "collaborators": [
+    "Bernd Malle <bernd.malle@gmail.com>"
+  ],
+  "description": "Rust Wasm GOL tutorial",
+  "version": "0.1.0",
+  "license": "None",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cassinius/wasm-experiments"
+  },
+  "files": [
+    "rust_wasm_gol_bg.wasm",
+    "rust_wasm_gol.js",
+    "rust_wasm_gol.d.ts",
+    "LICENSE_APACHE",
+    "LICENSE_MIT"
+  ],
+  "module": "rust_wasm_gol.js",
+  "types": "rust_wasm_gol.d.ts",
+  "sideEffects": false
+}
