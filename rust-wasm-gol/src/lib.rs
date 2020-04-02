@@ -17,7 +17,7 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 extern crate web_sys;
 
 // A macro to provide `println!(..)`-style syntax for `console.log` logging.
-macro_rules! log {
+macro_rules!log {
     ( $( $t:tt )* ) => {
         web_sys::console::log_1(&format!( $( $t )* ).into());
     }
@@ -32,7 +32,7 @@ macro_rules! log {
 // 	Alive = 1,
 // }
 
-const DEFAULT_SIZE: u32 = 128;
+const DEFAULT_SIZE: u32 = 96;
 
 
 #[wasm_bindgen]
@@ -88,7 +88,7 @@ impl Universe {
 
 
 	pub fn new() -> Universe {
-		utils::set_panic_hook();
+		// utils::set_panic_hook();
 		// panic!("blahoo");
 
 		let epoch = 0;
