@@ -17,6 +17,8 @@ const CELL_SIZE = 5; // px
 const GRID_COLOR = "#111111";
 const DEAD_COLOR = "#111111";
 const ALIVE_COLOR = "#33ff54";
+const TICKS_PER_DRAW_TEXT = "Ticks per draw: ";
+let TICKS_PER_ROUND = 1;
 
 // Construct the universe, and get its width and height.
 const universe = Universe.new();
@@ -26,10 +28,18 @@ const height = universe.height();
 // Give the canvas room for all of our cells and a 1px border
 // around each of them.
 const canvas = document.getElementById("game-of-life-canvas");
+const ctx = canvas.getContext('2d');
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
+const ticks_per_draw_slider = document.querySelector("#ticks-per-draw");
+const ticks_per_draw_text = document.querySelector("#ticks-per-draw-text");
 
-const ctx = canvas.getContext('2d');
+ticks_per_draw_slider.addEventListener('change', e => {
+	const val = e.target.value;
+	console.log(`Setting ticks per draw to: ${val}`);
+	TICKS_PER_ROUND = val;
+	ticks_per_draw_text.textContent = TICKS_PER_DRAW_TEXT + val;
+});
 
 /**
  * (CELL_SIZE + 1) + 1 ??
@@ -81,6 +91,7 @@ const drawCells = () => {
 	ctx.stroke();
 };
 
+
 const bitIsSet = (n, arr) => {
 	const byte = Math.floor(n / 8);
 	const mask = 1 << (n % 8);
@@ -121,10 +132,28 @@ playPauseButton.addEventListener("click", event => {
 	}
 });
 
+canvas.addEventListener("click", event => {
+	const boundingRect = canvas.getBoundingClientRect();
+
+	const scaleX = canvas.width / boundingRect.width;
+	const scaleY = canvas.height / boundingRect.height;
+
+	const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
+	const canvasTop = (event.clientY - boundingRect.top) * scaleY;
+
+	const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
+	const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+
+	universe.toggle_cell(row, col);
+
+	drawGrid();
+	drawCells();
+});
+
 const renderLoop = () => {
 	// debugger;
 	fps_meter.tickStart();
-	universe.tick();
+	universe.ticks(TICKS_PER_ROUND);
 	drawGrid();
 	drawCells();
 	animationId = requestAnimationFrame(renderLoop);

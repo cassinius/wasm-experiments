@@ -74,10 +74,15 @@ impl Universe {
 	pub fn cells(&self) -> *const u32 { self.cells.as_slice().as_ptr() }
 
 	/// Resets all cells to the dead state.
-	fn reset_cells(&mut self) {
+	pub fn reset_cells(&mut self) {
 		let size = (self.width * self.height) as usize;
 		self.cells = FixedBitSet::with_capacity(size);
 		for i in 0..size { self.cells.set(i, false) }
+	}
+
+	pub fn toggle_cell(&mut self, row: u32, column: u32) {
+		let idx = self.get_index(row, column);
+		self.cells.set(idx, !self.cells[idx]);
 	}
 
 	/// Setters
@@ -115,7 +120,18 @@ impl Universe {
 	}
 
 
-	pub fn tick(&mut self) {
+	pub fn ticks(&mut self, nr_ticks: usize) {
+		let mut changes = vec![(0, 0); nr_ticks];
+		for i in 0..nr_ticks {
+			changes[i] = self.tick();
+		}
+		let died: u32 = changes.iter().map(|&x| x.0).sum();
+		let born: u32 = changes.iter().map(|&x| x.1).sum();
+		log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, died, born);
+	}
+
+
+	fn tick(&mut self) -> (u32, u32) {
 		self.epoch += 1;
 		let mut next = self.cells.clone();
 		let mut dead_alive = 0;
@@ -141,9 +157,8 @@ impl Universe {
 				// log!("    it becomes {:?}", next[idx]);
 			}
 		}
-		log!("Epoch {}: {} cells died & {} cells were newly born.", self.epoch, alive_dead, dead_alive);
-
 		self.cells = next;
+		return (dead_alive, alive_dead);
 	}
 
 	// #[inline]
