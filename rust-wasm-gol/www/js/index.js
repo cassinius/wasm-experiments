@@ -13,7 +13,7 @@ const fps_meter = new window.FPSMeter({
 });
 
 
-const UNIVERSE_SIZE = 510;
+const UNIVERSE_SIZE = 512;
 const CELL_SIZE = 2; // px
 const GRID_COLOR = "#111111";
 
