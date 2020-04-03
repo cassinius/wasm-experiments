@@ -4,9 +4,11 @@ export class Universe {
   free(): void;
 /**
 * Constructor
+* @param {number | undefined} width 
+* @param {number | undefined} height 
 * @returns {Universe} 
 */
-  static new(): Universe;
+  static new(width?: number, height?: number): Universe;
 /**
 * Getters
 * @returns {number} 

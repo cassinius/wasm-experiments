@@ -13,6 +13,7 @@ const fps_meter = new window.FPSMeter({
 });
 
 
+const UNIVERSE_SIZE = 510;
 const CELL_SIZE = 2; // px
 const GRID_COLOR = "#111111";
 
@@ -30,7 +31,7 @@ const TICKS_PER_DRAW_TEXT = "Speed: ";
 let TICKS_PER_ROUND = 1;
 
 // Construct the universe, and get its width and height.
-const universe = Universe.new();
+const universe = Universe.new(UNIVERSE_SIZE, UNIVERSE_SIZE);
 const width = universe.width();
 const height = universe.height();
 
