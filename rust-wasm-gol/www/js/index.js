@@ -92,7 +92,7 @@ const getIndex = (row, column) => {
 };
 
 const drawCells = () => {
-	const cellsPtr = universe.cells_from_p();
+	const cellsPtr = universe.cells();
 	const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
 
 	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);

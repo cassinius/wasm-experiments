@@ -191,8 +191,8 @@ impl Universe {
 	pub fn ticks(&mut self, nr_ticks: usize) {
 		let mut died_born = vec!((0, 0); nr_ticks);
 		for i in 0..nr_ticks {
-			// died_born[i] = self.tick();
-			died_born[i] = self.tick2();
+			died_born[i] = self.tick();
+			// died_born[i] = self.tick2();
 		}
 	}
 
@@ -243,25 +243,27 @@ impl Universe {
 		self.epoch += 1;
 		let mut died = 0;
 		let mut born = 0;
-		let size_l = (self.width_l * self.height_l) as usize;
+		// let size_l = (self.width_l * self.height_l) as usize;
 
-		for idx_l in 0..size_l {
-			let idx_p = self.idx_l2p(idx_l);
-			// utils::console_log(&format!("Logical index {} equals physical index {}", idx_l, idx_p));
+		// for idx_l in 0..size_l {
+		for row in 0..self.height_l {
+			for col in 0..self.width_l {
+				let idx_p = self.get_index(row+1, col+1);
+				// let idx_p = self.idx_l2p(idx_l);
+				let cell = self.cells_p[idx_p];
+				let live_neighbors = self.live_neighbor_count_2(idx_p);
 
-			let cell = self.cells_p[idx_p];
-			let live_neighbors = self.live_neighbor_count_2(idx_p);
-
-			let new_val = match (cell, live_neighbors) {
-				(true, x) if x < 2 => false,
-				(true, 2) | (true, 3) => true,
-				(true, x) if x > 3 => false,
-				(false, 3) => true,
-				(otherwise, _) => otherwise
-			};
-			if cell && !new_val { died += 1 };
-			if !cell && new_val { born += 1 };
-			self.tmp_cells_p.set(idx_p, new_val);
+				let new_val = match (cell, live_neighbors) {
+					(true, x) if x < 2 => false,
+					(true, 2) | (true, 3) => true,
+					(true, x) if x > 3 => false,
+					(false, 3) => true,
+					(otherwise, _) => otherwise
+				};
+				if cell && !new_val { died += 1 };
+				if !cell && new_val { born += 1 };
+				self.tmp_cells_p.set(idx_p, new_val);
+			}
 		}
 
 		unsafe {
