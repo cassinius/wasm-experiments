@@ -1,8 +1,11 @@
-// mod utils;
-// mod timer;
-// use timer::Timer;
+mod utils;
+use utils::console_log;
+mod timer;
+use timer::Timer;
 
+use rayon::prelude::*;
 use wasm_bindgen::prelude::*;
+
 extern crate js_sys;
 extern crate web_sys;
 
@@ -16,24 +19,7 @@ use fixedbitset::FixedBitSet;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 
-// A macro to provide `println!(..)`-style syntax for `console.log` logging.
-// #[allow(unused_macros)]
-// macro_rules! log {
-//     ( $( $t:tt )* ) => {
-//         web_sys::console::log_1(&format!( $( $t )* ).into());
-//     }
-// }
-
-// #[wasm_bindgen]
-// // Cell is represented as single Byte
-// #[repr(u8)]
-// #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-// pub enum Cell {
-// 	Dead = 0,
-// 	Alive = 1,
-// }
-
-const DEFAULT_SIZE: u32 = 150;
+const DEFAULT_SIZE: u32 = 512;
 const DEFAULT_ALIVE_INIT: f64 = 0.3;
 
 
@@ -49,10 +35,6 @@ pub struct Universe {
 	height: u32,
 	cells: FixedBitSet,
 	tmp_cells: FixedBitSet,
-	/// will logically store tuples of (row, column, new_val), but we
-	/// flatten it right from the start, so no conversion is necessary
-	changed_cells: Vec<u32>,
-	nr_changed: u32
 }
 
 
@@ -78,7 +60,11 @@ impl Universe {
 #[wasm_bindgen]
 impl Universe {
 
+	/// Constructor
+	///
+	#[allow(unused_doc_comments)]
 	pub fn new() -> Universe {
+		/// Activating debug symbols
 		// utils::set_panic_hook();
 		// panic!("blahoo");
 
@@ -92,11 +78,6 @@ impl Universe {
 			// FixedBitSet takes a boolean as value
 			cells.set(i, get_random_boolean());
 		}
-		// we expect max 20 iterations (ticks) to be computed at once
-		let mut changed_cells = vec!(0; 2*size+1);
-		// first i16 is reserved for nr_changed which we also return to JS
-		changed_cells.push(0);
-		let nr_changed = 0;
 
 		Universe {
 			epoch,
@@ -104,41 +85,17 @@ impl Universe {
 			height,
 			cells,
 			tmp_cells,
-			changed_cells,
-			nr_changed
 		}
 	}
 
-
 	/// Getters
+	///
 	pub fn width(&self) -> u32 { self.width }
 	pub fn height(&self) -> u32 { self.height }
 	pub fn cells(&self) -> *const u32 { self.cells.as_slice().as_ptr() }
-	pub fn diffs(&mut self) -> *const u32 {
-		self.changed_cells[0] = self.nr_changed;
-		self.changed_cells.as_slice().as_ptr()
-	}
-
-	/// Resets all cells to the dead state.
-	pub fn reset_cells(&mut self) {
-		let size = (self.width * self.height) as usize;
-		self.cells = FixedBitSet::with_capacity(size);
-		for i in 0..size { self.cells.set(i, false) }
-	}
-
-	pub fn toggle_cell(&mut self, row: u32, column: u32) {
-		let idx = self.get_index(row, column);
-		self.cells.set(idx, !self.cells[idx]);
-	}
-
-	pub fn randomize_cells(&mut self) {
-		let size = (self.width * self.height) as usize;
-		for i in 0..size {
-			self.cells.set(i, get_random_boolean());
-		}
-	}
 
 	/// Setters
+	///
 	pub fn set_width(&mut self, width: u32) {
 		self.width = width;
 		self.reset_cells();
@@ -148,30 +105,51 @@ impl Universe {
 		self.reset_cells();
 	}
 
+	/// Resets one / all cells to some state.
+	///
+	///
+	pub fn toggle_cell(&mut self, row: u32, column: u32) {
+		let idx = self.get_index(row, column);
+		self.cells.set(idx, !self.cells[idx]);
+	}
 
+	pub fn reset_cells(&mut self) {
+		let size = (self.width * self.height) as usize;
+		self.cells = FixedBitSet::with_capacity(size);
+		for i in 0..size { self.cells.set(i, false) }
+	}
+
+	pub fn randomize_cells(&mut self) {
+		let size = (self.width * self.height) as usize;
+		for i in 0..size {
+			self.cells.set(i, get_random_boolean());
+		}
+	}
+
+	/// Universe evolution
+	///
 	pub fn ticks(&mut self, nr_ticks: usize) {
-		for _i in 0..nr_ticks {
-				// Reset changes
-				// self.nr_changed = 0;
-				// let size = (self.width * self.height) as usize;
-				// self.changed_cells = vec!(0; size*2+1);
-			self.tick();
+		let mut died_born = vec!((0, 0); nr_ticks);
+		for i in 0..nr_ticks {
+			// died_born[i] = self.tick();
+			died_born[i] = self.tick2();
 		}
 	}
 
 
-	fn tick(&mut self) {
-		// let _timer = Timer::new("Universe::tick");
+	fn tick(&mut self) -> (u32, u32) {
+		let _timer = Timer::new("Universe::tick-1");
 		self.epoch += 1;
-
+		let mut died = 0;
+		let mut born = 0;
 		{
 			// let _timer = Timer::new("new generation");
 			for row in 0..self.height {
 				for col in 0..self.width {
 					let idx = self.get_index(row, col);
-					let cell = self.cells[idx];
 					let live_neighbors = self.live_neighbor_count(row, col);
 
+					let cell = self.cells[idx];
 					let new_val = match (cell, live_neighbors) {
 						(true, x) if x < 2 => false,
 						(true, 2) | (true, 3) => true,
@@ -179,21 +157,60 @@ impl Universe {
 						(false, 3) => true,
 						(otherwise, _) => otherwise
 					};
+					if cell && !new_val { died += 1 };
+					if !cell && new_val { born += 1 };
 
-					// if new_val {
-					// 	self.nr_changed += 1;
-					// 	self.changed_cells[self.nr_changed as usize *2] = row;
-					// 	self.changed_cells[self.nr_changed as usize *2 + 1] = col;
-					// }
 					self.tmp_cells.set(idx, new_val);
 				}
 			}
 		}
-
 		{
 			// let _timer = Timer::new("switch references to FixedBitSets");
 			self.cells = self.tmp_cells.clone();
 		}
+		(died, born)
+	}
+
+
+	fn tick2(&mut self) -> (u32, u32) {
+		let _timer = Timer::new("Universe::tick-2");
+		self.epoch += 1;
+		let mut died = 0;
+		let mut born = 0;
+		let size = (self.width * self.height) as usize;
+
+		/// The size of (&[u32]) cells.as_slice() is (size*size/32)
+		// let cells_u32 = self.cells.as_slice();
+		// console_log(&format!("u32 length of cells: {:?}", cells_u32.len()));
+		// (0..size).into_par_iter();
+
+		for i in 0..size {
+			let mut row = self.get_row(i);
+			let mut col = self.get_col(i);
+			let live_neighbors = self.live_neighbor_count(row, col);
+			let cell = self.cells[i];
+			let new_val = match (cell, live_neighbors) {
+				(true, x) if x < 2 => false,
+				(true, 2) | (true, 3) => true,
+				(true, x) if x > 3 => false,
+				(false, 3) => true,
+				(otherwise, _) => otherwise
+			};
+			if cell && !new_val { died += 1 };
+			if !cell && new_val { born += 1 };
+			self.tmp_cells.set(i, new_val);
+		}
+		self.cells = self.tmp_cells.clone();
+
+		(died, born)
+	}
+
+	fn get_row(&self, idx: usize) -> u32 {
+		(idx / (self.width as usize)) as u32
+	}
+
+	fn get_col(&self, idx: usize) -> u32 {
+		(idx % (self.width as usize)) as u32
 	}
 
 	// #[inline]
@@ -257,11 +274,3 @@ impl Universe {
 		count
 	}
 }
-
-
-// #[wasm_bindgen]
-// pub fn greet(name: &str) {
-// 	utils::console_log(&format!("Hello, {}!", name));
-// 	utils::console_log(&format!("Random f32: {}", js_sys::Math::random()));
-// 	// utils::console_error("ERROR: WHHOOOAAAAAAAAAA.....");
-// }

@@ -13,7 +13,7 @@ const fps_meter = new window.FPSMeter({
 });
 
 
-const CELL_SIZE = 3; // px
+const CELL_SIZE = 2; // px
 const GRID_COLOR = "#111111";
 
 const CELL_CONDITIONS = {
@@ -40,8 +40,8 @@ const canvas = document.getElementById("game-of-life-canvas");
 const ctx = canvas.getContext("2d");
 console.log('canvas CONTEXT: ', ctx);
 
-canvas.height = (CELL_SIZE + 1) * height + 1;
-canvas.width = (CELL_SIZE + 1) * width + 1;
+canvas.height = CELL_SIZE * height;
+canvas.width = CELL_SIZE * width;
 const ticks_per_draw_slider = document.querySelector("#ticks-per-draw");
 const ticks_per_draw_text = document.querySelector("#ticks-per-draw-text");
 const reset_dead = document.querySelector("#reset-dead");
@@ -59,6 +59,7 @@ reset_dead.addEventListener('click', () => {
 	drawGrid();
 	drawCells();
 });
+
 reset_random.addEventListener('click', () => {
 	universe.randomize_cells();
 	drawGrid();
@@ -89,35 +90,6 @@ const getIndex = (row, column) => {
 	return row * width + column;
 };
 
-const drawChanges = () => {
-	const diffsPtr = universe.diffs();
-	// *times TICKS_PER_ROUND should suffice...
-	const changes = new Uint32Array(memory.buffer, diffsPtr, width * height + 1);
-	// console.log(`Length of changes array: ${changes.length}`);
-	// console.log(`Actual changes this iteration: ${changes[0]}`);
-
-	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);
-	ctx.beginPath();
-	ctx.fillStyle = CELL_CONDITIONS.alive.color;
-
-	/**
-	 * the number of changes is stored at index 0 of the array
-	 * since each cell has 2 coordinates, we need to iterate to 2*changes
-	 * @type {number}
-	 */
-	const min_length = Math.min(2 * changes[0], changes.length);
-	for ( let i = 1; i < min_length; i += 2) {
-		let row = changes[i];
-		let col = changes[i+1];
-		ctx.fillRect(
-			col * (CELL_SIZE + 1) + 1,
-			row * (CELL_SIZE + 1) + 1,
-			CELL_SIZE,
-			CELL_SIZE
-		);
-	}
-};
-
 const drawCells = () => {
 	const cellsPtr = universe.cells();
 	const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
@@ -129,23 +101,19 @@ const drawCells = () => {
 	for (let row = 0; row < height; row++) {
 		for (let col = 0; col < width; col++) {
 			const idx = getIndex(row, col);
-
-			if ( !bitIsSet(idx, cells) ) { // !== condition.value ) {
+			if ( !bitIsSet(idx, cells) ) {
 				continue;
 			}
-
 			ctx.fillRect(
-				col * (CELL_SIZE + 1) + 1,
-				row * (CELL_SIZE + 1) + 1,
+				col * (CELL_SIZE),
+				row * (CELL_SIZE),
 				CELL_SIZE,
 				CELL_SIZE
 			);
 		}
 	}
-
 	ctx.stroke();
 };
-
 
 const bitIsSet = (n, arr) => {
 	const byte = Math.floor(n / 8);
@@ -186,34 +154,15 @@ playPauseButton.addEventListener("click", event => {
 	}
 });
 
-// canvas.addEventListener("click", event => {
-// 	const boundingRect = canvas.getBoundingClientRect();
-//
-// 	const scaleX = canvas.width / boundingRect.width;
-// 	const scaleY = canvas.height / boundingRect.height;
-//
-// 	const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
-// 	const canvasTop = (event.clientY - boundingRect.top) * scaleY;
-//
-// 	const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
-// 	const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
-//
-// 	universe.toggle_cell(row, col);
-//
-// 	drawGrid();
-// 	drawCells();
-// });
-
 const renderLoop = () => {
 	// debugger;
 	fps_meter.tickStart();
 	universe.ticks(TICKS_PER_ROUND);
-	drawGrid();
+	// drawGrid();
 	drawCells();
-	// drawChanges();
 	animationId = requestAnimationFrame(renderLoop);
 	fps_meter.tick();
 };
 // Just draw the initial state (and wait for player to click 'play')
-drawGrid();
+// drawGrid();
 drawCells();

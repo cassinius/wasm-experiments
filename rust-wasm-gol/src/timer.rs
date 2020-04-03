@@ -2,7 +2,7 @@ extern crate web_sys;
 use web_sys::console;
 
 pub struct Timer<'a> {
-	name: &'a str,
+	name: &'a str
 }
 
 impl<'a> Timer<'a> {

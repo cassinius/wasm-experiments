@@ -3,6 +3,7 @@
 export class Universe {
   free(): void;
 /**
+* Constructor
 * @returns {Universe} 
 */
   static new(): Universe;
@@ -20,22 +21,6 @@ export class Universe {
 */
   cells(): number;
 /**
-* @returns {number} 
-*/
-  diffs(): number;
-/**
-* Resets all cells to the dead state.
-*/
-  reset_cells(): void;
-/**
-* @param {number} row 
-* @param {number} column 
-*/
-  toggle_cell(row: number, column: number): void;
-/**
-*/
-  randomize_cells(): void;
-/**
 * Setters
 * @param {number} width 
 */
@@ -45,6 +30,20 @@ export class Universe {
 */
   set_height(height: number): void;
 /**
+* Resets one / all cells to some state.
+*
+* @param {number} row 
+* @param {number} column 
+*/
+  toggle_cell(row: number, column: number): void;
+/**
+*/
+  reset_cells(): void;
+/**
+*/
+  randomize_cells(): void;
+/**
+* Universe evolution
 * @param {number} nr_ticks 
 */
   ticks(nr_ticks: number): void;
