@@ -23,6 +23,10 @@ export class Universe {
 */
   cells(): number;
 /**
+* @returns {number} 
+*/
+  cells_from_p(): number;
+/**
 * Setters
 * @param {number} width 
 */
@@ -33,7 +37,6 @@ export class Universe {
   set_height(height: number): void;
 /**
 * Resets one / all cells to some state.
-*
 * @param {number} row 
 * @param {number} column 
 */

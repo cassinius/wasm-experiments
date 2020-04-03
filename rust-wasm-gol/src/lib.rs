@@ -74,7 +74,7 @@ impl Universe {
 	#[allow(unused_doc_comments)]
 	pub fn new(width: Option<u32>, height: Option<u32>) -> Universe {
 		/// Activating debug symbols
-		utils::set_panic_hook();
+		// utils::set_panic_hook();
 		// panic!("blahoo");
 
 		let epoch = 0;
@@ -124,45 +124,12 @@ impl Universe {
 		}
 	}
 
-	/// This works completely inside the physical universe
-	/// Only use indices, no rows or cols ;-)
-	/// @todo invoke on every `tick start`, since we cannot use the instance method @ construction
-	fn copy_borders(&mut self) {
-		// north to south (`source` el {w_p+1..2w_p-2} => {`source` + (h_p-2)w_p})
-		for source in self.width_p+1..2*self.width_p-2 {
-			let target = source + (self.height_p-2) * self.width_p;
-			self.cells_p.set(target as usize, self.cells_p[source as usize]);
-		}
-		// south to north (`source` el {(h_p-1)w_p+1..h_p*w_p-2} => {`source` - (h_p-1)w_p})
-		for source in (self.height_p-1)*self.width_p+1..self.height_p*self.width_p-2 {
-			let target = source - (self.height_p-1)*self.width_p;
-			self.cells_p.set(target as usize, self.cells_p[source as usize]);
-		}
-		// west to east (`source` el {w_p+1;(h_p-2)w_p+1;w_p} => {`source` + w_p-2})
-		for source in (self.width_p+1..(self.height_p-2)*self.width_p+1).step_by(self.width_p as usize) {
-			let target = source + self.width_p - 2;
-			self.cells_p.set(target as usize, self.cells_p[source as usize]);
-		}
-		// east to west (`source` el {2w_p-2;(h_p-1)w_p-2;w_p} => {`source` - w_p-2})
-		for source in (2*self.width_p-2..(self.height_p-1)*self.width_p-2).step_by(self.width_p as usize) {
-			let target = source - self.width_p - 2;
-			self.cells_p.set(target as usize, self.cells_p[source as usize]);
-		}
-		// move the 4 corners of the earch, uuhm, universe ;-)
-		// right bottom => left top
-		self.cells_p.set(0, self.cells_p[((self.height_p-1)*self.width_p-2) as usize]);
-		// left bottom => right top
-		self.cells_p.set((self.width_p-1) as usize, self.cells_p[((self.height_p-2)*self.width_p+1) as usize]);
-		// right top => left bottom
-		self.cells_p.set(((self.height_p-1)*self.width_p) as usize, self.cells_p[(2*self.width_p-2) as usize]);
-		// left top => right bottom
-		self.cells_p.set((self.width_p*self.height_p-1) as usize, self.cells_p[(self.width_p+1) as usize]);
-	}
-
 
 	/// Index conversion between logical & physical universes
 	///
 	fn idx_l2p(&self, idx_l: usize) -> usize {
+		// log is extremely slow...
+		// let log2width = (self.width_l as f64).log2() as usize;
 		let x_l = (idx_l / (self.width_l as usize)) as u32;
 		let y_l = idx_l as u32 - (x_l * self.width_l);
 		((x_l + 1) * self.width_p + y_l + 1) as usize
@@ -172,7 +139,20 @@ impl Universe {
 	///
 	pub fn width(&self) -> u32 { self.width_l }
 	pub fn height(&self) -> u32 { self.height_l }
-	pub fn cells(&self) -> *const u32 { self.cells_l.as_slice().as_ptr() }
+	pub fn cells(&self) -> *const u32 {
+		let _timer = Timer::new("Universe::return logical cells");
+		self.cells_l.as_slice().as_ptr()
+	}
+	pub fn cells_from_p(&self) -> *const u32 {
+		let _timer = Timer::new("Universe::return logical cells from physical");
+		let size_l = (self.width_l * self.height_l) as usize;
+		let mut cells = FixedBitSet::with_capacity(size_l);
+		for idx_l in 0..size_l {
+			let idx_p = self.idx_l2p(idx_l);
+			cells.set(idx_l, self.cells_p[idx_p]);
+		}
+		cells.as_slice().as_ptr()
+	}
 
 	/// Setters
 	///
@@ -180,13 +160,13 @@ impl Universe {
 		self.width_l = width;
 		self.reset_cells();
 	}
+
 	pub fn set_height(&mut self, height: u32) {
 		self.height_l = height;
 		self.reset_cells();
 	}
 
 	/// Resets one / all cells to some state.
-	///
 	///
 	pub fn toggle_cell(&mut self, row: u32, column: u32) {
 		let idx = self.get_index(row, column);
@@ -211,11 +191,10 @@ impl Universe {
 	pub fn ticks(&mut self, nr_ticks: usize) {
 		let mut died_born = vec!((0, 0); nr_ticks);
 		for i in 0..nr_ticks {
-			died_born[i] = self.tick();
-			// died_born[i] = self.tick2();
+			// died_born[i] = self.tick();
+			died_born[i] = self.tick2();
 		}
 	}
-
 
 	fn tick(&mut self) -> (u32, u32) {
 		let _timer = Timer::new("Universe::tick-1");
@@ -259,20 +238,20 @@ impl Universe {
 	/// The size of (&[u32]) cells.as_slice() is (size*size/32)
 	fn tick2(&mut self) -> (u32, u32) {
 		let _timer = Timer::new("Universe::tick-2");
+
+		self.compute_borders();
 		self.epoch += 1;
 		let mut died = 0;
 		let mut born = 0;
-		let size = (self.width_l * self.height_l) as usize;
+		let size_l = (self.width_l * self.height_l) as usize;
 
-		// let cells_u32 = self.cells.as_slice();
-		// console_log(&format!("u32 length of cells: {:?}", cells_u32.len()));
-		// (0..size).into_par_iter();
+		for idx_l in 0..size_l {
+			let idx_p = self.idx_l2p(idx_l);
+			// utils::console_log(&format!("Logical index {} equals physical index {}", idx_l, idx_p));
 
-		for i in 0..size {
-			let row = self.get_row(i);
-			let col = self.get_col(i);
-			let live_neighbors = self.live_neighbor_count(row, col);
-			let cell = self.cells_l[i];
+			let cell = self.cells_p[idx_p];
+			let live_neighbors = self.live_neighbor_count_2(idx_p);
+
 			let new_val = match (cell, live_neighbors) {
 				(true, x) if x < 2 => false,
 				(true, 2) | (true, 3) => true,
@@ -282,31 +261,72 @@ impl Universe {
 			};
 			if cell && !new_val { died += 1 };
 			if !cell && new_val { born += 1 };
-			self.tmp_cells_l.set(i, new_val);
+			self.tmp_cells_p.set(idx_p, new_val);
 		}
-		self.cells_l = self.tmp_cells_l.clone();
 
+		unsafe {
+			std::ptr::swap(&mut self.cells_p, &mut self.tmp_cells_p);
+		}
 		(died, born)
 	}
 
-	fn get_row(&self, idx: usize) -> u32 {
-		(idx / (self.width_l as usize)) as u32
+
+	fn live_neighbor_count_2(&self, idx_p: usize) -> u8 {
+		let mut live_neighbors = 0;
+		live_neighbors += self.cells_p[idx_p - self.width_p as usize - 1] as u8;
+		live_neighbors += self.cells_p[idx_p - self.width_p as usize] as u8;
+		live_neighbors += self.cells_p[idx_p - self.width_p as usize + 1] as u8;
+		live_neighbors += self.cells_p[idx_p - 1] as u8;
+		live_neighbors += self.cells_p[idx_p + 1] as u8;
+		live_neighbors += self.cells_p[idx_p + self.width_p as usize - 1] as u8;
+		live_neighbors += self.cells_p[idx_p + self.width_p as usize] as u8;
+		live_neighbors += self.cells_p[idx_p + self.width_p as usize + 1] as u8;
+		live_neighbors
 	}
 
-	fn get_col(&self, idx: usize) -> u32 {
-		(idx % (self.width_l as usize)) as u32
+
+	/// This works completely inside the physical universe
+	/// Only use indices, no rows or cols ;-)
+	/// @todo invoke on every `tick start`, since we cannot use the instance method @ construction
+	fn compute_borders(&mut self) {
+		let _timer = timer::Timer::new("Universe::Computing borders");
+		// north to south (`source` el {w_p+1..2w_p-2} => {`source` + (h_p-2)w_p})
+		for source in self.width_p+1..2*self.width_p-2 {
+			let target = source + (self.height_p-2) * self.width_p;
+			self.cells_p.set(target as usize, self.cells_p[source as usize]);
+		}
+		// south to north (`source` el {(h_p-1)w_p+1..h_p*w_p-2} => {`source` - (h_p-1)w_p})
+		for source in (self.height_p-1)*self.width_p+1..self.height_p*self.width_p-2 {
+			let target = source - (self.height_p-1)*self.width_p;
+			self.cells_p.set(target as usize, self.cells_p[source as usize]);
+		}
+		// west to east (`source` el {w_p+1;(h_p-2)w_p+1;w_p} => {`source` + w_p-2})
+		for source in (self.width_p+1..(self.height_p-2)*self.width_p+1).step_by(self.width_p as usize) {
+			let target = source + self.width_p - 2;
+			self.cells_p.set(target as usize, self.cells_p[source as usize]);
+		}
+		// east to west (`source` el {2w_p-2;(h_p-1)w_p-2;w_p} => {`source` - w_p-2})
+		for source in (2*self.width_p-2..(self.height_p-1)*self.width_p-2).step_by(self.width_p as usize) {
+			let target = source - self.width_p - 2;
+			self.cells_p.set(target as usize, self.cells_p[source as usize]);
+		}
+		// move the 4 corners of the earch, uuhm, universe ;-)
+		// right bottom => left top
+		self.cells_p.set(0, self.cells_p[((self.height_p-1)*self.width_p-2) as usize]);
+		// left bottom => right top
+		self.cells_p.set((self.width_p-1) as usize, self.cells_p[((self.height_p-2)*self.width_p+1) as usize]);
+		// right top => left bottom
+		self.cells_p.set(((self.height_p-1)*self.width_p) as usize, self.cells_p[(2*self.width_p-2) as usize]);
+		// left top => right bottom
+		self.cells_p.set((self.width_p*self.height_p-1) as usize, self.cells_p[(self.width_p+1) as usize]);
 	}
+
 
 	// #[inline]
 	// #[inline(always)]
 	fn get_index(&self, row: u32, column: u32) -> usize {
 		(row * self.width_l + column) as usize
 	}
-
-
-	// fn live_neighbor_count_2(&self, idx: usize) -> u8 {
-	//
-	// }
 
 
 	fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
