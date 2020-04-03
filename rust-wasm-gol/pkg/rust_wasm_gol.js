@@ -76,13 +76,6 @@ export class Universe {
         return ret;
     }
     /**
-    * @returns {number}
-    */
-    cells_from_p() {
-        var ret = wasm.universe_cells_from_p(this.ptr);
-        return ret;
-    }
-    /**
     * Setters
     * @param {number} width
     */
@@ -121,14 +114,6 @@ export class Universe {
         wasm.universe_ticks(this.ptr, nr_ticks);
     }
 }
-
-export const __wbg_time_246498b6a24402b6 = function(arg0, arg1) {
-    console.time(getStringFromWasm0(arg0, arg1));
-};
-
-export const __wbg_timeEnd_dc6f656e450c9027 = function(arg0, arg1) {
-    console.timeEnd(getStringFromWasm0(arg0, arg1));
-};
 
 export const __wbg_random_d45f566bef640e60 = typeof Math.random == 'function' ? Math.random : notDefined('Math.random');
 
