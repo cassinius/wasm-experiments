@@ -221,7 +221,7 @@ impl Universe {
 					let idx = self.get_index_l(row, col);
 
 					// let live_neighbors = 2;
-					let live_neighbors = self.live_neighbor_count(row, col);
+					let live_neighbors = self.live_neighbor_count_1(row, col);
 
 					let cell = self.cells_l[idx];
 					let new_val = match (cell, live_neighbors) {
@@ -246,7 +246,10 @@ impl Universe {
 	}
 
 
-	fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
+	/// 4x edge checks
+	/// 8x index computation
+	/// 8x grid access
+	fn live_neighbor_count_1(&self, row: u32, column: u32) -> u8 {
 		let mut count = 0;
 
 		let north = if row == 0 {
@@ -320,7 +323,7 @@ impl Universe {
 
 		for row in 0..self.height_l {
 			for col in 0..self.width_l {
-				let idx_l = self.get_index_l(row, col);
+				// let idx_l = self.get_index_l(row, col);
 				let idx_p = self.get_index_p(row+1, col+1);
 				let cell = self.cells_p[idx_p];
 
@@ -336,40 +339,52 @@ impl Universe {
 				};
 				if cell && !new_val { died += 1 };
 				if !cell && new_val { born += 1 };
-				self.tmp_cells_l.set(idx_l, new_val);
+				// self.tmp_cells_l.set(idx_l, new_val);
 				self.tmp_cells_p.set(idx_p, new_val);
 			}
 		}
 
-		std::mem::swap(&mut self.cells_l, &mut self.tmp_cells_l);
+		// std::mem::swap(&mut self.cells_l, &mut self.tmp_cells_l);
 		std::mem::swap(&mut self.cells_p, &mut self.tmp_cells_p);
 		(died, born)
 	}
 
 
+	/// 0x edge checks
+	/// 0x index computation
+	/// 8x grid access
 	fn live_neighbor_count_2(&self, idx_p: usize) -> u8 {
-		// utils::console_log(&format!("Source cell for neighborhood: {}", idx_p));
+		let width = self.width_p as usize;
 		let mut acc = 0;
 
+		let nw = idx_p - width - 1;
+		acc += self.cells_p[nw] as u8;
+		let n = idx_p - width;
+		acc += self.cells_p[n] as u8;
+		let ne = idx_p - width + 1;
+		acc += self.cells_p[ne] as u8;
+		let w = idx_p - 1;
+		acc += self.cells_p[w] as u8;
+		let e = idx_p + 1;
+		acc += self.cells_p[e] as u8;
+		let sw = idx_p + width - 1;
+		acc += self.cells_p[sw] as u8;
+		let s = idx_p + width;
+		acc += self.cells_p[s] as u8;
+		let se = idx_p + width + 1;
+		acc += self.cells_p[se] as u8;
+		acc
+
+
+		// @description range must *include* upper bound !!
 		// let width = self.width_p as i32;
 		// for j in ((-1*width)..=width).step_by(width as usize) {
 		// 	for i in ((-1 as i32)..=1).step_by(1) {
 		// 		let target_idx = (idx_p as isize + i as isize + j as isize) as usize;
-		// 		// utils::console_log(&format!("{:?}", target_idx));
 		// 		acc += self.cells_p[target_idx] as u8;
 		// 	}
 		// }
 		// if self.cells_p[idx_p] {acc -= 1};
-
-		acc += self.cells_p[idx_p - self.width_p as usize - 1] as u8;
-		acc += self.cells_p[idx_p - self.width_p as usize] as u8;
-		acc += self.cells_p[idx_p - self.width_p as usize + 1] as u8;
-		acc += self.cells_p[idx_p - 1] as u8;
-		acc += self.cells_p[idx_p + 1] as u8;
-		acc += self.cells_p[idx_p + self.width_p as usize - 1] as u8;
-		acc += self.cells_p[idx_p + self.width_p as usize] as u8;
-		acc += self.cells_p[idx_p + self.width_p as usize + 1] as u8;
-		acc
 	}
 
 
@@ -380,7 +395,7 @@ impl Universe {
 		// let _timer = timer::Timer::new("Universe::Computing borders");
 		// north to south (`source` el {w_p+1..2w_p-2} => {`source` + (h_p-2)w_p})
 		for source in self.width_p+1..2*self.width_p-2 {
-			let target = source + (self.height_p-2) * self.width_p;
+			let target = source + (self.height_p-2)*self.width_p;
 			self.cells_p.set(target as usize, self.cells_p[source as usize]);
 		}
 		// south to north (`source` el {(h_p-1)w_p+1..h_p*w_p-2} => {`source` - (h_p-1)w_p})

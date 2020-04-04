@@ -52,4 +52,9 @@ We have to comment out all the #[wasm_bindgen] annotations, and the "cdylib" bit
 ##### Tick-2 with neighborhood counting + double setting (logical + physical)
 
 * Tick-2
-    - 
+    - Chrome: ~10
+    - Firefox: ~8.5
+
+* Tick-2 update with target (usize) computation before access:
+    - Chrome: ~9
+    - Firefox: ~8

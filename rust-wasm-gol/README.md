@@ -55,3 +55,7 @@ We have to comment out all the #[wasm_bindgen] annotations, and the "cdylib" bit
     - Chrome: ~10
     - Firefox: ~8.5
 
+* Tick-2 update with target (usize) computation before access:
+    - Chrome: ~9 (~9 w/o double access)
+    - Firefox: ~8 (~7 w/o double access)
+
