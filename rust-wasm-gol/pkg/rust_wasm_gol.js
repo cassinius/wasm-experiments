@@ -76,13 +76,6 @@ export class Universe {
         return ret;
     }
     /**
-    * @returns {number}
-    */
-    cells_from_p() {
-        var ret = wasm.universe_cells_from_p(this.ptr);
-        return ret;
-    }
-    /**
     * Setters
     * @param {number} width
     */

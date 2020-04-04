@@ -23,10 +23,6 @@ export class Universe {
 */
   cells(): number;
 /**
-* @returns {number} 
-*/
-  cells_from_p(): number;
-/**
 * Setters
 * @param {number} width 
 */
