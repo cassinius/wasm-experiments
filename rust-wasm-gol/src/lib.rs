@@ -351,7 +351,8 @@ impl Universe {
 
 
 	/// 0x edge checks
-	/// 0x index computation
+	/// 8x index computations (w/o multiplication, but maybe  
+	///    this does not matter on modern CPUs anymore ??)
 	/// 8x grid access
 	fn live_neighbor_count_2(&self, idx_p: usize) -> u8 {
 		let width = self.width_p as usize;
@@ -377,6 +378,7 @@ impl Universe {
 
 
 		// @description range must *include* upper bound !!
+		// @description actually works but is *incredibly* slow !!
 		// let width = self.width_p as i32;
 		// for j in ((-1*width)..=width).step_by(width as usize) {
 		// 	for i in ((-1 as i32)..=1).step_by(1) {
