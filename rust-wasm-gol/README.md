@@ -28,3 +28,30 @@ wasm-pack test --chrome --headless
 ### Benchmarking
 
 We have to comment out all the #[wasm_bindgen] annotations, and the "cdylib" bits from Cargo.toml or else building native code will fail and have link errors.
+
+#### Tick-1 vs. Tick2 (running avg. last 100 iterations)
+
+##### w/o neighborhood counting
+
+* Tick-1 
+    - Chrome: ~2ms
+    - Firefox: ~2.3ms
+* Tick-2 w/o logical cells
+    - Chrome: ~2ms
+    - Firefox: ~2.5ms
+ 
+##### with neighborhood counting
+ 
+* Tick-1 
+    - Chrome: ~8.5
+    - Firefox: ~8.5
+* Tick-2
+    - Chrome: ~9.5
+    - Firefox: ~ 7.3
+    
+##### Tick-2 with neighborhood counting + double setting (logical + physical)
+
+* Tick-2
+    - Chrome: ~10
+    - Firefox: ~8.5
+

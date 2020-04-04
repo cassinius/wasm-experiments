@@ -34,9 +34,9 @@ export class Universe {
 /**
 * Resets one / all cells to some state.
 * @param {number} row 
-* @param {number} column 
+* @param {number} col 
 */
-  toggle_cell(row: number, column: number): void;
+  toggle_cell(row: number, col: number): void;
 /**
 */
   reset_cells(): void;
