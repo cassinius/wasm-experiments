@@ -13,8 +13,8 @@ const fps_meter = new window.FPSMeter({
 });
 
 
-const UNIVERSE_SIZE = 512;
-const CELL_SIZE = 2; // px
+const UNIVERSE_SIZE = 384;
+const CELL_SIZE = 2;
 const GRID_COLOR = "#111111";
 
 const CELL_CONDITIONS = {
@@ -24,7 +24,7 @@ const CELL_CONDITIONS = {
 	},
 	dead: {
 		value: false,
-		color: "#ff3000" // "#111111"
+		color: "#ff3000" // Just to see what we render
 	}
 };
 const TICKS_PER_DRAW_TEXT = "Speed: ";

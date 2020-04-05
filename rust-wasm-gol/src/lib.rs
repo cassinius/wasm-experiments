@@ -4,9 +4,6 @@ use utils::console_log;
 mod timer;
 use timer::Timer;
 
-// use std::time::{Instant, Duration};
-// use std::time::{Duration, SystemTime};
-
 // use rayon::prelude::*;
 use wasm_bindgen::prelude::*;
 
@@ -81,7 +78,6 @@ impl Universe {
 	pub fn new(width: Option<u32>, height: Option<u32>) -> Universe {
 		/// Activating debug symbols
 		utils::set_panic_hook();
-		// panic!("blahoo");
 
 		let epoch = 0;
 		let width_l = width.unwrap_or(DEFAULT_SIZE);
@@ -89,12 +85,12 @@ impl Universe {
 		let width_p = width_l + 2;
 		let height_p = height_l + 2;
 
-		let log2width = (width_l as f64).log2();
-		let log2height = (height_l as f64).log2();
-		if log2width.ceil() != log2width.floor() || log2height.ceil() != log2height.floor() {
-			// utils::console_error("Width & height must be powers of 2 !");
-			panic!("Width & height must be powers of 2 !");
-		}
+		// Thought this would make cell position calculation easier, but it turns out it doesn't
+		// let log2width = (width_l as f64).log2();
+		// let log2height = (height_l as f64).log2();
+		// if log2width.ceil() != log2width.floor() || log2height.ceil() != log2height.floor() {
+		// 	panic!("Width & height must be powers of 2 !");
+		// }
 
 		let size_l = (width_l * height_l) as usize;
 		let size_p = (width_p * height_p) as usize;
@@ -114,7 +110,6 @@ impl Universe {
 		/// 2. perform the copying phase we will later use for updating as well
 		for i in 0..size_p {
 			cells_p.set(i, get_random_boolean());
-			// self. copy_borders();
 		}
 
 		Universe {
@@ -201,8 +196,8 @@ impl Universe {
 		for i in 0..nr_ticks {
 			let tic = Instant::now();
 
-			// died_born[i] = self.tick1();
-			died_born[i] = self.tick2();
+			died_born[i] = self.tick1();
+			// died_born[i] = self.tick2();
 
 			let elapsed = tic.elapsed().as_micros() as i32;
 			self.update_averages(elapsed);
@@ -323,7 +318,7 @@ impl Universe {
 
 		for row in 0..self.height_l {
 			for col in 0..self.width_l {
-				// let idx_l = self.get_index_l(row, col);
+				let idx_l = self.get_index_l(row, col);
 				let idx_p = self.get_index_p(row+1, col+1);
 				let cell = self.cells_p[idx_p];
 
@@ -339,19 +334,19 @@ impl Universe {
 				};
 				if cell && !new_val { died += 1 };
 				if !cell && new_val { born += 1 };
-				// self.tmp_cells_l.set(idx_l, new_val);
+				self.tmp_cells_l.set(idx_l, new_val);
 				self.tmp_cells_p.set(idx_p, new_val);
 			}
 		}
 
-		// std::mem::swap(&mut self.cells_l, &mut self.tmp_cells_l);
+		std::mem::swap(&mut self.cells_l, &mut self.tmp_cells_l);
 		std::mem::swap(&mut self.cells_p, &mut self.tmp_cells_p);
 		(died, born)
 	}
 
 
 	/// 0x edge checks
-	/// 8x index computations (w/o multiplication, but maybe  
+	/// 8x index computations (w/o multiplication, but maybe
 	///    this does not matter on modern CPUs anymore ??)
 	/// 8x grid access
 	fn live_neighbor_count_2(&self, idx_p: usize) -> u8 {
