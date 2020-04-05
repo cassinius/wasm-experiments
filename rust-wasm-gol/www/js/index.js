@@ -39,7 +39,7 @@ const height = universe.height();
 // around each of them.
 const canvas = document.getElementById("game-of-life-canvas");
 const ctx = canvas.getContext("2d");
-console.log('canvas CONTEXT: ', ctx);
+// console.log('canvas CONTEXT: ', ctx);
 
 canvas.height = CELL_SIZE * height;
 canvas.width = CELL_SIZE * width;
@@ -94,8 +94,9 @@ const getIndex = (row, column) => {
 const drawCells = () => {
 	const cellsPtr = universe.cells();
 	const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
+	const radius = CELL_SIZE / 2;
 
-	ctx.clearRect(0, 0, (CELL_SIZE + 1) * width + 1, (CELL_SIZE + 1) * height + 1);
+	ctx.clearRect(0, 0, CELL_SIZE * width, CELL_SIZE * height);
 	ctx.beginPath();
 	ctx.fillStyle = CELL_CONDITIONS.alive.color;
 
@@ -105,14 +106,19 @@ const drawCells = () => {
 			if ( !bitIsSet(idx, cells) ) {
 				continue;
 			}
+
+			// ctx.moveTo(col * CELL_SIZE, row * CELL_SIZE);
+			// ctx.arc(col * CELL_SIZE, row * CELL_SIZE, radius, 0, 2 * Math.PI);
+
 			ctx.fillRect(
-				col * (CELL_SIZE),
-				row * (CELL_SIZE),
+				col * CELL_SIZE,
+				row * CELL_SIZE,
 				CELL_SIZE,
 				CELL_SIZE
 			);
 		}
 	}
+	ctx.fill();
 	ctx.stroke();
 };
 
