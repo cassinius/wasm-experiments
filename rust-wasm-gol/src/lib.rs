@@ -1,10 +1,11 @@
+#![feature(stmt_expr_attributes)]
+
 mod utils;
 use utils::console_log;
 
 mod timer;
 use timer::Timer;
 
-// use rayon::prelude::*;
 use wasm_bindgen::prelude::*;
 
 extern crate js_sys;
@@ -21,13 +22,12 @@ use fixedbitset::FixedBitSet;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-
 const DEFAULT_SIZE: u32 = 128;
-const DEFAULT_ALIVE_INIT: f64 = 0.3;
+const DEFAULT_ALIVE_RATIO: f64 = 0.3;
 
 
 fn get_random_boolean() -> bool {
-	return js_sys::Math::random() < DEFAULT_ALIVE_INIT;
+	js_sys::Math::random() < DEFAULT_ALIVE_RATIO
 }
 
 
@@ -74,6 +74,9 @@ impl Universe {
 	pub fn new(width: Option<u32>, height: Option<u32>) -> Universe {
 		/// Activating debug symbols
 		utils::set_panic_hook();
+
+		/// Initialize thread pool
+		// rayon::ThreadPoolBuilder::new().num_threads(22).build_global().unwrap();
 
 		let epoch = 0;
 		let width_l = width.unwrap_or(DEFAULT_SIZE);
@@ -133,7 +136,6 @@ impl Universe {
 	pub fn reset_cells(&mut self) {
 		let size_l = (self.width * self.height) as usize;
 		for idx_l in 0..size_l { self.cells.set(idx_l, false) }
-
 	}
 
 	pub fn randomize_cells(&mut self) {
@@ -159,24 +161,34 @@ impl Universe {
 	/// Universe evolution
 	///
 	pub fn ticks(&mut self, nr_ticks: usize) {
-		let mut died_born = vec!((0, 0); nr_ticks);
+		// let mut died_born = vec!((0, 0); nr_ticks);
 		for i in 0..nr_ticks {
+			self.epoch += 1;
 			let tic = Instant::now();
-			died_born[i] = self.tick();
+
+			/// We need something like that, just in wasm...
+			// rayon::join(
+			// 	|| self.tick(0, self.height / 2, 0, self.width),
+			// 	|| self.tick(self.height / 2, self.height, 0, self.width),
+			// );
+
+			self.cells = self.tick(0, self.height, 0, self.width);
+
 			let elapsed = tic.elapsed().as_micros() as i32;
 			self.update_averages(elapsed);
 		}
 	}
 
-	fn tick(&mut self) -> (u32, u32) {
+	fn tick(&self, row_start: u32, row_end: u32, col_start: u32, col_end: u32) -> FixedBitSet {
 		// let _timer = Timer::new("Universe::tick-1");
-		self.epoch += 1;
 		let mut died = 0;
 		let mut born = 0;
+		let cells_size = ((row_end - row_start) * (col_end - col_start)) as usize;
+		let mut cells = FixedBitSet::with_capacity(cells_size);
 		{
 			// let _timer = Timer::new("new generation");
-			for row in 0..self.height {
-				for col in 0..self.width {
+			for row in row_start..row_end { //} 0..self.height {
+				for col in col_start..col_end { //} 0..self.width {
 					let idx = self.get_index_l(row, col);
 
 					// let live_neighbors = 2;
@@ -193,15 +205,16 @@ impl Universe {
 					if cell && !new_val { died += 1 };
 					if !cell && new_val { born += 1 };
 
-					self.tmp_cells.set(idx, new_val);
+					cells.set(idx, new_val);
 				}
 			}
 		}
 		{
 			// let _timer = Timer::new("switch references to FixedBitSets");
-			std::mem::swap(&mut self.cells, &mut self.tmp_cells);
+			// std::mem::swap(&mut self.cells, &mut self.tmp_cells);
 		}
-		(died, born)
+		// (died, born)
+		cells
 	}
 
 

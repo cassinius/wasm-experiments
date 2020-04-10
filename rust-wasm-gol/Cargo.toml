@@ -17,7 +17,9 @@ default = ["console_error_panic_hook"]
 wasm-bindgen = "0.2"
 wasm-timer = "0.2.0"
 fixedbitset = "0.2.0"
-rayon = "1.3.0"
+# rayon does not work in wasm
+#rayon = "1.3.0"
+web_worker = "0.2.0"
 # Works only on wasm32-wasi, not wasm32-unknown-unknown
 #rand = "0.7.3"
 # Use this for Math::random etc...
