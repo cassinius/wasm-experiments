@@ -1,6 +1,6 @@
 # Wasm Notes
 
-## Multi-threading blog (October 24th(?), 2018)
+## Episode 1 - Multi-threading blog (October 24th(?), 2018)
 
 ### Concepts
 
@@ -44,10 +44,27 @@ pub struct Module {
   - and then use memory.init manually for the first Thread
 
 
+### Conclusion
+
+* WAY too much low-level dirty work for our purposes - I guess there is a good chance that this got better in the 1 1/2 years since the blog post, but if not we're gonna start with Rust / wgpu  
+
 
 ### Reading list
 
 * [Multithreading Rust & Wasm](https://rustwasm.github.io/2018/10/24/multithreading-rust-and-wasm.html)
 * [Wasm thread proposal]()
 * [Atomic instructions](https://github.com/WebAssembly/threads/blob/master/proposals/threads/Overview.md#atomic-memory-accesses)
-  
+
+
+## Episode 2 - A new hope ;-)
+
+### Actual project: hydrodynamics simulation in Rust => native + Wasm in one project
+
+
+### Conclusion
+
+* The actual hope lies in the structure of the project: The author succeeded in organizing their codebase such that building with wasm-pack & cargo (build) is both possible, with the one producing a .wasm + .js loader file for use via Webpack (same setup as in the GOL sample) and the other producing a regular binary with native graphics backend
+
+### Reading list
+
+* [Experience ] https://karthikkaranth.me/blog/my-experience-with-rust-plus-wasm/
