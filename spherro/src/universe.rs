@@ -13,6 +13,11 @@
 ///    && I am not sure about the rendering yet 
 ///    (but we'll probably use a different library anyways...)
 /// 
+/// One interesting fact about this file is that i simply includes
+/// wasm_bindgen although it's not used for the desktop (binary) version
+/// --> that's probably a hint that the compiler is smart enough to only
+/// use code from crates that is actually used in a compilation target (!?!?)
+
 
 
 use wasm_bindgen::prelude::*;

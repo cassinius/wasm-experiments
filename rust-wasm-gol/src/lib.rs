@@ -30,9 +30,7 @@ fn get_random_boolean() -> bool {
 }
 
 
-/// Has logical cells (*_l) & physical ones (*_p)
-/// Logical are the cells you see from the outside
-/// Physical is the data-structure to compute them efficiently
+/// Has cells & tmp_cells so we can build a swapchain
 ///
 #[wasm_bindgen]
 pub struct Universe {
