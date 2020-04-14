@@ -1,0 +1,9 @@
+bin/
+/target
+**/*.rs.bk
+wasm-pack.log
+
+.vscode
+.vs
+.idea
+

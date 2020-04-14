@@ -1,0 +1,103 @@
+#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99%;
+    height: 99%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#spherro-canvas {
+    border: 5px solid black;
+    background-color: white;
+}
+/* TODO: I don't think it has to be this complicated */
+@media (orientation: landscape) {
+    #spherro-canvas {
+        width: 70vh;
+        height: 70vh;
+    }
+}
+@media (orientation: portrait) {
+    #spherro-canvas {
+        width: 70vw;
+        height: 70vw;
+    }
+}
+
+.controls {
+    min-width: 35vw;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    font-family: monospace;
+    text-align: right;
+}
+
+.loading {
+    position: absolute;
+    width: 99vw;
+    height: 99vh;
+    background-color: #dedede;
+    font-family: monospace;
+    font-size: 28px;
+    color: #3a3a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.heading {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.footer {
+    font-family: sans-serif;
+    text-align: center;
+    color: #9a9a9a;
+    min-width: 30vw;
+    margin-top: 0.1em;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+    -webkit-touch-callout: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}
+
+.help {
+    float: right;
+    margin-top: 10px;
+    color: blueviolet;
+}
+
+.blinking{
+    animation:blinkingText 0.8s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: red;      }
+    49%{    color: red;      }
+    50%{    color: red;      }
+    99%{    color: black;    }
+    100%{   color: black;    }
+}
+
+a:link, a:visited {
+    color: #7a7a7a;
+}
+
+p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

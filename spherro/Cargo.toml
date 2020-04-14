@@ -1,0 +1,67 @@
+[package]
+name = "spherro"
+version = "0.2.1"
+readme = "README.md"
+authors = ["Karthik Karanth <karanth.karthik@gmail.com>"]
+edition = "2018"
+description = "A SPH fluid simulator"
+repository = "https://github.com/medakk/spherro"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "spherro-bin"
+path = "src/bin.rs"
+
+[[bin]]
+name = "playground"
+path = "src/playground.rs"
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+cgmath = "0.17.0"
+itertools = "0.8.0"
+rand = { version = "0.7.0", features = ["wasm-bindgen"] }
+
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+console_error_panic_hook = { version = "0.1.1", optional = true }
+
+# `wee_alloc` is a tiny allocator for wasm that is only ~1K in code size
+# compared to the default allocator's ~10K. It is slower than the default
+# allocator, however.
+#
+# Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
+wee_alloc = { version = "0.4.2", optional = true }
+
+[target.'cfg(not(target_arch="wasm32"))'.dependencies]
+kiss3d = "0.20.1"
+nalgebra = "0.18.0"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.2"
+criterion = "0.2.11"
+
+[[bench]]
+name = "solver"
+harness = false
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  "console",
+]
+
+[profile.release]
+debug = true
+
+#[profile.release]
+# Tell `rustc` to optimize for small code size.
+# opt-level = "s"

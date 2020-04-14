@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>spherro</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+  </head>
+  <body>
+
+    <div class="loading">
+      <p>loading <strong>spherro</strong></p>
+      <img src="svg-loaders/ball-triangle.svg" />
+    </div>
+
+    <div id="main" class="noselect">
+
+      <div class="controls">
+        <span class="heading">spherro</span>
+        
+        <div>
+          <span>{{ fps }}fps</span>
+          | <span v-if="isStable">stable</span>
+          <span v-else style="color:red">unstable</span>
+
+          | <span>{{ particleCount }} particles</span>
+          | <span><a href="#"
+                    v-on:click="onclickReset();"
+                    v-bind:class="{ blinking: !isStable }">reset</a></span>
+        </div>
+
+        <div>
+          <!-- Baba is You -->
+          <p class="help">slider is add and remove<br>click and touch is push</p>
+          <vue-slider
+                      v-model="desiredParticleCount"
+                      :min="minParticles" :max="maxParticles" :interval=5>
+          </vue-slider>
+        </div>
+      </div>
+
+      <canvas id="spherro-canvas"></canvas>
+
+      <div class="footer">
+        <hr>
+        <p>© 2019 <a href="https://karthikkaranth.me">Karthik Karanth</a>, MIT License</p>
+        <p>View on <a href="https://github.com/medakk/spherro">GitHub</a></p>
+      </div>
+    </div>
+
+    <script src="./bootstrap.js"></script>
+  </body>
+</html>
