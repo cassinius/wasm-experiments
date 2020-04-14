@@ -3,8 +3,8 @@ use crate::util::*;
 
 #[wasm_bindgen]
 pub struct Force {
-    //TODO: using x,y instead of Vector2f because of lack of
-    //wasm_bindgen in Vector2f
+    /// TODO: using x,y instead of Vector2f because of lack of
+    /// wasm_bindgen in Vector2f
     pub x: f32,
     pub y: f32,
     pub power: f32,

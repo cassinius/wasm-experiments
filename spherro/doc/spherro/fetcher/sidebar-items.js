@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["STRIDE","2 floats for position 2 floats for velocity"]],"struct":[["Fetcher","Fetches data from the universe into a buffer for wasm to read. The point of this is to separate the Universe's concern from the data format needed by the client"]]});

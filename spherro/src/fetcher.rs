@@ -1,14 +1,14 @@
 use wasm_bindgen::prelude::*;
 use crate::universe::Universe;
 
-// 2 floats for position
-// 2 floats for velocity
+/// 2 floats for position
+/// 2 floats for velocity
 const STRIDE: usize = 4;
 
-// Fetches data from the universe into a buffer
-// for wasm to read. The point of this is to separate
-// the Universe's concern from the data format needed
-// by the client
+/// Fetches data from the universe into a buffer
+/// for wasm to read. The point of this is to separate
+/// the Universe's concern from the data format needed
+/// by the client
 #[wasm_bindgen]
 pub struct Fetcher {
     buffer: Vec<f32>,

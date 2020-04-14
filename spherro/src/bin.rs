@@ -1,3 +1,5 @@
+/// Here the desktop rendering happens...
+/// 
 extern crate kiss3d;
 extern crate nalgebra as na;
 extern crate spherro;
@@ -40,7 +42,7 @@ fn main() {
         viz_objs.push(obj);
     }
 
-    // Draw some borders
+    /// Draw some borders
     for i in 0..4 {
         let sx = 10.0 * VIZ_SCALE;
         let sy = 700.0 * VIZ_SCALE;

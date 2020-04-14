@@ -1,3 +1,20 @@
+/// Universe is rendering-agnostic meaning
+/// it can be used from both Rust & JS code
+/// 
+/// This is achieved by de-coupling the internal
+/// data structures for computation from the data structures
+/// used for rendering, which in case of 
+/// 
+/// -) Wasm are fetched by the `fetcher` module as a `*const f32`
+///    which is then drawn in WebGL via a vertex array (`Float32Array`)
+/// 
+/// -) kiss3d are zipped from the universe's particles &
+///    Vec<kiss3d::scene::SceneNode>
+///    && I am not sure about the rendering yet 
+///    (but we'll probably use a different library anyways...)
+/// 
+
+
 use wasm_bindgen::prelude::*;
 use cgmath::{InnerSpace};
 use rand::Rng;

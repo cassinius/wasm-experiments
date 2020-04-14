@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["SIGMA",""],["SIGMA_2D",""],["_SIGMA_1D",""],["_SIGMA_3D",""]],"fn":[["cubicspline_df",""],["cubicspline_f",""]]});

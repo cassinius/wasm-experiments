@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["BOUNDARY_COR",""],["BOUNDARY_MIN_DV",""],["GRAVITY",""],["H",""],["K",""],["MASS","If we hadn't used \"#[macro_use\" with itertools in the main module \"lib\" we would need to do the following..."],["MAX_FORCE_MAG",""],["REST_RHO",""],["VISC",""]],"enum":[["Event",""]],"struct":[["Universe",""]],"type":[["Neighbours",""]]});
