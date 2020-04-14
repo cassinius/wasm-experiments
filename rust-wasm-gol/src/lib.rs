@@ -1,10 +1,9 @@
 #![feature(stmt_expr_attributes)]
 
 mod utils;
-use utils::console_log;
 
-mod timer;
-use timer::Timer;
+// mod timer;
+// use timer::Timer;
 
 use wasm_bindgen::prelude::*;
 
@@ -162,7 +161,7 @@ impl Universe {
 	///
 	pub fn ticks(&mut self, nr_ticks: usize) {
 		// let mut died_born = vec!((0, 0); nr_ticks);
-		for i in 0..nr_ticks {
+		for _i in 0..nr_ticks {
 			self.epoch += 1;
 			let tic = Instant::now();
 
@@ -181,8 +180,8 @@ impl Universe {
 
 	fn tick(&self, row_start: u32, row_end: u32, col_start: u32, col_end: u32) -> FixedBitSet {
 		// let _timer = Timer::new("Universe::tick-1");
-		let mut died = 0;
-		let mut born = 0;
+		// let mut died = 0;
+		// let mut born = 0;
 		let cells_size = ((row_end - row_start) * (col_end - col_start)) as usize;
 		let mut cells = FixedBitSet::with_capacity(cells_size);
 		{
@@ -202,8 +201,8 @@ impl Universe {
 						(false, 3) => true,
 						(otherwise, _) => otherwise
 					};
-					if cell && !new_val { died += 1 };
-					if !cell && new_val { born += 1 };
+					// if cell && !new_val { died += 1 };
+					// if !cell && new_val { born += 1 };
 
 					cells.set(idx, new_val);
 				}
